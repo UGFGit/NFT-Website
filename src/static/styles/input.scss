@@ -1,0 +1,58 @@
+@import "./colors.scss";
+
+.input-root{
+    width: 100%;
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    
+    .input-lable-wrap{
+        margin-bottom: 10px;
+        margin-left: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .input-lable{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 22px;
+            letter-spacing: -0.5px;
+            color: $black;
+        }
+    
+        .input-optional-lable{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 22px;
+            letter-spacing: -0.5px;
+            color: $optional-lable;
+            margin-left: 14px;
+        }
+    }
+
+    .input{
+        width: 100%;
+        outline: 0;
+        background: $white;
+        border: 1px solid $input-border;
+        border-radius: 8px;
+        padding: 10px 14px;
+        color: $black;
+    }
+
+    .helper-text{
+        font-family: Open Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 19px;
+        letter-spacing: -0.5px;
+        color: $optional-lable;
+        margin-left: auto;
+    }
+}
