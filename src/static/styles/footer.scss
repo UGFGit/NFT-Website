@@ -1,0 +1,45 @@
+@import "./colors.scss";
+
+.footer-root{
+    background-color: $black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 49px 122px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    .footer-title{
+        font-family: Open Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 19px;
+        letter-spacing: 0.035em;
+        color: $white;
+    }
+
+    .footer-items-wrap{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-left: auto;
+
+        p{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 22px;
+            text-align: center;
+            text-decoration-line: underline;
+            color: $white;
+        }
+
+        p:first-child{
+            margin-right: 40px;
+        }
+    }
+}

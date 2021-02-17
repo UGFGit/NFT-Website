@@ -1,0 +1,59 @@
+@import "./colors.scss";
+
+.navigation-root{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    padding: 22px 122px;
+    background-color: $black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .navigation-title{
+        color: $white;
+        font-style: normal;
+        font-weight: normal;
+        font-family: Poller One;
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .navigation-wrap{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-left: auto;
+
+        .navigation-item{
+            color: $white;
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 19px;
+            margin: 0px 30px;
+            cursor: pointer;
+
+            &:hover{
+                color: $turquoise;
+            }
+        }
+
+        .navigation-item-active{
+            color: $turquoise;
+        }
+
+        .connect-button{
+            margin-left: 30px;
+            color: $turquoise;
+            background: $black;
+            border: 1px solid $turquoise;
+            cursor: pointer;
+            outline: 0;
+            padding: 12px 20px;
+            border-radius: 20px;
+        }
+    }
+}
