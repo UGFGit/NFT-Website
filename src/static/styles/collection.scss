@@ -1,11 +1,15 @@
 @import "./colors.scss";
 @import "./fonts.scss";
 
+html{
+    scroll-snap-type: y mandatory;
+}
+
 .collection-root{
     min-height: 100vh;
     background-color: $grey;
     width: 100%;
-
+    
     .collection-main{
         background: $black;
         min-height: 100vh;
@@ -13,6 +17,7 @@
         position: relative;
         overflow: hidden;
         overflow-y: hidden;
+        scroll-snap-align: start;
 
         .collection-main-container{
             margin: auto;
@@ -95,6 +100,7 @@
 
     .collection-explore-root{
        min-height: 100vh; 
+       scroll-snap-align: start;
 
        .collection-explore-wrap{
             height: calc(100vh - 120px);

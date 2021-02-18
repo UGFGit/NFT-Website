@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import DocumentTitle from 'react-document-title';
 import Navigation, { LocationEnum } from '../../components/Navigation';
 import '../../static/styles/collection.scss';
@@ -18,7 +18,7 @@ function Collection(){
     const loadApplication = async (pageNumber = 0) => {
         const response = await fetch.post(APPLICATION, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }});
         const { applications, pagination } = await response.json();
-        console.log(applications, pagination, applications.length)
+        
         if(applications.length === 0){
             setLoad(false);
         }
