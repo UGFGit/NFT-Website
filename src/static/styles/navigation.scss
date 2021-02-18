@@ -1,6 +1,10 @@
 @import "./colors.scss";
 
 .navigation-root{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
     padding: 22px 122px;
     background-color: $black;
     display: flex;

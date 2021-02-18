@@ -1,0 +1,54 @@
+@import "./colors.scss";
+
+.accordion-root{
+    border: 1px solid $optional-lable;
+    border-radius: 16px;
+    width: 100%;
+    margin: 10px 0;
+    
+    .accordion-header{
+        padding: 13px 24px;
+        border-bottom: 1px solid $optional-lable;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .accordion-header-title{
+            font-family: Nunito Sans;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 33px;
+            color: $black;
+        }
+
+        .accordion-btf{
+            height: 40px;
+            width: 40px;
+            margin-left: auto;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .accordion-btf-active{
+            background: linear-gradient(106deg, #62E2FF 9.9%, rgba(48, 79, 242, 0.63) 40.22%, rgba(11, 195, 236, 0.52) 90.65%);
+            border-radius: 39px;
+        }
+    }
+
+    .accordion-body{
+        padding: 13px 24px 24px ;
+
+        .accordion-text{
+            font-family: Nunito Sans;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 22px;
+            color: $black;
+            white-space: pre-line;
+        }
+    }
+}
