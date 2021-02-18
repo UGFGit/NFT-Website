@@ -10,6 +10,9 @@
         background: $black;
         min-height: 100vh;
         display: flex;
+        position: relative;
+        overflow: hidden;
+        overflow-y: hidden;
 
         .collection-main-container{
             margin: auto;
@@ -50,7 +53,7 @@
         .collection-main-bottom{
             width: 515px;
             height: 527px;
-            position: fixed;
+            position: absolute;
             bottom: -10px;
             left: 0;
             background-image: url('../images/dots.svg');
@@ -59,7 +62,7 @@
             .collection-main-bottom-cards{
                 width: 350px;
                 height: 466px;
-                position: fixed;
+                position: absolute;
                 left: 30px;
                 bottom: -125px;
                 background-image: url('../images/cards.svg');
@@ -70,7 +73,7 @@
         .collection-main-top{
             width: 515px;
             height: 527px;
-            position: fixed;
+            position: absolute;
             top: -10px;
             right: 0;
             background-image: url('../images/dots.svg');
@@ -80,12 +83,45 @@
             .collection-main-top-cards{
                 width: 350px;
                 height: 466px;
-                position: fixed;
+                position: absolute;
                 right: 132px;
                 top: 85px;
                 background-image: url('../images/cards.svg');
                 background-repeat: no-repeat;
                 transform: rotate(180deg);
+            }
+        }
+    }
+
+    .collection-explore-root{
+       min-height: 100vh; 
+
+       .collection-explore-wrap{
+            height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+
+            .collection-explore-title{
+                padding: 165px 122px 0px;
+                font-family: Poller One;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 44px;
+                line-height: 52px;
+                text-align: center;
+                color: $black;
+                text-align: left;
+            }
+
+            .collection-explore-scroll-wrap{
+                padding: 0px 107px 185px;
+                overflow: auto;
+
+                .collection-explore-cards-wrap{
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                }
             }
         }
     }

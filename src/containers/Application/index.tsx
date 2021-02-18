@@ -4,7 +4,7 @@ import Navigation, { LocationEnum } from '../../components/Navigation';
 import Footer from '../../components/Footer';
 import '../../static/styles/application.scss';
 import Input from  '../../components/Input';
-import { APPLICATION, FILESTORE_UPLOAD } from '../../constants/endpoints';
+import { APPLICATION_CREATE, FILESTORE_UPLOAD } from '../../constants/endpoints';
 import { fetch } from '../../libs';
 import { useHistory } from 'react-router-dom';
 import Dropzone from '../../components/Dropzone';
@@ -22,7 +22,7 @@ function Application(){
     const [filename, setFilename] = useState('');
 
     const handleSubmit = async () => {
-        const response = await fetch.post(APPLICATION, { nickname, name, email, address, price: Number(price), description, filename });
+        const response = await fetch.post(APPLICATION_CREATE, { nickname, name, email, address, price: Number(price), description, filename });
         if(response.ok){
             return history.push('/');
         }
