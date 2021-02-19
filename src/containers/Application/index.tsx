@@ -7,7 +7,7 @@ import Input from  '../../components/Input';
 import { APPLICATION_CREATE, FILESTORE_UPLOAD } from '../../constants/endpoints';
 import { fetch } from '../../libs';
 import { useHistory } from 'react-router-dom';
-import Dropzone from '../../components/Dropzone';
+import Dropzone, { IFile } from '../../components/Dropzone';
 import { serialize } from 'object-to-formdata';
 
 function Application(){
@@ -19,10 +19,11 @@ function Application(){
     const [address, setAddress] = useState("");
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState("");
-    const [filename, setFilename] = useState('');
+    const [file, setFile] = useState<IFile>();
 
     const handleSubmit = async () => {
-        const response = await fetch.post(APPLICATION_CREATE, { nickname, name, email, address, price: Number(price), description, filename });
+        const data = { nickname, name, email, address, price: Number(price), description, ...file };
+        const response = await fetch.post(APPLICATION_CREATE, data);
         if(response.ok){
             return history.push('/');
         }
@@ -36,7 +37,7 @@ function Application(){
         const response = await fetch.post(FILESTORE_UPLOAD, formData);
         const body = await response.json();
         if(response.ok){
-            return setFilename(body.filename);
+            return setFile({ filename: body.filename, mimetype: body. mimetype});
         }
         console.log(body);
     }
@@ -83,7 +84,7 @@ function Application(){
                     </div>
                     <div className = 'dropzone-wrap'>
                         <Dropzone
-                            file = {filename}
+                            file = {file}
                             onChange = {sendFile}
                         />
                     </div>

@@ -123,6 +123,14 @@ html{
                 padding: 0px 107px 185px;
                 overflow: auto;
 
+                .collection-explore-scroll-loader{
+                    width: 388px;
+                    height: 505px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
                 .collection-explore-cards-wrap{
                     display: flex;
                     align-items: center;

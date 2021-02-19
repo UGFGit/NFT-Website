@@ -8,6 +8,7 @@ import { fetch } from '../../libs';
 import { IApplication } from '../../interfaces/Application/application.interface';
 import InfiniteScroll from 'react-infinite-scroller';
 import Card from './Card';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -53,7 +54,7 @@ function Collection(){
                                 pageStart={-1}
                                 loadMore={loadApplication}
                                 hasMore={load}
-                                loader={<div className="loader" key={0}>Loading ...</div>}
+                                loader={<div className="collection-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
                                 useWindow={false}
                                 className = "collection-explore-cards-wrap"
                             >

@@ -3,8 +3,13 @@ import {useDropzone} from 'react-dropzone'
 import { FILESTORE } from '../constants/endpoints';
 import '../static/styles/dropzone.scss';
 
+export interface IFile {
+    filename: string;
+    mimetype: string;
+}
+
 interface DropzoneProps{
-    file: any;
+    file?: IFile;
     onChange: (file: any) => void;
 }
 
@@ -32,7 +37,7 @@ function Dropzone({ file, onChange }: DropzoneProps){
 
                 {file && 
                     <div className = 'dropzone-image-wrap'>
-                        <img className = "dropzone-image" alt = "" src = {FILESTORE(file)}/>
+                        <img className = "dropzone-image" alt = "" src = {FILESTORE(file.filename)}/>
                     </div>
                 }
             </div>
