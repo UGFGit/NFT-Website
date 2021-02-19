@@ -47,17 +47,9 @@ function MetamaskChecker(){
     }
     
     useEffect(() => {
-        //@ts-ignore
-        const provider = window.ethereum;
-        
-        if(provider && provider.isConnected()){
-            check();
-        }
-
         return () => removeListeners();
     }, []);
     
-    console.log(state);
     return(
         <button 
             className = "connect-button" 

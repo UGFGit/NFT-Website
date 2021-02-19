@@ -29,7 +29,6 @@ function Application(){
             return history.push('/');
         }
         const body = await response.json();
-        console.log(body);
     }
 
     const sendFile = async (file: any) => {
@@ -40,7 +39,6 @@ function Application(){
         if(response.ok){
             return setFile({ filename: body.filename, mimetype: body. mimetype});
         }
-        console.log(body);
     }
 
     return(
