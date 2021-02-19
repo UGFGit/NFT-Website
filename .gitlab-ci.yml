@@ -1,0 +1,36 @@
+stages:
+    - install
+    - deploy
+
+Install:
+    stage: install
+    tags:
+        - genesis-arts-dev
+    script:
+        - npm install --unsafe-perm
+    cache:
+        untracked: true
+        key: "$CI_COMMIT_SHORT_SHA"
+        paths:
+            - node_modules/
+        policy: push
+    rules:
+        - if: '$CI_COMMIT_BRANCH == "develop"'
+          when: always
+
+Deploy:
+    stage: deploy
+    tags:
+        - genesis-arts-dev
+    script:
+        - npm run build
+        - sudo cp -a -f ./build/. /home/ubuntu/front
+    rules:
+        - if: '$CI_COMMIT_BRANCH == "develop"'
+          when: always
+    cache:
+        untracked: true
+        key: "$CI_COMMIT_SHORT_SHA"
+        paths:
+            - node_modules/
+        policy: pull
