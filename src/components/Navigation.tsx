@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import '../static/styles/navigation.scss';
 import { useHistory } from "react-router-dom";
 import classNames from 'classnames';
+import MetamaskChecker from '../components/MetamaskChecker';
 
 export enum LocationEnum{
     COLLECTION,
@@ -24,7 +25,7 @@ function Navigation({ location }: NavigationProps){
                 <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.FAQ})} onClick={() => history.push('/faq')}>Faq</p>
                 <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.APPLICATION})} onClick={() => history.push('/application')}>Application</p>
 
-                <button className = "connect-button" onClick = {() => alert('Connect wallet')}>Connect wallet</button>
+                <MetamaskChecker/>
             </div>
         </div>
     )
