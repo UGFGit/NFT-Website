@@ -20,9 +20,10 @@ function Application(){
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState("");
     const [file, setFile] = useState<IFile>();
+    const [cryptoPrice, setCryptoPrice] = useState('');
 
     const handleSubmit = async () => {
-        const data = { nickname, name, email, address, price: Number(price), description, ...file };
+        const data = { nickname, name, email, address, price: Number(price), cryptoPrice: Number(cryptoPrice), description, ...file };
         const response = await fetch.post(APPLICATION_CREATE, data);
         if(response.ok){
             return history.push('/');
@@ -68,14 +69,14 @@ function Application(){
                     />
                     <div className = 'prices-wrap'>
                         <Input
-                            lable = "Price"
-                            value = {price}
-                            onChange= {(value) => setPrice(value)}
+                            lable = "Price (UOP)"
+                            value = {cryptoPrice}
+                            onChange= {(value) => setCryptoPrice(value)}
                             placeholder = "Amount"
                             type = 'number'
                         />
                         <Input
-                            lable = "Price"
+                            lable = "Price (€)"
                             value = {price}
                             onChange= {(value) => setPrice(value)}
                             placeholder = "Amount"

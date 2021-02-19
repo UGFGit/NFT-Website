@@ -19,7 +19,7 @@ interface DialogProps{
 }
 
 function Dialog({ application , open, handleBuy, onClose}: DialogProps){
-    const { nickname, filename, name, price, description } = application;
+    const { nickname, filename, name, price, description, number, cryptoPrice } = application;
 
     return(
         <MuiDialog className = "dialog-root" open={open} onClose = {onClose}>
@@ -40,13 +40,13 @@ function Dialog({ application , open, handleBuy, onClose}: DialogProps){
                     <div className = "dialog-content-text-wrap">
                         <p className = "dialog-content-text-title">{name}</p>
                         <p className = "dialog-content-text-description">{description}</p>
-                        <p className = "dialog-content-text-number">1 of 1</p>
+                        <p className = "dialog-content-text-number">1 of {number}</p>
                     </div>
                 </div>                    
             </DialogContent>
             <DialogActions className = 'dialog-actions'>
                 <div className = "dialog-actions-price-wrap">
-                    <p>{price} UOP</p>
+                    <p>{cryptoPrice} UOP</p>
                     <p>{price} €</p>
                 </div>
 

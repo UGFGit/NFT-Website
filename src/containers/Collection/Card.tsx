@@ -7,7 +7,7 @@ import { FILESTORE } from '../../constants/endpoints';
 import Dialog from './Dialog';
 
 function Card(application: IApplication){
-    const { nickname, filename, name, price } = application;
+    const { nickname, filename, name, price, number, cryptoPrice } = application;
 
     const [open, setOpen ] = useState(false);
 
@@ -29,12 +29,12 @@ function Card(application: IApplication){
 
                     <div className = "card-body-name-wrap">
                         <p className = "card-body-name">{name}</p>
-                        <p className = "card-body-name">1 of 1</p>
+                        <p className = "card-body-name">1 of {number}</p>
                     </div>
 
                     <div className = "card-body-footer">
                         <div className = "card-body-footer-price-wrap">
-                            <p>{price} UOP</p>
+                            <p>{cryptoPrice} UOP</p>
                             <p>{price} €</p>
                         </div>
 

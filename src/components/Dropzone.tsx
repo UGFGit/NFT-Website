@@ -19,7 +19,7 @@ function Dropzone({ file, onChange }: DropzoneProps){
         onChange(file)
     }, [])
     
-    const {getRootProps, getInputProps} = useDropzone({onDrop});
+    const {getRootProps, getInputProps} = useDropzone({onDrop, accept: 'image/*', multiple: false, maxSize: 31457280});
 
     return(
         <div className = 'dropzone-root'>
@@ -28,7 +28,7 @@ function Dropzone({ file, onChange }: DropzoneProps){
                 <input {...getInputProps()} />
                 {!file && 
                     <div className = 'dropzone-body-wrap'>
-                        <p className = 'dropzone-body-title'>PNG, GIF, WEBP, MP4 or MP3. Max 30mb.</p>
+                        <p className = 'dropzone-body-title'>PNG, GIF or WEBP. Max 30mb.</p>
                         <div className = 'dropzone-btn'>
                             <p className = 'dropzone-btn-title'>Choose file</p>
                         </div>
