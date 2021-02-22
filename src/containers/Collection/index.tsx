@@ -82,7 +82,7 @@ function Collection(){
                             >Music</button>
                         </div>
 
-                        <div className = "collection-explore-scroll-wrap">
+                        <div className = {classNames("collection-explore-scroll-wrap", { 'empty': state.list.length === 0 })}>
                             <InfiniteScroll
                                 ref={scrollRef}
                                 pageStart={-1}
@@ -90,15 +90,18 @@ function Collection(){
                                 hasMore={state.load}
                                 loader={<div className="collection-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
                                 useWindow={false}
-                                className = "collection-explore-cards-wrap"
                             >
-                            {state.list.map((item) => (
-                                    <Card key = {item.id} {...item}/>
-                            ))}
+                                <div className = "collection-explore-cards-wrap">
+                                    {state.list.map((item) => (
+                                        <Card key = {item.id} {...item}/>
+                                    ))}
+                                </div>
                             </InfiniteScroll>
+                            <div className = {classNames({ "collection-explore-footer-wrap":state.list.length === 0 })}>
+                                <Footer/>
+                            </div>
                         </div>
-                    </div>
-                    <Footer/>
+                    </div>                    
                 </div>
             </div>
         </DocumentTitle>

@@ -114,12 +114,12 @@ html{
        scroll-snap-align: start;
 
        .collection-explore-wrap{
-            height: calc(100vh - 120px);
+            height: 100vh;
             display: flex;
             flex-direction: column;
 
             .collection-explore-title{
-                padding: 165px 113px 0px;
+                padding: 140px 113px 0px;
                 font-family: Poller One;
                 font-style: normal;
                 font-weight: normal;
@@ -131,7 +131,7 @@ html{
             }
 
             .collection-explore-filters-wrap{
-                padding: 42px 114px 80px;
+                padding: 30px 124px 35px;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
@@ -166,7 +166,6 @@ html{
             }
 
             .collection-explore-scroll-wrap{
-                padding: 0px 106px 185px;
                 overflow: auto;
 
                 .collection-explore-scroll-loader{
@@ -181,7 +180,18 @@ html{
                     display: flex;
                     align-items: center;
                     flex-wrap: wrap;
+                    padding: 0px 122px 80px;
                 }
+
+                .collection-explore-footer-wrap{
+                    margin-top: auto;
+                }
+            }
+
+            .collection-explore-scroll-wrap.empty{
+                display: flex;
+                height: 100%;
+                flex-direction: column;
             }
         }
     }
