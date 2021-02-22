@@ -63,6 +63,7 @@ html{
                 color: $white;
                 max-width: 500px;
                 margin-top: 30px;
+                padding: 0px 16px;
             }
         }
 
@@ -114,12 +115,12 @@ html{
        scroll-snap-align: start;
 
        .collection-explore-wrap{
-            height: calc(100vh - 120px);
+            height: 100vh;
             display: flex;
             flex-direction: column;
 
             .collection-explore-title{
-                padding: 165px 113px 0px;
+                padding: 140px 113px 0px;
                 font-family: Poller One;
                 font-style: normal;
                 font-weight: normal;
@@ -131,7 +132,7 @@ html{
             }
 
             .collection-explore-filters-wrap{
-                padding: 42px 114px 80px;
+                padding: 30px 124px 30px;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
@@ -166,12 +167,12 @@ html{
             }
 
             .collection-explore-scroll-wrap{
-                padding: 0px 106px 185px;
                 overflow: auto;
+                display: flex;
+                height: 100%;
+                flex-direction: column;
 
                 .collection-explore-scroll-loader{
-                    width: 388px;
-                    height: 505px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -181,6 +182,71 @@ html{
                     display: flex;
                     align-items: center;
                     flex-wrap: wrap;
+                    padding: 0px 122px 80px;
+                }
+
+                .collection-explore-footer-wrap{
+                    margin-top: auto;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1380px){
+    .collection-root{
+        .collection-main{
+            .collection-main-top{
+                .collection-main-top-cards{
+                    display: none;
+                }
+            }
+            .collection-main-bottom{
+                .collection-main-bottom-cards{
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 620px){
+    .collection-root{
+        .collection-main{
+            .collection-main-container{
+                .collection-main-container-title-wrap{
+                    .collection-main-container-title{
+                      font-size: 22px;
+                      line-height: 26px; 
+                    }
+                } 
+
+                .collection-main-container-text{
+                    font-size: 14px;
+                    line-height: 19px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 680px){
+    .collection-root{
+        .collection-explore-root{
+            .collection-explore-wrap{
+                .collection-explore-title{
+                    padding: 100px 16px 0px;
+                }
+                .collection-explore-filters-wrap{
+                    padding: 30px 13px 30px;
+                }
+
+                .collection-explore-scroll-wrap{
+                    .collection-explore-cards-wrap{
+                        padding: 0px 16px 80px;
+                        flex-direction: column;
+                    }
                 }
             }
         }

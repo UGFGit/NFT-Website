@@ -90,15 +90,18 @@ function Collection(){
                                 hasMore={state.load}
                                 loader={<div className="collection-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
                                 useWindow={false}
-                                className = "collection-explore-cards-wrap"
                             >
-                            {state.list.map((item) => (
-                                    <Card key = {item.id} {...item}/>
-                            ))}
+                                <div className = "collection-explore-cards-wrap">
+                                    {state.list.map((item) => (
+                                        <Card key = {item.id} {...item}/>
+                                    ))}
+                                </div>
                             </InfiniteScroll>
+                            <div className = "collection-explore-footer-wrap">
+                                <Footer/>
+                            </div>
                         </div>
-                    </div>
-                    <Footer/>
+                    </div>                    
                 </div>
             </div>
         </DocumentTitle>

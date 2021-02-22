@@ -14,13 +14,17 @@
         margin-bottom: 20px;
     }
 
+    .dropzone-body-wrap.error{
+        border: 1px solid red;
+    }
+
     .dropzone-body-wrap{
         max-height: 160px;
         width: 100%;
         background: $white;
         border: 1px solid $input-border;
         border-radius: 8px;
-        padding: 48px 135px 29px;
+        padding: 48px 0px 29px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -32,6 +36,10 @@
             font-size: 12px;
             line-height: 16px;
             color: $btn-black;
+        }
+
+        .dropzone-body-title.error{
+            color: red;
         }
 
         .dropzone-btn{

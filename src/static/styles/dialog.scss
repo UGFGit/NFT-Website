@@ -133,3 +133,34 @@
         }
     }
 }
+
+@media screen and (max-width: 460px){
+    .dialog-root{
+        .dialog-card-header{
+            padding: 10px;
+
+            .dialog-card-header-nickname{
+                margin-left: 10px;
+            }
+        }
+
+        .dialog-content{
+            flex-direction: column;
+
+            .dialog-content-image-wrap{
+                width: 206px;
+                height: 190px;
+            }
+
+            .dialog-content-text-wrap{
+                margin-left: 0px;
+            }
+        }
+
+        .dialog-actions{
+            .dialog-actions-buy-btn{
+                width: 110px;
+            }
+        }
+    }
+}

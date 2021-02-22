@@ -44,11 +44,32 @@
         .accordion-text{
             font-family: Nunito Sans;
             font-style: normal;
-            font-weight: 600;
             font-size: 16px;
             line-height: 22px;
             color: $black;
             white-space: pre-line;
+        }
+    }
+}
+
+@media screen and (max-width: 480px){
+    .accordion-root{
+        .accordion-header{
+            padding: 10px;
+
+            .accordion-header-title{
+                font-size: 16px;
+                line-height: 22px;
+            }
+
+            .accordion-btf{
+                height: 20px;
+                width: 20px;
+            }
+        }
+
+        .accordion-body{
+            padding: 10px;
         }
     }
 }

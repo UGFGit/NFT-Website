@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import {useDropzone} from 'react-dropzone'
 import { FILESTORE } from '../constants/endpoints';
 import '../static/styles/dropzone.scss';
+import classNames from 'classnames';
 
 export interface IFile {
     filename: string;
@@ -11,9 +12,10 @@ export interface IFile {
 interface DropzoneProps{
     file?: IFile;
     onChange: (file: any) => void;
+    error?: string;
 }
 
-function Dropzone({ file, onChange }: DropzoneProps){
+function Dropzone({ file, onChange, error }: DropzoneProps){
     const onDrop = useCallback(([file]) => {
         file.preview = window.URL.createObjectURL(file);
         onChange(file)
@@ -27,8 +29,8 @@ function Dropzone({ file, onChange }: DropzoneProps){
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 {!file && 
-                    <div className = 'dropzone-body-wrap'>
-                        <p className = 'dropzone-body-title'>PNG, GIF or WEBP. Max 30mb.</p>
+                    <div className = {classNames('dropzone-body-wrap', { 'error': Boolean(error)})}>
+                        <p className = {classNames('dropzone-body-title', { 'error': Boolean(error)})}>PNG, GIF or WEBP. Max 30mb.</p>
                         <div className = 'dropzone-btn'>
                             <p className = 'dropzone-btn-title'>Choose file</p>
                         </div>
