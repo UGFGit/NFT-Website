@@ -63,6 +63,7 @@ html{
                 color: $white;
                 max-width: 500px;
                 margin-top: 30px;
+                padding: 0px 16px;
             }
         }
 
@@ -192,6 +193,44 @@ html{
                 display: flex;
                 height: 100%;
                 flex-direction: column;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1380px){
+    .collection-root{
+        .collection-main{
+            .collection-main-top{
+                .collection-main-top-cards{
+                    display: none;
+                }
+            }
+            .collection-main-bottom{
+                .collection-main-bottom-cards{
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 620px ){
+    .collection-root{
+        .collection-main{
+            .collection-main-container{
+                .collection-main-container-title-wrap{
+                    .collection-main-container-title{
+                      font-size: 22px;
+                      line-height: 26px; 
+                    }
+                } 
+
+                .collection-main-container-text{
+                    font-size: 14px;
+                    line-height: 19px;
+                }
             }
         }
     }
