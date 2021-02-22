@@ -28,3 +28,22 @@
         }
     }
 }
+
+@media screen and (max-width: 832px){
+    .faq-root{
+        .faq-body{
+            padding: 170px 15px 200px;
+        }
+    }
+}
+
+@media screen and (max-width: 480px){
+    .faq-root{
+        .faq-body{
+            .title{
+                font-size: 22px;
+                line-height: 26px;
+            }
+        }
+    }
+}
