@@ -168,6 +168,9 @@ html{
 
             .collection-explore-scroll-wrap{
                 overflow: auto;
+                display: flex;
+                height: 100%;
+                flex-direction: column;
 
                 .collection-explore-scroll-loader{
                     display: flex;
@@ -185,12 +188,6 @@ html{
                 .collection-explore-footer-wrap{
                     margin-top: auto;
                 }
-            }
-
-            .collection-explore-scroll-wrap.empty{
-                display: flex;
-                height: 100%;
-                flex-direction: column;
             }
         }
     }

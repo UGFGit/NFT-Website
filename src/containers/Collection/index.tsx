@@ -82,7 +82,7 @@ function Collection(){
                             >Music</button>
                         </div>
 
-                        <div className = {classNames("collection-explore-scroll-wrap", { 'empty': state.list.length === 0 })}>
+                        <div className = "collection-explore-scroll-wrap">
                             <InfiniteScroll
                                 ref={scrollRef}
                                 pageStart={-1}
@@ -97,7 +97,7 @@ function Collection(){
                                     ))}
                                 </div>
                             </InfiniteScroll>
-                            <div className = {classNames({ "collection-explore-footer-wrap":state.list.length === 0 })}>
+                            <div className = "collection-explore-footer-wrap">
                                 <Footer/>
                             </div>
                         </div>
