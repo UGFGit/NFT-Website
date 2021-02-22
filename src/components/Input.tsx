@@ -1,5 +1,6 @@
 import React from 'react'
 import '../static/styles/input.scss';
+import classNames from 'classnames';
 
 interface InputProps{
     lable: string;
@@ -10,9 +11,10 @@ interface InputProps{
     optional?: boolean;
     helperText?: string;
     maxLength?: number;
+    error?: string;
 }
 
-function Input({ lable, value, onChange, placeholder, type, optional, helperText, maxLength }: InputProps){
+function Input({ lable, value, onChange, placeholder, type, optional, helperText, maxLength, error }: InputProps){
     return(
         <div className='input-root'>
             <div className = "input-lable-wrap">
@@ -22,13 +24,16 @@ function Input({ lable, value, onChange, placeholder, type, optional, helperText
             <input 
                 value = {value} 
                 onChange={(event) => onChange(event.target.value)} 
-                className = "input"
+                className = {classNames("input", { error: Boolean(error)})}
                 placeholder = {placeholder}
                 type={type || 'text'}
                 maxLength = {maxLength}
                 min = {0}
             />
-            {helperText && <p className='helper-text'>{helperText}</p>}
+            <div className = "input-help-wrap">
+                { error && <p className = "error-text">{error}</p>}
+                {helperText && <p className='helper-text'>{helperText}</p>}
+            </div>
         </div>
     )
 }
