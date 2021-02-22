@@ -132,7 +132,7 @@ html{
             }
 
             .collection-explore-filters-wrap{
-                padding: 30px 124px 35px;
+                padding: 30px 124px 30px;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
@@ -170,8 +170,6 @@ html{
                 overflow: auto;
 
                 .collection-explore-scroll-loader{
-                    width: 388px;
-                    height: 505px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -216,7 +214,7 @@ html{
 }
 
 
-@media screen and (max-width: 620px ){
+@media screen and (max-width: 620px){
     .collection-root{
         .collection-main{
             .collection-main-container{
@@ -230,6 +228,28 @@ html{
                 .collection-main-container-text{
                     font-size: 14px;
                     line-height: 19px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 680px){
+    .collection-root{
+        .collection-explore-root{
+            .collection-explore-wrap{
+                .collection-explore-title{
+                    padding: 100px 16px 0px;
+                }
+                .collection-explore-filters-wrap{
+                    padding: 30px 13px 30px;
+                }
+
+                .collection-explore-scroll-wrap{
+                    .collection-explore-cards-wrap{
+                        padding: 0px 16px 80px;
+                        flex-direction: column;
+                    }
                 }
             }
         }
