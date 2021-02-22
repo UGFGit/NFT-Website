@@ -1,13 +1,12 @@
 @import "./colors.scss";
 @import "./fonts.scss";
 
-.footer-root{
-    
+.footer-root{    
     background-color: $black;
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 49px 122px;
+    padding: 30px 9% 28px;
 
     .footer-title{
         font-family: Open Sans;
@@ -38,6 +37,38 @@
 
         p:first-child{
             margin-right: 40px;
+        }
+    }
+}
+
+@media screen and (max-width: 715px){
+    .footer-root{
+        flex-direction: column;
+        padding: 17px 24px 16px 17px;
+
+        .footer-title{
+            margin-top: 12px;
+        }
+
+        .footer-items-wrap{
+            order: -1;
+            margin-left: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 360px){
+    .footer-root{
+        .footer-title{
+            font-size: 12px;
+            line-height: 16px;
+        }
+
+        .footer-items-wrap{
+            p{
+                font-size: 14px;
+                line-height: 19px;
+            }
         }
     }
 }
