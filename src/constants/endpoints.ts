@@ -6,3 +6,6 @@ export const FILESTORE_UPLOAD = '/api/filestore/';
 export const APPLICATION = '/api/application';
 export const APPLICATION_BY_ID = (id: string) => `/api/application/:${id}`;
 export const APPLICATION_CREATE = '/api/application/create';
+
+//Blockchain
+export const BLOCKCHAIN_CHARGE = '/api/blockchain/charge';
