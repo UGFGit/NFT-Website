@@ -11,7 +11,7 @@ import Card from './Card';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import classNames from 'classnames';
 
-const DEFAULT_PAGE_SIZE = 3;
+const DEFAULT_PAGE_SIZE = 20;
 
 interface IState{
     list: IApplication[];
@@ -89,7 +89,7 @@ function Collection(){
                                 loadMore={loadApplication}
                                 hasMore={state.load}
                                 loader={<div className="collection-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
-                                useWindow={false}
+                                useWindow={true}
                             >
                                 <div className = "collection-explore-cards-wrap">
                                     {state.list.map((item) => (

@@ -7,7 +7,7 @@
     background-color: $grey;
     border: 1px solid $optional-lable;
     border-radius: 20px;
-    margin: 15px;
+    margin: 15px 0;
 
     .card-header{
         border-bottom: 1px solid $optional-lable;
@@ -43,6 +43,7 @@
             height: 259px;
             max-width: 348px;
             min-width: 250px;
+            margin: auto;
 
             img{
                 width: 100%;
