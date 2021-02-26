@@ -8,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { FILESTORE } from '../../constants/endpoints';
 import Avatar from '@material-ui/core/Avatar';
 import '../../static/styles/dialog.scss';
-import { IApplication } from '../../interfaces/Application/application.interface';
+import { IApplication } from '../../interfaces/containers/Application/application.interface';
 import AvatarStub from '../../static/images/avatar-stub.jpg';
 
 interface DialogProps{
@@ -19,7 +19,9 @@ interface DialogProps{
 }
 
 function Dialog({ application , open, handleBuy, onClose}: DialogProps){
-    const { nickname, filename, name, price, description, number, cryptoPrice } = application;
+    const { nickname, filename, name, price, description, tokens, cryptoPrice } = application;
+
+    const solted = tokens.filter((token) => !token.sold);
 
     return(
         <MuiDialog className = "dialog-root" open={open} onClose = {onClose}>
@@ -40,7 +42,7 @@ function Dialog({ application , open, handleBuy, onClose}: DialogProps){
                     <div className = "dialog-content-text-wrap">
                         <p className = "dialog-content-text-title">{name}</p>
                         <p className = "dialog-content-text-description">{description}</p>
-                        <p className = "dialog-content-text-number">1 of {number}</p>
+                        <p className = "dialog-content-text-number">{solted.length} of {tokens.length}</p>
                     </div>
                 </div>                    
             </DialogContent>

@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import checkMetamask, { MetamaskNotFoundError } from '@metamask-checker/core';
 import Web3 from 'web3';
 import useInterval from '../libs/use-interval';
+import {connect} from 'react-redux';
+import {AnyAction, bindActionCreators, Dispatch} from 'redux';
+import { setProvider, removeProvider } from '../actions/web3';
 
 interface MetamaskCheckerState{
     provider?: any;
@@ -10,7 +13,12 @@ interface MetamaskCheckerState{
     account?: string;
 }
 
-function MetamaskChecker(){
+interface MetamaskCheckerProps{
+    setProvider: typeof setProvider;
+    removeProvider: typeof removeProvider;
+}
+
+function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
     const [state, setState] = useState<MetamaskCheckerState>({});
 
     const addProviderListeners = (provider: any) => {
@@ -21,6 +29,7 @@ function MetamaskChecker(){
 
     const removeListeners = (provider?: any) => {
         (provider || state.provider || { removeAllListeners: () => {}}).removeAllListeners();
+        removeProvider();
     }
 
     const check = async () => {
@@ -40,12 +49,14 @@ function MetamaskChecker(){
         if (! (resultError instanceof MetamaskNotFoundError)) {
             //@ts-ignore
             provider = window.ethereum;
-            removeListeners(provider)
-            addProviderListeners(provider)
+            removeListeners(provider);
+            addProviderListeners(provider);
         }
 
         if(!resultError){
-            setState({ provider, network: result.selectedNetwork, account: result.selectedAccount });
+            const state = { provider, network: result.selectedNetwork, account: result.selectedAccount };
+            setState(state);
+            setProvider({ available: true, ...{ provider, network: result.selectedNetwork, account: result.selectedAccount }})
         }
     }
 
@@ -63,12 +74,12 @@ function MetamaskChecker(){
 
         const addr = await web3.eth.getAccounts();
 
-        if(Array.isArray(addr) && addr.length !== 0){
+        if(Array.isArray(addr) && addr.length !== 0 && !state.account){
             check();
-        } else{
-            
+        } else{            
             if(state.provider && addr.length === 0){
                 setState({});
+                removeListeners();
             }
         }
     }; 
@@ -92,4 +103,10 @@ function MetamaskChecker(){
     )
 }
 
-export default MetamaskChecker;
+function matchDispatchToProps(dispatch: Dispatch<AnyAction>) {
+  return bindActionCreators({
+    setProvider,
+    removeProvider
+  }, dispatch)
+}
+export default connect(null , matchDispatchToProps)(MetamaskChecker);
