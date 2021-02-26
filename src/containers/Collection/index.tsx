@@ -5,7 +5,7 @@ import '../../static/styles/collection.scss';
 import Footer from '../../components/Footer';
 import { APPLICATION } from '../../constants/endpoints';
 import { fetch } from '../../libs';
-import { IApplication } from '../../interfaces/Application/application.interface';
+import { IApplication } from '../../interfaces/containers/Application/application.interface';
 import InfiniteScroll from 'react-infinite-scroller';
 import Card from './Card';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -93,7 +93,7 @@ function Collection(){
                             >
                                 <div className = "collection-explore-cards-wrap">
                                     {state.list.map((item) => (
-                                        <Card key = {item.id} {...item}/>
+                                        <Card key = {item.id} application={item}/>
                                     ))}
                                 </div>
                             </InfiniteScroll>
