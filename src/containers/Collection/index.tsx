@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DocumentTitle from 'react-document-title';
 import Navigation, { LocationEnum } from '../../components/Navigation';
 import '../../static/styles/collection.scss';
@@ -10,6 +10,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Card from './Card';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import classNames from 'classnames';
+import { useSocket } from '../../socket';
+import { SocketEventsEnum } from '../../constants/socket/events';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -21,6 +23,8 @@ interface IState{
 
 function Collection(){
     const [state, setState] = useState<IState>({ list: [], load: true, mimetype: null });
+
+    const socket = useSocket();
 
     const scrollRef = useRef(null);
 
@@ -37,6 +41,16 @@ function Collection(){
 
         setState({...newState, list});
     }
+
+    useEffect(() => {
+        socket?.on(SocketEventsEnum.APPLICATION_SALED, ({ id }: {id: string}) => {
+            setState({ load: state.load, mimetype: state.mimetype, list: state.list.filter((app) => app.id !== id)});
+        })
+
+        return () => {
+            socket?.removeListener(SocketEventsEnum.APPLICATION_SALED);
+        }
+    }, [socket, state])
 
     const setFilter = (filter: string | null) => () => {
         //@ts-ignore

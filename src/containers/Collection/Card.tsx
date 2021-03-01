@@ -37,7 +37,7 @@ function Card({ web3, application }: CardProps){
                 
                 const amount = client.utils.toWei(String(cryptoPrice), 'ether');
                 const { transactionHash } = await client.eth.sendTransaction({ from: web3.account, to: token?.owner, value: amount });
-                fetch.post(BLOCKCHAIN_CHARGE, { transactionHash, amount, address: web3.account, token: token?.token, tokenId: token?.tokenId});
+                await fetch.post(BLOCKCHAIN_CHARGE, { transactionHash, amount, address: web3.account, token: token?.token, tokenId: token?.tokenId});
                 setSnackbar({open: true, severity: 'success', title: `Hurray: ${transactionHash}`});
             } catch(err){
                 setSnackbar({open: true, severity: 'error', title: err.message});

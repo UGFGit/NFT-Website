@@ -8,6 +8,7 @@ import {createStore, applyMiddleware} from 'redux';
 import promise from 'redux-promise';
 import thunk from 'redux-thunk';
 import allReducers from './reducers';
+import { SocketProvider } from './socket';
 
 const store = createStore(
   allReducers,
@@ -16,9 +17,11 @@ const store = createStore(
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <Root/>
-    </Provider>
+     <SocketProvider>
+      <Provider store={store}>
+          <Root/>
+      </Provider>
+    </SocketProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
