@@ -3,7 +3,7 @@ import { connect } from 'socket.io-client';
 
 const SocketContext = React.createContext<SocketIOClient.Socket|null|undefined>(null);
 
-const URL = 'localhost:3000';
+const URL = 'http://13.53.187.73/';
 const SOCKET_OPTIONS: SocketIOClient.ConnectOpts = {
     transports: ['websocket'],
 };
