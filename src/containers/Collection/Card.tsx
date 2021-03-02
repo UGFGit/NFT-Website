@@ -11,6 +11,9 @@ import Snackbar from '../../components/Snackbar';
 import Web3 from 'web3';
 import { fetch } from '../../libs';
 import { BLOCKCHAIN_CHARGE } from '../../constants/endpoints';
+import { ABI } from '../../constants/blockchain/abi';
+
+const PAYMENT_CONTRACT = '0xd8fAb6FaF352936d8F658E69C4ba531f2F0A92c4';
 
 interface CardProps{
     web3: IWeb3State,
@@ -35,8 +38,16 @@ function Card({ web3, application }: CardProps){
                 const client = new Web3(web3.provider);
                 const token = tokens.find((token) => !token.sold);
                 
-                const amount = client.utils.toWei(String(cryptoPrice), 'ether');
-                const { transactionHash } = await client.eth.sendTransaction({ from: web3.account, to: token?.owner, value: amount });
+                //@ts-ignore
+                const contract = new client.eth.Contract(ABI, PAYMENT_CONTRACT);
+                const decimal = await contract.methods.decimals().call();
+                const amount = `${cryptoPrice * Math.pow(10, decimal)}`;
+                const tx = contract.methods.transfer(token?.owner, amount);
+                const abi = tx.encodeABI();
+                const gas = await tx.estimateGas({ from: web3.account });
+                const gasPrice = await client.eth.getGasPrice();
+
+                const { transactionHash } = await client.eth.sendTransaction({ from: web3.account, to: PAYMENT_CONTRACT, data: abi,  gas, gasPrice });
                 await fetch.post(BLOCKCHAIN_CHARGE, { transactionHash, amount, address: web3.account, token: token?.token, tokenId: token?.tokenId});
                 setSnackbar({open: true, severity: 'success', title: `Hurray: ${transactionHash}`});
             } catch(err){
