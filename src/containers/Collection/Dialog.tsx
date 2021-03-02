@@ -24,17 +24,19 @@ function Dialog({ application , open, handleBuy, onClose}: DialogProps){
     const solted = tokens.filter((token) => !token.sold);
 
     return(
-        <MuiDialog className = "dialog-root" open={open} onClose = {onClose}>
+        <MuiDialog maxWidth = 'md' className = "dialog-root" open={open} onClose = {onClose}>
             <DialogTitle>
-                <div className = "dialog-card-header">
-                    <Avatar alt="" src = {AvatarStub}/>
-                    <p className = "dialog-card-header-nickname">{nickname}</p>
-                    <IconButton style = {{marginLeft: 'auto'}} onClick = {onClose}>
-                        <CloseIcon />
-                    </IconButton>
+                <div className = "dialog-card-header-wrap">
+                    <div className = "dialog-card-header">
+                        <Avatar alt="" src = {AvatarStub}/>
+                        <p className = "dialog-card-header-nickname">{nickname}</p>
+                        <IconButton style = {{marginLeft: 'auto'}} onClick = {onClose}>
+                            <CloseIcon />
+                        </IconButton>
+                    </div>
                 </div>
             </DialogTitle>
-            <DialogContent dividers>
+            <DialogContent>
                 <div className = 'dialog-content'>
                     <div className = "dialog-content-image-wrap">
                         <img alt = "" src = {FILESTORE(filename)}/>
@@ -42,13 +44,13 @@ function Dialog({ application , open, handleBuy, onClose}: DialogProps){
                     <div className = "dialog-content-text-wrap">
                         <p className = "dialog-content-text-title">{name}</p>
                         <p className = "dialog-content-text-description">{description}</p>
-                        <p className = "dialog-content-text-number">{solted.length} of {tokens.length}</p>
                     </div>
                 </div>                    
             </DialogContent>
             <DialogActions className = 'dialog-actions'>
                 <div className = "dialog-actions-price-wrap">
                     <p>{cryptoPrice} UOP</p>
+                    <div/>
                     <p>{price} €</p>
                 </div>
 

@@ -2,59 +2,32 @@
 @import "./fonts.scss";
 
 .card-root{
-    min-width: 288px;
-    height: 505px;
+    min-width: 284px;
+    height: 382px;
     background-color: $grey;
     border: 1px solid $optional-lable;
     border-radius: 20px;
     margin: 15px 0;
+    
+    overflow: hidden;
 
-    .card-header{
-        border-bottom: 1px solid $optional-lable;
-        padding: 15px 20px;
+    .card-image-wrap{
         display: flex;
-        flex-direction: row;
         align-items: center;
+        justify-content: center;
+        height: 200px;
 
-        .MuiAvatar-root{
-            width: 60px;
-            height: 60px;
-        }
-
-        .card-nickname{
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 20px;
-            line-height: 23px;
-            color: $black;
-            margin-left: 16px;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     }
 
     .card-body{
         padding: 20px;
 
-        .card-image-wrap{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            height: 259px;
-            max-width: 348px;
-            min-width: 250px;
-            margin: auto;
-
-            img{
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-            }
-        }
-
         .card-body-name-wrap{
-            margin-top: 11px;
-
             .card-body-name{
                 font-family: Open Sans;
                 font-style: normal;
@@ -62,40 +35,63 @@
                 font-size: 16px;
                 line-height: 22px;
                 color: $black;
+                font-weight: 600;
             }
         }
 
-        .card-body-footer{
+        .card-body-user-wrap{
+            margin-top: 10px;
             display: flex;
-            justify-content: row;
-            margin-top: 22px;
+            flex-direction: row;
+            align-items: center;
 
-            .card-body-footer-price-wrap{
-                font-family: Open Sans;
-                font-style: normal;
-                font-weight: 600;
-                font-size: 16px;
-                line-height: 22px;
-                color: $black;
+            .MuiAvatar-root{
+                width: 30px;
+                height: 30px;
             }
 
-            .card-body-buy-btn{
-                width: 107px;
-                height: 40px;
-                margin-left: auto;
-                padding: 10px 40px;
-                background-color: $grey;
-                border: 1px solid $btn-black;
-                outline: 0;
+            .card-nickname{
                 font-family: Roboto;
                 font-style: normal;
-                font-weight: bold;
+                font-weight: normal;
                 font-size: 16px;
                 line-height: 19px;
                 color: $black;
-                border-radius: 39px;
-                cursor: pointer;
+                margin-left: 10px;
             }
+        }
+    }
+
+
+    .card-body-footer{
+        background-color: $black;
+        padding: 11px 20px;
+
+        .card-body-footer-price-wrap{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 19px;
+            color: $white;
+        }
+
+        .card-body-buy-btn{
+            width: 107px;
+            height: 40px;
+            margin-left: auto;
+            padding: 10px 40px;
+            background-color: $grey;
+            border: 1px solid $btn-black;
+            outline: 0;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 19px;
+            color: $black;
+            border-radius: 39px;
+            cursor: pointer;
         }
     }
 
@@ -114,22 +110,5 @@
 @media screen and (max-width: 680px){
     .card-root{
         margin: 15px 0;
-        height: 435px;
-
-        .card-header{
-            padding: 10px;
-
-            .card-nickname{
-                margin-left: 10px;
-            }
-        }
-
-        .card-body{
-            padding: 20px 20px 35px 20px;
-
-            .card-image-wrap{
-                height: 192px;
-            }
-        }
     }
 }

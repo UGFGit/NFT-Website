@@ -50,29 +50,25 @@ function Card({ web3, application }: CardProps){
     return(
         <div>
             <div onClick = {(event: any) => event.target.className !== 'card-body-buy-btn' && setOpen(true)} className = "card-root">
-                <div className = "card-header">
-                    <Avatar alt="" src = {AvatarStub}/>
-                    <p className = "card-nickname">{nickname}</p>
+                <div className = "card-image-wrap">
+                    <img alt = "" src = {FILESTORE(filename)}/>
                 </div>
                 <div className = "card-body">
-                    <div className = "card-image-wrap">
-                        <img alt = "" src = {FILESTORE(filename)}/>
-                    </div>
-
                     <div className = "card-body-name-wrap">
                         <p className = "card-body-name">{name}</p>
                         <p className = "card-body-name">{solted.length} of {tokens.length}</p>
                     </div>
-
-                    <div className = "card-body-footer">
-                        <div className = "card-body-footer-price-wrap">
-                            <p>{cryptoPrice} UOP</p>
-                            <p>{price} €</p>
-                        </div>
-
-                        <button onClick = {handleBuy} className = "card-body-buy-btn">Buy</button>
+                    <div className = "card-body-user-wrap">
+                        <Avatar alt="" src = {AvatarStub}/>
+                        <p className = "card-nickname">{nickname}</p>
+                    </div>                    
+                </div>
+                <div className = "card-body-footer">
+                    <div className = "card-body-footer-price-wrap">
+                        <p>{cryptoPrice} UOP</p>
+                        <p>{price} €</p>
                     </div>
-                </div>            
+                </div>        
             </div>
             <Dialog
                 application = {application}
