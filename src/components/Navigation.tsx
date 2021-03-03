@@ -9,7 +9,8 @@ import DehazeIcon from '@material-ui/icons/Dehaze';
 export enum LocationEnum{
     COLLECTION,
     FAQ,
-    APPLICATION
+    APPLICATION,
+    ARTISTS
 }
 
 interface NavigationProps{
@@ -34,6 +35,7 @@ function Navigation({ location }: NavigationProps){
             </div>
             <div className={classNames('navigation-wrap', {'open': open } )}>
                 <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.COLLECTION})} onClick={() => history.push('/')}>Collection</p>
+                <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.ARTISTS})} onClick={() => history.push('/artists')}>Artists</p>
                 <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.FAQ})} onClick={() => history.push('/faq')}>Faq</p>
                 <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.APPLICATION})} onClick={() => history.push('/application')}>Application</p>
 

@@ -10,3 +10,6 @@ export const BLOCKCHAIN_CHARGE = '/api/blockchain/charge';
 
 //Metadata
 export const METADATA = '/api/metadata';
+
+//Artists
+export const ARTISTS = '/api/artists';

@@ -1,0 +1,240 @@
+@import "./colors.scss";
+@import "./fonts.scss";
+
+.artists-root{
+    min-height: 100vh;
+    background-color: $grey;
+    width: 100%;
+    
+    .artists-main{
+        background: $black;
+        min-height: 100vh;
+        display: flex;
+        position: relative;
+        overflow: hidden;
+        overflow-y: hidden;
+
+        .artists-main-container{
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            .artists-main-container-title{
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: 800;
+                font-size: 46px;
+                line-height: 63px;
+                text-align: center;
+                color: $white;
+                max-width: 498px;
+                letter-spacing: 0.035em;
+            }
+
+            .artists-main-container-text{
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 22px;
+                text-align: center;
+                color: $white;
+                max-width: 532px;
+                margin-top: 12px;
+                padding: 0px 16px;
+            }
+        }
+
+        .artists-main-bottom{
+            width: 515px;
+            height: 527px;
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            background-image: url('../images/dots.svg');
+            background-repeat: no-repeat;
+
+            .artists-main-bottom-cards{
+                width: 350px;
+                height: 466px;
+                position: absolute;
+                left: 62px;
+                bottom: -125px;
+                background-image: url('../images/artists-bottom.svg');
+                background-repeat: no-repeat;
+            }
+        }
+
+        .artists-main-top{
+            width: 515px;
+            height: 527px;
+            position: absolute;
+            top: 46px;
+            right: 0;
+            background-image: url('../images/dots.svg');
+            background-repeat: no-repeat;
+            transform: rotate(180deg);
+
+            .artists-main-top-cards{
+                width: 350px;
+                height: 466px;
+                position: absolute;
+                right: 198px;
+                top: -7px;
+                background-image: url('../images/artists-top.svg');
+                background-repeat: no-repeat;
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .artists-explore-root{
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+
+       .artists-explore-wrap{
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+
+            .artists-explore-title{
+                padding: 140px 113px 0px;
+                font-family: Poller One;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 44px;
+                line-height: 52px;
+                text-align: center;
+                color: $black;
+                text-align: left;
+                margin-bottom: 60px;
+            }
+
+            .artists-explore-filters-wrap{
+                padding: 30px 124px 30px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                .artists-explore-filter-btn{
+                    color: $black;
+                    font-family: Roboto;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 16px;
+                    line-height: 19px;
+                    padding: 10px 20px;
+                    border: 1px solid $optional-lable;
+                    border-radius: 39px;
+                    outline: 0;
+                    cursor: pointer;
+                    margin: 0px 10px;
+                    background-color: $grey;
+
+                    &:hover{
+                        background: $black;
+                        border: 1px solid $black;
+                        color: $white;
+                    }
+                }
+
+                .artists-explore-filter-btn-active{
+                    background: $black;
+                    border: 1px solid $black;
+                    color: $white;
+                }
+            }
+
+            .artists-explore-scroll-wrap{
+                display: flex;
+                height: 100%;
+                flex-direction: column;
+                flex: 1;
+
+                .artists-explore-scroll-loader{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .artists-explore-cards-wrap{
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    padding: 0px 122px 80px;
+                    column-gap: 15px;
+                }
+
+                .artists-explore-footer-wrap{
+                    margin-top: auto;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 620px){
+    .artists-root{
+        .artists-main{
+            .artists-main-container{
+                .artists-main-container-title{
+                    font-size: 22px;
+                    line-height: 26px; 
+                }
+
+                .artists-main-container-text{
+                    font-size: 14px;
+                    line-height: 19px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 680px){
+    .artists-root{
+        .artists-explore-root{
+            .artists-explore-wrap{
+                .artists-explore-title{
+                    padding: 100px 16px 0px;
+                }
+                .artists-explore-filters-wrap{
+                    padding: 30px 13px 30px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 860px){
+    .artists-root{
+        .artists-explore-root{
+            .artists-explore-wrap{
+                .artists-explore-scroll-wrap{
+                    .artists-explore-cards-wrap{
+                        padding: 0px 16px 80px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 680px){
+    .artists-root{
+        .artists-main{
+            .artists-main-top{
+                .artists-main-top-cards{
+                    display: none;
+                }
+            }
+            .artists-main-bottom{
+                .artists-main-bottom-cards{
+                    display: none;
+                }
+            }
+        }
+    }
+}

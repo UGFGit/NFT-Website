@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
 import '../../static/styles/card.scss';
 import Avatar from '@material-ui/core/Avatar';
-import AvatarStub from '../../static/images/avatar-stub.jpg';
 import { FILESTORE } from '../../constants/endpoints';
 import Dialog from './Dialog';
 import {connect} from 'react-redux';
@@ -66,7 +65,7 @@ function Card({ web3, metadata }: CardProps){
                         <p className = "card-body-name">{solted.length} of {tokens.length}</p>
                     </div>
                     <div className = "card-body-user-wrap">
-                        <Avatar alt="" src = {AvatarStub}/>
+                        <Avatar alt="" src = {artist.avatar}/>
                         <p className = "card-nickname">{artist.name}</p>
                     </div>                    
                 </div>

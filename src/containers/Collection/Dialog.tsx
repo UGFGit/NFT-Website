@@ -9,7 +9,6 @@ import { FILESTORE } from '../../constants/endpoints';
 import Avatar from '@material-ui/core/Avatar';
 import '../../static/styles/dialog.scss';
 import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
-import AvatarStub from '../../static/images/avatar-stub.jpg';
 
 interface DialogProps{
     metadata: IMetadata;
@@ -28,7 +27,7 @@ function Dialog({ metadata , open, handleBuy, onClose}: DialogProps){
             <DialogTitle>
                 <div className = "dialog-card-header-wrap">
                     <div className = "dialog-card-header">
-                        <Avatar alt="" src = {AvatarStub}/>
+                        <Avatar alt="" src = {artist.avatar}/>
                         <p className = "dialog-card-header-nickname">{artist.name}</p>
                         <IconButton style = {{marginLeft: 'auto'}} onClick = {onClose}>
                             <CloseIcon />
