@@ -1,7 +1,7 @@
 @import "./colors.scss";
 
 .accordion-root{
-    border: 1px solid $optional-lable;
+    background-color: $white;
     border-radius: 16px;
     width: 100%;
     margin: 10px 0;
@@ -33,7 +33,7 @@
         }
 
         .accordion-btf-active{
-            background: linear-gradient(106deg, #62E2FF 9.9%, rgba(48, 79, 242, 0.63) 40.22%, rgba(11, 195, 236, 0.52) 90.65%);
+            background: $black;
             border-radius: 39px;
         }
     }
@@ -42,9 +42,10 @@
         padding: 13px 24px 24px ;
 
         .accordion-text{
-            font-family: Nunito Sans;
+            font-family: Open Sans;
             font-style: normal;
             font-size: 16px;
+            font-weight: 300;
             line-height: 22px;
             color: $black;
             white-space: pre-line;

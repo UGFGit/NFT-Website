@@ -1,3 +1,3 @@
 export enum SocketEventsEnum {
-    APPLICATION_SALED = 'APPLICATION_SALED'
+    METADATA_SOLD = 'METADATA_SOLD',
 }

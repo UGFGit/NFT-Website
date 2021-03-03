@@ -8,18 +8,18 @@ import CloseIcon from '@material-ui/icons/Close';
 import { FILESTORE } from '../../constants/endpoints';
 import Avatar from '@material-ui/core/Avatar';
 import '../../static/styles/dialog.scss';
-import { IApplication } from '../../interfaces/containers/Application/application.interface';
+import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
 import AvatarStub from '../../static/images/avatar-stub.jpg';
 
 interface DialogProps{
-    application: IApplication;
+    metadata: IMetadata;
     open: boolean;
     handleBuy: () => void;
     onClose: () => void;
 }
 
-function Dialog({ application , open, handleBuy, onClose}: DialogProps){
-    const { nickname, filename, name, price, description, tokens, cryptoPrice } = application;
+function Dialog({ metadata , open, handleBuy, onClose}: DialogProps){
+    const { artist, filename, name, price, description, tokens, cryptoPrice } = metadata;
 
     const solted = tokens.filter((token) => !token.sold);
 
@@ -29,7 +29,7 @@ function Dialog({ application , open, handleBuy, onClose}: DialogProps){
                 <div className = "dialog-card-header-wrap">
                     <div className = "dialog-card-header">
                         <Avatar alt="" src = {AvatarStub}/>
-                        <p className = "dialog-card-header-nickname">{nickname}</p>
+                        <p className = "dialog-card-header-nickname">{artist.name}</p>
                         <IconButton style = {{marginLeft: 'auto'}} onClick = {onClose}>
                             <CloseIcon />
                         </IconButton>

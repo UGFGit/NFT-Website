@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IApplication } from '../../interfaces/containers/Application/application.interface';
+import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
 import '../../static/styles/card.scss';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarStub from '../../static/images/avatar-stub.jpg';
@@ -7,30 +7,25 @@ import { FILESTORE } from '../../constants/endpoints';
 import Dialog from './Dialog';
 import {connect} from 'react-redux';
 import { IWeb3State } from '../../interfaces/reducers/web3.interface';
-import Snackbar from '../../components/Snackbar';
 import Web3 from 'web3';
 import { fetch } from '../../libs';
 import { BLOCKCHAIN_CHARGE } from '../../constants/endpoints';
 import { ABI } from '../../constants/blockchain/abi';
+import { useSnackbar } from 'notistack';
 
 const PAYMENT_CONTRACT = '0xd8fAb6FaF352936d8F658E69C4ba531f2F0A92c4';
 
 interface CardProps{
     web3: IWeb3State,
-    application: IApplication
+    metadata: IMetadata
 }
 
-interface SnacbarState{
-    open: boolean;
-    title?: string;
-    severity?: 'success' | 'info' | 'warning' | 'error';
-}
+function Card({ web3, metadata }: CardProps){
+    const { enqueueSnackbar } = useSnackbar();
 
-function Card({ web3, application }: CardProps){
-    const { nickname, filename, name, price, cryptoPrice, tokens } = application;
+    const { artist, filename, name, price, cryptoPrice, tokens } = metadata;
 
     const [open, setOpen ] = useState(false);
-    const [snackbar, setSnackbar] = useState<SnacbarState>({ open: false });
 
     const handleBuy = async () => {
         if(web3.available){
@@ -48,10 +43,11 @@ function Card({ web3, application }: CardProps){
                 const gasPrice = await client.eth.getGasPrice();
 
                 const { transactionHash } = await client.eth.sendTransaction({ from: web3.account, to: PAYMENT_CONTRACT, data: abi,  gas, gasPrice });
-                await fetch.post(BLOCKCHAIN_CHARGE, { transactionHash, amount, address: web3.account, token: token?.token, tokenId: token?.tokenId});
-                setSnackbar({open: true, severity: 'success', title: `Hurray: ${transactionHash}`});
+                enqueueSnackbar(`Hurray: ${transactionHash}`, { variant: 'success' });
+                setOpen(false);
+                fetch.post(BLOCKCHAIN_CHARGE, { transactionHash, amount, address: web3.account, contract: token?.contract, tokenId: token?.tokenId});
             } catch(err){
-                setSnackbar({open: true, severity: 'error', title: err.message});
+                enqueueSnackbar(err.message, { variant: 'error' });
             }            
         }
     }
@@ -71,7 +67,7 @@ function Card({ web3, application }: CardProps){
                     </div>
                     <div className = "card-body-user-wrap">
                         <Avatar alt="" src = {AvatarStub}/>
-                        <p className = "card-nickname">{nickname}</p>
+                        <p className = "card-nickname">{artist.name}</p>
                     </div>                    
                 </div>
                 <div className = "card-body-footer">
@@ -82,16 +78,10 @@ function Card({ web3, application }: CardProps){
                 </div>        
             </div>
             <Dialog
-                application = {application}
+                metadata = {metadata}
                 open = {open}
                 handleBuy = {handleBuy}
                 onClose = {() => setOpen(false)}
-            />
-            <Snackbar
-                open = {snackbar.open}
-                handleClose = {() => setSnackbar({ open: false, title: snackbar.title, severity: snackbar.severity })}
-                title = {snackbar.title}
-                severity = {snackbar.severity}
             />
         </div>
     )

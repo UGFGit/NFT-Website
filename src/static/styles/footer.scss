@@ -2,20 +2,45 @@
 @import "./fonts.scss";
 
 .footer-root{    
-    background-color: $black;
+    background-color: $grey;
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 30px 9% 28px;
+    position: relative;
+
+    .footer-logo-wrap{
+        .footer-logo-wrap-title{
+            color: $black;
+            font-style: normal;
+            font-weight: normal;
+            font-family: Poller One;
+            font-size: 20px;
+            line-height: 24px;
+            cursor: default;
+        }
+
+        .footer-logo-wrap-by{
+            font-family: Oxygen;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 8px;
+            line-height: 10px;
+            color: $black;
+            text-align: center;
+        }
+    }
 
     .footer-title{
         font-family: Open Sans;
         font-style: normal;
         font-weight: normal;
-        font-size: 14px;
-        line-height: 19px;
+        font-size: 12px;
+        line-height: 16px;
         letter-spacing: 0.035em;
-        color: $white;
+        color: $black;
+        position: absolute;
+        left: calc(100% / 2 - 80px);
     }
 
     .footer-items-wrap{
@@ -32,7 +57,7 @@
             line-height: 22px;
             text-align: center;
             text-decoration-line: underline;
-            color: $white;
+            color: $black;
         }
 
         p:first-child{
@@ -41,13 +66,18 @@
     }
 }
 
-@media screen and (max-width: 715px){
+@media screen and (max-width: 850px){
     .footer-root{
         flex-direction: column;
         padding: 17px 24px 16px 17px;
 
+        .footer-logo-wrap{
+            margin: 10px 0;
+        }
+
         .footer-title{
-            margin-top: 12px;
+            position: relative;
+            left: 0;
         }
 
         .footer-items-wrap{

@@ -3,9 +3,9 @@ import DocumentTitle from 'react-document-title';
 import Navigation, { LocationEnum } from '../../components/Navigation';
 import '../../static/styles/collection.scss';
 import Footer from '../../components/Footer';
-import { APPLICATION } from '../../constants/endpoints';
+import { METADATA } from '../../constants/endpoints';
 import { fetch } from '../../libs';
-import { IApplication } from '../../interfaces/containers/Application/application.interface';
+import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
 import InfiniteScroll from 'react-infinite-scroller';
 import Card from './Card';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -16,7 +16,7 @@ import { SocketEventsEnum } from '../../constants/socket/events';
 const DEFAULT_PAGE_SIZE = 20;
 
 interface IState{
-    list: IApplication[];
+    list: IMetadata[];
     load: boolean;
     mimetype: string | null;
 }
@@ -29,26 +29,30 @@ function Collection(){
     const scrollRef = useRef(null);
 
     const loadApplication = async (pageNumber = 0) => {
-        const response = await fetch.post(APPLICATION, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype } });
-        const { applications, pagination} = await response.json();
-        const list = [...state.list, ...applications];
-        const newState = { ...state };
+        const response = await fetch.post(METADATA, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype } });
+        if(response.ok){
+            const { metadatas, pagination} = await response.json();
+            const list = [...state.list, ...metadatas];
+            const newState = { ...state };
 
-        if(list.length === pagination.total || applications.length === 0){
-            newState.load = false;
-            setState(newState);
+            if(list.length === pagination.total || metadatas.length === 0){
+                newState.load = false;
+                setState(newState);
+            }
+
+            setState({...newState, list});
+        } else {
+            setState({ ...state, load: false });
         }
-
-        setState({...newState, list});
     }
 
     useEffect(() => {
-        socket?.on(SocketEventsEnum.APPLICATION_SALED, ({ id }: {id: string}) => {
+        socket?.on(SocketEventsEnum.METADATA_SOLD, ({ id }: {id: string}) => {
             setState({ load: state.load, mimetype: state.mimetype, list: state.list.filter((app) => app.id !== id)});
         })
 
         return () => {
-            socket?.removeListener(SocketEventsEnum.APPLICATION_SALED);
+            socket?.removeListener(SocketEventsEnum.METADATA_SOLD);
         }
     }, [socket, state])
 
@@ -64,11 +68,8 @@ function Collection(){
                 <Navigation location={LocationEnum.COLLECTION}/>
                 <div className = 'collection-main'>
                     <div className = "collection-main-container">
-                        <div className = "collection-main-container-title-wrap">
-                            <p className = 'collection-main-container-title'>Collect <span>digital</span></p>
-                            <p className = 'collection-main-container-title'><span>artworks</span> from <span>artists</span></p>
-                        </div>
-                        <p className = "collection-main-container-text">NFT stands for non-fungible tokens like ERC-721 (a smart contract standard) tokens which are hosted on Ethereum’s own blockchain.</p>
+                        <p className = 'collection-main-container-title'>Genesis Arts</p>
+                        <p className = "collection-main-container-text">A music-centric NFTs marketplace hosting rare and collectable digital assets</p>
                         <p className = "collection-main-container-scroll">scroll</p>
                     </div>
                     <div className = 'collection-main-bottom'>
@@ -107,7 +108,7 @@ function Collection(){
                             >
                                 <div className = "collection-explore-cards-wrap">
                                     {state.list.map((item) => (
-                                        <Card key = {item.id} application={item}/>
+                                        <Card key = {item.id} metadata={item}/>
                                     ))}
                                 </div>
                             </InfiniteScroll>

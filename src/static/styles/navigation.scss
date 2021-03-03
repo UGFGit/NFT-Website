@@ -17,14 +17,26 @@
         display: flex;
         flex-direction: row;
 
-        .navigation-title{
-            color: $white;
-            font-style: normal;
-            font-weight: normal;
-            font-family: Poller One;
-            font-size: 20px;
-            line-height: 24px;
-            cursor: default;
+        .navigation-logo-wrap{
+            .navigation-logo-wrap-title{
+                color: $white;
+                font-style: normal;
+                font-weight: normal;
+                font-family: Poller One;
+                font-size: 20px;
+                line-height: 24px;
+                cursor: default;
+            }
+
+            .navigation-logo-wrap-by{
+                font-family: Oxygen;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 8px;
+                line-height: 10px;
+                color: $white;
+                text-align: center;
+            }
         }
     
         .navigation-menu-wrap{

@@ -24,7 +24,10 @@ function Navigation({ location }: NavigationProps){
     return(
         <div className= 'navigation-root'>
             <div className = "navigation-title-wrap">
-                <p className='navigation-title'>Genesis arts</p>
+                <div className = 'navigation-logo-wrap'>
+                    <p className='navigation-logo-wrap-title'>Genesis arts</p>
+                    <p className='navigation-logo-wrap-by'>by utopia genesis foundation</p>
+                </div>
                 <div onClick = {() => setOpen(!open)} className = "navigation-menu-wrap">
                     { open? <CloseIcon style = {{ fontSize: 16, color: "#FFFFFF"}}/> : <DehazeIcon style = {{ fontSize: 24, color: "#FFFFFF"}}/>}
                 </div>

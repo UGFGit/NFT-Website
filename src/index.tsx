@@ -9,6 +9,7 @@ import promise from 'redux-promise';
 import thunk from 'redux-thunk';
 import allReducers from './reducers';
 import { SocketProvider } from './socket';
+import { SnackbarProvider } from 'notistack';
 
 const store = createStore(
   allReducers,
@@ -17,11 +18,13 @@ const store = createStore(
 
 ReactDOM.render(
   <React.StrictMode>
-     <SocketProvider>
-      <Provider store={store}>
-          <Root/>
-      </Provider>
-    </SocketProvider>
+    <SnackbarProvider maxSnack={5} autoHideDuration={3000} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+      <SocketProvider>
+          <Provider store={store}>
+              <Root/>
+          </Provider>
+      </SocketProvider>
+    </SnackbarProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
