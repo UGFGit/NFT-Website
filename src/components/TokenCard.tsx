@@ -65,7 +65,7 @@ function TokenCard({ web3, metadata }: CardProps){
                         <p className = "card-body-name">{solted.length} of {tokens.length}</p>
                     </div>
                     <div className = "card-body-user-wrap">
-                        <Avatar alt="" src = {artist.avatar}/>
+                        <Avatar alt="" src = {FILESTORE(artist.avatar)}/>
                         <p className = "card-nickname">{artist.name}</p>
                     </div>                    
                 </div>

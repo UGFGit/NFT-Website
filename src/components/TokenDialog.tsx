@@ -27,7 +27,7 @@ function TokenDialog({ metadata , open, handleBuy, onClose}: DialogProps){
             <DialogTitle>
                 <div className = "dialog-card-header-wrap">
                     <div className = "dialog-card-header">
-                        <Avatar alt="" src = {artist.avatar}/>
+                        <Avatar alt="" src = {FILESTORE(artist.avatar)}/>
                         <p className = "dialog-card-header-nickname">{artist.name}</p>
                         <IconButton style = {{marginLeft: 'auto'}} onClick = {onClose}>
                             <CloseIcon />

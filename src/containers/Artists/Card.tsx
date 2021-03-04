@@ -13,7 +13,7 @@ function Card({ host, name, background, avatar }: IArtist){
                 <img alt = "" src = {FILESTORE(background)}/>
             </div>
             <div className = "artists-card-avatar-wrap">
-                <Avatar alt="" src = {avatar}/>
+                <Avatar alt="" src = {FILESTORE(avatar)}/>
             </div>
             <div className = "artist-card-name-wrap">
                 <p className = 'artist-card-name'>{name}</p>
