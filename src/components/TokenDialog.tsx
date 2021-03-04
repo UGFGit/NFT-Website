@@ -5,10 +5,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import { FILESTORE } from '../../constants/endpoints';
+import { FILESTORE } from '../constants/endpoints';
 import Avatar from '@material-ui/core/Avatar';
-import '../../static/styles/dialog.scss';
-import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
+import '../static/styles/dialog.scss';
+import { IMetadata } from '../interfaces/containers/Application/metadata.interface';
 
 interface DialogProps{
     metadata: IMetadata;
@@ -17,7 +17,7 @@ interface DialogProps{
     onClose: () => void;
 }
 
-function Dialog({ metadata , open, handleBuy, onClose}: DialogProps){
+function TokenDialog({ metadata , open, handleBuy, onClose}: DialogProps){
     const { artist, filename, name, price, description, tokens, cryptoPrice } = metadata;
 
     const solted = tokens.filter((token) => !token.sold);
@@ -59,4 +59,4 @@ function Dialog({ metadata , open, handleBuy, onClose}: DialogProps){
     )
 }
 
-export default Dialog;
+export default TokenDialog;

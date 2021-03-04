@@ -13,3 +13,6 @@ export const METADATA = '/api/metadata';
 
 //Artists
 export const ARTISTS = '/api/artists';
+
+//Host
+export const HOST_CONFIG = '/api/host/config';

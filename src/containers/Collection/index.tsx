@@ -7,7 +7,7 @@ import { METADATA } from '../../constants/endpoints';
 import { fetch } from '../../libs';
 import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
 import InfiniteScroll from 'react-infinite-scroller';
-import Card from './Card';
+import Card from '../../components/TokenCard';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import classNames from 'classnames';
 import { useSocket } from '../../socket';

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
-import '../../static/styles/card.scss';
+import { IMetadata } from '../interfaces/containers/Application/metadata.interface';
+import '../static/styles/card.scss';
 import Avatar from '@material-ui/core/Avatar';
-import { FILESTORE } from '../../constants/endpoints';
-import Dialog from './Dialog';
+import { FILESTORE } from '../constants/endpoints';
+import Dialog from './TokenDialog';
 import {connect} from 'react-redux';
-import { IWeb3State } from '../../interfaces/reducers/web3.interface';
+import { IWeb3State } from '../interfaces/reducers/web3.interface';
 import Web3 from 'web3';
-import { fetch } from '../../libs';
-import { BLOCKCHAIN_CHARGE } from '../../constants/endpoints';
-import { ABI } from '../../constants/blockchain/abi';
+import { fetch } from '../libs';
+import { BLOCKCHAIN_CHARGE } from '../constants/endpoints';
+import { ABI } from '../constants/blockchain/abi';
 import { useSnackbar } from 'notistack';
 
 const PAYMENT_CONTRACT = '0xd8fAb6FaF352936d8F658E69C4ba531f2F0A92c4';
@@ -19,7 +19,7 @@ interface CardProps{
     metadata: IMetadata
 }
 
-function Card({ web3, metadata }: CardProps){
+function TokenCard({ web3, metadata }: CardProps){
     const { enqueueSnackbar } = useSnackbar();
 
     const { artist, filename, name, price, cryptoPrice, tokens } = metadata;
@@ -92,4 +92,4 @@ function mapStateToProps(state: { web3: IWeb3State}) {
     }
 }
 
-export default connect(mapStateToProps)(Card);
+export default connect(mapStateToProps)(TokenCard);

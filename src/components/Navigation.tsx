@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import MetamaskChecker from '../components/MetamaskChecker';
 import CloseIcon from '@material-ui/icons/Close';
 import DehazeIcon from '@material-ui/icons/Dehaze';
+import {connect} from 'react-redux';
+import { IConfigState } from '../interfaces/reducers/config.interface';
 
 export enum LocationEnum{
     COLLECTION,
@@ -14,10 +16,11 @@ export enum LocationEnum{
 }
 
 interface NavigationProps{
-    location: LocationEnum;
+    location?: LocationEnum;
+    config: IConfigState
 }
 
-function Navigation({ location }: NavigationProps){
+function Navigation({ location, config }: NavigationProps){
     const history = useHistory();
 
     const [open, setOpen] = useState(false);
@@ -29,15 +32,21 @@ function Navigation({ location }: NavigationProps){
                     <p className='navigation-logo-wrap-title'>Genesis arts</p>
                     <p className='navigation-logo-wrap-by'>by utopia genesis foundation</p>
                 </div>
+                { !config.main && 
+                    <div className = "navigation-artist-logo-wrap">
+                        <div className = "navigation-artist-logo-cross"/>
+                        <p className = "navigation-artist-logo-title">{config.artist?.name}</p>
+                    </div>
+                }
                 <div onClick = {() => setOpen(!open)} className = "navigation-menu-wrap">
                     { open? <CloseIcon style = {{ fontSize: 16, color: "#FFFFFF"}}/> : <DehazeIcon style = {{ fontSize: 24, color: "#FFFFFF"}}/>}
                 </div>
             </div>
             <div className={classNames('navigation-wrap', {'open': open } )}>
-                <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.COLLECTION})} onClick={() => history.push('/')}>Collection</p>
-                <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.ARTISTS})} onClick={() => history.push('/artists')}>Artists</p>
+                { config.main && <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.COLLECTION})} onClick={() => history.push('/')}>Collection</p> }
+                { config.main && <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.ARTISTS})} onClick={() => history.push('/artists')}>Artists</p> }
                 <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.FAQ})} onClick={() => history.push('/faq')}>Faq</p>
-                <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.APPLICATION})} onClick={() => history.push('/application')}>Application</p>
+                { config.main && <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.APPLICATION})} onClick={() => history.push('/application')}>Application</p> }
 
                 <MetamaskChecker/>
             </div>
@@ -45,4 +54,10 @@ function Navigation({ location }: NavigationProps){
     )
 }
 
-export default Navigation;
+function mapStateToProps(state: { config: IConfigState}) {
+    return {
+        config : state.config,
+    }
+}
+
+export default connect(mapStateToProps)(Navigation);

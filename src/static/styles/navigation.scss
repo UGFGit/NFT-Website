@@ -38,6 +38,27 @@
                 text-align: center;
             }
         }
+
+        .navigation-artist-logo-wrap{
+            display: flex;
+            flex-direction: row;
+            
+            .navigation-artist-logo-cross{
+                width: 20px;
+                height: 20px;
+                background-image: url('../images/nav-cross.svg');
+                background-repeat: no-repeat;
+                margin: 4px 9px 0px 9px;
+            }
+            .navigation-artist-logo-title{
+                font-family: Oxygen;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 18px;
+                line-height: 23px;
+                color: $white;
+            }
+        }
     
         .navigation-menu-wrap{
             margin-left: auto;
