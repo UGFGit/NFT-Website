@@ -35,7 +35,7 @@ function ArtistPage({ artist }: IArtistProps){
     const scrollRef = useRef(null);
 
     const loadApplication = async (pageNumber = 0) => {
-        const response = await fetch.post(METADATA, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, actist: artist.id } });
+        const response = await fetch.post(METADATA, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, artist: artist.id } });
         if(response.ok){
             const { metadatas, pagination} = await response.json();
             const list = [...state.list, ...metadatas];
