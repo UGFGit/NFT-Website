@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../static/styles/navigation.scss';
 import { useHistory } from "react-router-dom";
 import classNames from 'classnames';
@@ -24,6 +24,15 @@ function Navigation({ location, config }: NavigationProps){
     const history = useHistory();
 
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        const unlisten = history.listen(() => {
+            window.scrollTo(0, 0);
+        });
+        return () => {
+            unlisten();
+        }
+    }, [])
 
     return(
         <div className= 'navigation-root'>
