@@ -16,10 +16,11 @@ const PAYMENT_CONTRACT = '0xd8fAb6FaF352936d8F658E69C4ba531f2F0A92c4';
 
 interface CardProps{
     web3: IWeb3State,
-    metadata: IMetadata
+    metadata: IMetadata,
+    disableDialog?: boolean;
 }
 
-function TokenCard({ web3, metadata }: CardProps){
+function TokenCard({ web3, metadata, disableDialog }: CardProps){
     const { enqueueSnackbar } = useSnackbar();
 
     const { artist, filename, name, price, cryptoPrice, tokens } = metadata;
@@ -76,12 +77,12 @@ function TokenCard({ web3, metadata }: CardProps){
                     </div>
                 </div>        
             </div>
-            <Dialog
+            {!disableDialog && <Dialog
                 metadata = {metadata}
                 open = {open}
                 handleBuy = {handleBuy}
                 onClose = {() => setOpen(false)}
-            />
+            />}
         </div>
     )
 }

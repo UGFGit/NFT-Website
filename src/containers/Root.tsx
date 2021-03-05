@@ -12,6 +12,7 @@ import {AnyAction, bindActionCreators, Dispatch} from 'redux';
 import { setConfig } from '../actions/config';
 import { IConfigState } from '../interfaces/reducers/config.interface';
 import ArtistPage from './Artists/ArtistPage';
+import Dashboard from './Dashboard';
 
 interface AppProps{
     setConfig: typeof setConfig;
@@ -69,6 +70,7 @@ function App({ setConfig }: AppProps) {
                 <Route component={Faq} path="/faq"/>
                 {config.main && <Route component={Application} path="/application"/>}
                 {config.main && <Route component={Artists} path="/artists"/>}
+                <Route component={Dashboard} path="/dashboard"/>
             </Switch>
         </Router>
     );

@@ -1,14 +1,14 @@
 @import "./colors.scss";
 @import "./fonts.scss";
 
-.artist-page-root{
+.dashboard-root{
     min-height: 100vh;
     background-color: $grey;
     width: 100%;
     display: flex;
     flex-direction: column;
 
-    .artist-page-background{
+    .dashboard-background{
         width: 100%;
         height: 300px;
 
@@ -19,7 +19,7 @@
         }
     }
 
-    .artist-page-name-wrap{
+    .dashboard-name-wrap{
         padding: 110px 0px 80px 0px;
         position: relative;
 
@@ -32,7 +32,7 @@
             border: 4px solid #FFFFFF;
         }
 
-        .artist-page-name{
+        .dashboard-name{
             font-family: Open Sans;
             font-style: normal;
             font-weight: 800;
@@ -43,17 +43,17 @@
         }
     }
 
-    .artist-page-explore-root{
+    .dashboard-explore-root{
         display: flex;
         flex-direction: column;
         flex: 1;
 
-        .artist-page-explore-wrap{
+        .dashboard-explore-wrap{
             display: flex;
             flex-direction: column;
             flex: 1;
 
-            .artist-page-explore-title{
+            .dashboard-explore-title{
                 padding: 0px 113px;
                 font-family: Open Sans;
                 font-style: normal;
@@ -65,13 +65,13 @@
                 text-align: left;
             }
 
-            .artist-page-explore-filters-wrap{
+            .dashboard-explore-filters-wrap{
                 padding: 25px 111px 44px;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
 
-                .artist-page-explore-filter-btn{
+                .dashboard-explore-filter-btn{
                     position: relative;
                     font-family: Open Sans;
                     font-style: normal;
@@ -102,7 +102,7 @@
                     }
                 }
 
-                .artist-page-explore-filter-btn-active{
+                .dashboard-explore-filter-btn-active{
                     color: $black;
 
                     &::before{
@@ -119,26 +119,87 @@
                 }
             }
 
-            .artist-page-explore-scroll-wrap{
+            .dashboard-explore-scroll-wrap{
                 display: flex;
                 height: 100%;
                 flex-direction: column;
                 flex: 1;
 
-                .artist-page-explore-scroll-loader{
+                .dashboard-list-empty-wrap{
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+
+                    .dashboard-list-empty-img-wrap{
+                        width: 120px;
+                        height: 160px;
+
+                        img{
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+
+                    .dashboard-list-empty-text-wrap{
+                        text-align: center;
+                        margin-top: 20px;
+                        margin-bottom: 40px;
+
+                        .dashboard-list-empty-text-title{
+                            font-family: Open Sans;
+                            font-style: normal;
+                            font-weight: bold;
+                            font-size: 24px;
+                            line-height: 33px;
+                            color: #252423;
+                        }
+
+                        .dashboard-list-empty-text-desc{
+                            margin-top: 10px;
+                            font-family: Open Sans;
+                            font-style: normal;
+                            font-weight: 300;
+                            font-size: 19px;
+                            line-height: 27px;
+                            text-align: center;
+                            color: #252423;
+                            max-width: 357px;
+                        }   
+                    }
+
+                    .dashboard-list-empty-btn{
+                        width: 150px;
+                        height: 44px;
+                        background-color: #F5F5F5;
+
+                        font-family: Roboto;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 16px;
+                        line-height: 19px;
+                        color: #252423;
+                        outline: 0;
+                        cursor: pointer;
+
+                        border: 1px solid #000000;
+                        border-radius: 39px;
+                    }
+                }
+
+                .dashboard-explore-scroll-loader{
                     display: flex;
                     align-items: center;
                     justify-content: center;
                 }
 
-                .artist-page-explore-cards-wrap{
+                .dashboard-explore-cards-wrap{
                     display: grid;
                     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                     padding: 0px 122px 80px;
                     column-gap: 15px;
                 }
 
-                .artist-page-explore-footer-wrap{
+                .dashboard-explore-footer-wrap{
                     margin-top: auto;
                 }
             }
@@ -148,13 +209,13 @@
 
 
 @media screen and (max-width: 680px){
-    .artist-page-root{
-        .artist-page-explore-root{
-            .artist-page-explore-wrap{
-                .artist-page-explore-title{
+    .dashboard-root{
+        .dashboard-explore-root{
+            .dashboard-explore-wrap{
+                .dashboard-explore-title{
                     padding: 100px 16px 0px;
                 }
-                .artist-page-explore-filters-wrap{
+                .dashboard-explore-filters-wrap{
                     padding: 30px 13px 30px;
                 }
             }
@@ -163,11 +224,11 @@
 }
 
 @media screen and (max-width: 860px){
-    .artist-page-root{
-        .artist-page-explore-root{
-            .artist-page-explore-wrap{
-                .artist-page-explore-scroll-wrap{
-                    .artist-page-explore-cards-wrap{
+    .dashboard-root{
+        .dashboard-explore-root{
+            .dashboard-explore-wrap{
+                .dashboard-explore-scroll-wrap{
+                    .dashboard-explore-cards-wrap{
                         padding: 0px 16px 80px;
                     }
                 }

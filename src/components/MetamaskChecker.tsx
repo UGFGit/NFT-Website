@@ -8,6 +8,7 @@ import {AnyAction, bindActionCreators, Dispatch} from 'redux';
 import { setProvider, removeProvider } from '../actions/web3';
 import { ChainNames } from '../constants/blockchain/chain-names';
 import WrongNatworkDialog from './WrongNatworkDialog';
+import { useHistory } from "react-router-dom";
 
 const CURRENT_CHAIN_ID = 4;
 const CURRENT_CHAIN_NAME = ChainNames[CURRENT_CHAIN_ID];
@@ -24,6 +25,8 @@ interface MetamaskCheckerProps{
 }
 
 function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
+    const history = useHistory();
+
     const [state, setState] = useState<MetamaskCheckerState>({});
     const [chainDialogOpen, setChainDialogOpen] = useState(false);
 
@@ -105,11 +108,16 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
         <div>
             <button 
                 className = "connect-button" 
-                onClick={check}
-                disabled = {Boolean(state.account)}
+                onClick={() => {
+                    if(!state.account){
+                        return check();
+                    }
+                    
+                    history.push('/dashboard');
+                }}
             >{!state.account? 
                     'Connect wallet': 
-                    `${state.account.slice(0, 6)}...${state.account.slice(38)}`
+                    'Dashboard'
             }</button>
             <WrongNatworkDialog
                 open = {chainDialogOpen}
