@@ -42,7 +42,11 @@ function Dashboard({ web3 }: DashboardProps){
     const scrollRef = useRef(null);
 
     const loadApplication = async (pageNumber = 0) => {
-        const response = await fetch.post(METADATA, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, address: web3.account || "" } });
+        if(!web3.account){
+            setState({list: [], load: false, mimetype: state.mimetype});
+            return;
+        }
+        const response = await fetch.post(METADATA, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, address: web3.account } });
         if(response.ok){
             const { metadatas, pagination} = await response.json();
             const list = [...state.list, ...metadatas];
