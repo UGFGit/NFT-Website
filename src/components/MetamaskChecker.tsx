@@ -6,6 +6,11 @@ import useInterval from '../libs/use-interval';
 import {connect} from 'react-redux';
 import {AnyAction, bindActionCreators, Dispatch} from 'redux';
 import { setProvider, removeProvider } from '../actions/web3';
+import { ChainNames } from '../constants/blockchain/chain-names';
+import WrongNatworkDialog from './WrongNatworkDialog';
+
+const CURRENT_CHAIN_ID = 4;
+const CURRENT_CHAIN_NAME = ChainNames[CURRENT_CHAIN_ID];
 
 interface MetamaskCheckerState{
     provider?: any;
@@ -20,6 +25,7 @@ interface MetamaskCheckerProps{
 
 function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
     const [state, setState] = useState<MetamaskCheckerState>({});
+    const [chainDialogOpen, setChainDialogOpen] = useState(false);
 
     const addProviderListeners = (provider: any) => {
         provider
@@ -74,6 +80,10 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
 
         const addr = await web3.eth.getAccounts();
 
+        const chainId = await web3.eth.getChainId();
+
+        setChainDialogOpen(chainId !== CURRENT_CHAIN_ID);
+
         if(Array.isArray(addr) && addr.length !== 0 && !state.account){
             check();
         } else{            
@@ -92,14 +102,20 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
     useInterval(() => checkConnection(), 1000);
     
     return(
-        <button 
-            className = "connect-button" 
-            onClick={check}
-            disabled = {Boolean(state.account)}
-        >{!state.account? 
-                'Connect wallet': 
-                `${state.account.slice(0, 6)}...${state.account.slice(38)}`
-        }</button>
+        <div>
+            <button 
+                className = "connect-button" 
+                onClick={check}
+                disabled = {Boolean(state.account)}
+            >{!state.account? 
+                    'Connect wallet': 
+                    `${state.account.slice(0, 6)}...${state.account.slice(38)}`
+            }</button>
+            <WrongNatworkDialog
+                open = {chainDialogOpen}
+                network = {CURRENT_CHAIN_NAME}
+            />
+        </div>
     )
 }
 
