@@ -67,8 +67,8 @@ function App({ setConfig }: AppProps) {
                     return <Collection/>
                 }}/>
                 <Route component={Faq} path="/faq"/>
-                <Route component={Application} path="/application"/>
-                <Route component={Artists} path="/artists"/>
+                {config.main && <Route component={Application} path="/application"/>}
+                {config.main && <Route component={Artists} path="/artists"/>}
             </Switch>
         </Router>
     );

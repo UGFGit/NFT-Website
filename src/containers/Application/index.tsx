@@ -4,11 +4,13 @@ import Navigation, { LocationEnum } from '../../components/Navigation';
 import Footer from '../../components/Footer';
 import '../../static/styles/application.scss';
 import Input from  '../../components/Input';
-import { APPLICATION_CREATE, FILESTORE_UPLOAD } from '../../constants/endpoints';
+import { APPLICATION_CREATE, FILESTORE, FILESTORE_UPLOAD } from '../../constants/endpoints';
 import { fetch } from '../../libs';
 import { useHistory } from 'react-router-dom';
 import Dropzone, { IFile } from '../../components/Dropzone';
 import { serialize } from 'object-to-formdata';
+import CropDialog from './CropDialog';
+import { useSnackbar } from 'notistack';
 
 interface Errors{
     nickname?: string;
@@ -24,6 +26,10 @@ interface Errors{
 
 function Application(){
     const history = useHistory();
+    const { enqueueSnackbar } = useSnackbar();
+
+    const [avatarDialogOpen, setAvatarDialogOpen] = useState(false);
+    const [bannerDialogOpen, setBannerDialogOpen] = useState(false);
     
     const [nickname, setNickname] = useState("");
     const [name, setName] = useState("");
@@ -34,6 +40,8 @@ function Application(){
     const [file, setFile] = useState<IFile>();
     const [cryptoPrice, setCryptoPrice] = useState('');
     const [errors, setErrors] = useState<Errors>({});
+    const [avatar, setAvatar] = useState("");
+    const [background, setBackground] = useState("");
 
     const handleSubmit = async () => {
         const data = { 
@@ -44,12 +52,17 @@ function Application(){
             price: price && Number(price), 
             cryptoPrice: cryptoPrice && Number(cryptoPrice), 
             description, 
+            avatar,
+            background,
             ...file 
         };
         const response = await fetch.post(APPLICATION_CREATE, data);
+
         if(response.ok){
+            enqueueSnackbar('Your application is accepted', { variant: 'success' });
             return history.push('/');
         }
+
         const { code, desc } = await response.json();
 
         if(code && code === 3){
@@ -62,6 +75,8 @@ function Application(){
 
             setErrors(errs);
         }
+
+        enqueueSnackbar('Fill in all the fields of the application', { variant: 'error' });
     }
 
     const sendFile = async (file: any) => {
@@ -73,6 +88,30 @@ function Application(){
             return setFile({ filename: body.filename, mimetype: body. mimetype});
         }
     }
+
+    const sendAvatar = async (file: any) => {
+        const options = { indices: true };        
+        const formData = serialize({ file }, options);
+        const response = await fetch.post(FILESTORE_UPLOAD, formData);
+        const body = await response.json();
+        if(response.ok){
+            setAvatar(body.filename);
+        }
+        
+        setAvatarDialogOpen(false);
+    }
+
+    const sendBackground = async (file: any) => {
+        const options = { indices: true };        
+        const formData = serialize({ file }, options);
+        const response = await fetch.post(FILESTORE_UPLOAD, formData);
+        const body = await response.json();
+        if(response.ok){
+            setBackground(body.filename);
+        }
+        
+        setBannerDialogOpen(false);
+    }
    
     return(
         <DocumentTitle title="Application">
@@ -80,6 +119,24 @@ function Application(){
                 <Navigation location={LocationEnum.APPLICATION}/>
                 <div className = 'application-body'>
                     <p className='title'>Application</p>
+                    <p className='application-body-block-title'>Profile information</p>
+                    <div 
+                        className = "application-body-background-wrap"
+                        onClick = {(event: any) => {
+                            if(!['application-body-avatar-wrap', "application-body-avatar"].includes(event.target.className)){
+                                setBannerDialogOpen(true);
+                            }
+                        }}
+                    >
+                        {!background && <p className = "application-body-background-title">Your banner photo</p>}
+                        {background && <img className = "application-body-background" alt ="" src = {FILESTORE(background)}/>}
+                        <div 
+                            className = "application-body-avatar-wrap"
+                            onClick = {() => setAvatarDialogOpen(true)}
+                        >
+                            {avatar && <img className = "application-body-avatar" alt = "" src = {FILESTORE(avatar)}/>}
+                        </div>
+                    </div>
                     <Input
                         lable = "Name"
                         value = {nickname}
@@ -90,6 +147,8 @@ function Application(){
                         placeholder = "Your name"
                         error = {errors.nickname}
                     />
+                    <div className = "divader"/>
+                    <p className='application-body-block-title'>Contact information</p>
                     <Input
                         lable = "Email"
                         value = {email}
@@ -110,6 +169,14 @@ function Application(){
                         placeholder = "Wallet address"
                         error = {errors.address}
                     />
+                    <div className = "divader"/>
+                    <div className = 'dropzone-wrap'>
+                        <Dropzone
+                            file = {file}
+                            onChange = {sendFile}
+                            error = {errors.filename && errors.mimetype}
+                        />
+                    </div>
                     <div className = 'prices-wrap'>
                         <Input
                             lable = "Price (UOP)"
@@ -132,13 +199,6 @@ function Application(){
                             placeholder = "Amount"
                             type = 'number'
                             error = {errors.price}
-                        />
-                    </div>
-                    <div className = 'dropzone-wrap'>
-                        <Dropzone
-                            file = {file}
-                            onChange = {sendFile}
-                            error = {errors.filename && errors.mimetype}
                         />
                     </div>
                     <Input
@@ -168,6 +228,18 @@ function Application(){
                     <button onClick={handleSubmit} className="submit-btn">Submit</button>
                 </div>
                 <Footer/>
+                <CropDialog
+                    open = {avatarDialogOpen}
+                    onClose = {() => setAvatarDialogOpen(false)}
+                    onSave = {(file) => sendAvatar(file)}
+                    type = "avatar"
+                />
+                <CropDialog
+                    open = {bannerDialogOpen}
+                    onClose = {() => setBannerDialogOpen(false)}
+                    onSave = {(file) => sendBackground(file)}
+                    type = "banner"
+                />
             </div>
         </DocumentTitle>
     )

@@ -18,9 +18,7 @@ interface DialogProps{
 }
 
 function TokenDialog({ metadata , open, handleBuy, onClose}: DialogProps){
-    const { artist, filename, name, price, description, tokens, cryptoPrice } = metadata;
-
-    const solted = tokens.filter((token) => !token.sold);
+    const { artist, filename, name, price, description, cryptoPrice } = metadata;
 
     return(
         <MuiDialog maxWidth = 'md' className = "dialog-root" open={open} onClose = {onClose}>

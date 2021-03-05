@@ -1,0 +1,158 @@
+@import "./colors.scss";
+@import "./fonts.scss";
+
+.crop-dialog-root{
+
+    .MuiPaper-root{
+        width: 100%;
+    }
+    .MuiDialog-paperWidthMd{
+        max-width: 635px;
+    }
+    .MuiDialogTitle-root{
+        padding: 22px 20px 20px 20px;
+    }
+
+    .MuiPaper-rounded{
+        border-radius: 10px;
+    }
+
+    .MuiPaper-elevation24{
+        box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.1);
+    }
+
+    .MuiDialogContent-dividers{
+        padding: 20px;
+    }
+
+    .crop-dialog-card-header{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .crop-dialog-card-header-title{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 27px;
+            color: $black;
+        }
+    }
+
+    .MuiDialogContent-root{
+        padding: 0px 20px;
+    }
+
+    .crop-dialog-content{
+        padding: 20px 0px;
+        border-top: 1px solid #F6F9FA;
+        border-bottom: 1px solid #F6F9FA;
+
+        .crop-dialog-avatar-stub{
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            background-color: $white;
+            border: 2px solid #F5F5F5;
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.02);
+            border-radius: 50%;
+            cursor: pointer;
+            background-image: url('../images/avatar.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: auto;
+        }
+
+        .crop-dialog-banner-stub{
+            width: 500px;
+            height: 160px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.02);
+            border-radius: 10px;
+            background-image: url('../images/background.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            p{
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 22px;
+                color: #868686;
+            }
+        }
+
+        .crop-dialog-image-info{
+            width: 132px;
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 19px;
+            text-align: center;
+            color: #868686;
+            margin: 10px auto 0px;
+        }
+
+        .crop-dialog-crop-container{
+            position: relative;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .crop-dialog-crop-container-banner{
+            width: 500px;
+            height: 160px;
+        }
+
+        .crop-dialog-crop-container-avatar{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+    }
+
+    .MuiDialogActions-root{
+        padding: 20px 28px 20px 20px;
+    }
+
+    .crop-dialog-actions{
+        display: flex;
+        flex-direction: row;
+
+        .crop-dialog-delete-btn{
+            width: 40px;
+            height: 40px;
+            background-image: url('../images/crop-delete-icon.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            cursor: pointer;
+            margin-right: auto;
+        }
+
+        .crop-dialog-save-btn{
+            border: 1px solid #2BD2F7;
+            border-radius: 20px;
+            outline: 0;
+            width: 123px;
+            height: 40px;
+            background-color: $white;
+            cursor: pointer;
+
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 16px;
+            color: #2BD2F7;
+        }
+    }
+}

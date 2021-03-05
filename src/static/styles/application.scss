@@ -14,13 +14,87 @@
         min-height: calc(100vh - 120px);
 
         .title{
-            font-family: Poller One;
+            font-family: Open Sans;
             font-style: normal;
-            font-weight: normal;
+            font-weight: 800;
             font-size: 44px;
-            line-height: 52px;
+            line-height: 60px;
             text-align: center;
             color: $black;
+            margin-bottom: 80px;
+        }
+
+        .application-body-block-title{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 33px;
+            color: $black;
+            margin-right: auto;
+            margin-bottom: 20px;
+        }
+
+        .application-body-background-wrap{
+            width: 100%;
+            height: 152px;
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.02);
+            border-radius: 10px;
+            margin-top: 10px;
+            margin-bottom: 80px;
+            background-image: url('../images/background.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            cursor: pointer;
+            position: relative;
+
+            .application-body-background-title{
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 22px;
+                color: $optional-lable;
+                text-align: center;
+                margin-top: 41px;
+            }
+
+            .application-body-background{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .application-body-avatar-wrap{
+                width: 100px;
+                height: 100px;
+                overflow: hidden;
+                background-color: $white;
+                border: 2px solid #F5F5F5;
+                box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.02);
+                border-radius: 50%;
+                position: absolute;
+                bottom: -52px;
+                left: calc(100% / 2 - 50px);
+                cursor: pointer;
+                background-image: url('../images/avatar.png');
+                background-repeat: no-repeat;
+                background-size: cover;
+
+                .application-body-avatar{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+
+        .divader{
+            width: 100%;
+            height: 1px;
+            background-color: $white;
+            margin: 20px 0;
         }
 
         .prices-wrap{
@@ -34,8 +108,7 @@
         }
         
         .dropzone-wrap{
-            margin-bottom: 30px;
-            margin-top: 39px;
+            margin: 10px 0px;
             width: 100%;
         }
 
