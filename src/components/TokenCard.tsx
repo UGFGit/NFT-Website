@@ -46,7 +46,7 @@ function TokenCard({ web3, metadata }: CardProps){
                 setOpen(false);
                 fetch.post(BLOCKCHAIN_CHARGE, { transactionHash, amount, address: web3.account, contract: token?.contract, tokenId: token?.tokenId});
             } catch(err){
-                enqueueSnackbar(err.message, { variant: 'error' });
+                enqueueSnackbar("Transaction failed", { variant: 'error' });
             }            
         }
     }
