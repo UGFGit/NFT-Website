@@ -11,6 +11,10 @@ import { fetch } from '../libs';
 import { BLOCKCHAIN_CHARGE } from '../constants/endpoints';
 import { ABI } from '../constants/blockchain/abi';
 import { useSnackbar } from 'notistack';
+//@ts-ignore
+import ImageLoader from 'react-load-image';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ImageNotFound from '../static/images/image-not-found.jpg';
 
 const PAYMENT_CONTRACT = '0xd8fAb6FaF352936d8F658E69C4ba531f2F0A92c4';
 
@@ -57,9 +61,16 @@ function TokenCard({ web3, metadata, disableDialog }: CardProps){
     return(
         <div>
             <div onClick = {(event: any) => event.target.className !== 'card-body-buy-btn' && setOpen(true)} className = "card-root">
-                <div className = "card-image-wrap">
-                    <img alt = "" src = {FILESTORE(filename)}/>
-                </div>
+                <ImageLoader
+                    className = "card-image-wrap"
+                    src={FILESTORE(filename)}
+                >
+                    <img className = "card-img" alt = "" />
+                    <img className = "card-img" alt = "" src = {ImageNotFound} />
+                    <div>
+                        <CircularProgress size={80} thickness={5} />
+                    </div>
+                </ImageLoader>
                 <div className = "card-body">
                     <div className = "card-body-name-wrap">
                         <p className = "card-body-name">{name}</p>

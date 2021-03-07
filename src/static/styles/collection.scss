@@ -64,8 +64,11 @@
             position: absolute;
             bottom: -10px;
             left: 0;
-            background-image: url('../images/dots.svg');
-            background-repeat: no-repeat;
+
+            .collection-main-bottom-dots{
+                width: 100%;
+                height: 100%;
+            }
 
             .collection-main-bottom-cards{
                 width: 350px;
@@ -73,8 +76,11 @@
                 position: absolute;
                 left: 30px;
                 bottom: -125px;
-                background-image: url('../images/cards-bottom.svg');
-                background-repeat: no-repeat;
+
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
 
@@ -84,9 +90,12 @@
             position: absolute;
             top: -10px;
             right: 0;
-            background-image: url('../images/dots.svg');
-            background-repeat: no-repeat;
             transform: rotate(180deg);
+
+            .collection-main-top-dots{
+                width: 100%;
+                height: 100%;
+            }
 
             .collection-main-top-cards{
                 width: 350px;
@@ -94,9 +103,12 @@
                 position: absolute;
                 right: 132px;
                 top: 85px;
-                background-image: url('../images/cards-top.svg');
-                background-repeat: no-repeat;
                 transform: rotate(180deg);
+
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
     }

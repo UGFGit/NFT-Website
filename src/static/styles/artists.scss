@@ -53,17 +53,23 @@
             position: absolute;
             bottom: -10px;
             left: 0;
-            background-image: url('../images/dots.svg');
-            background-repeat: no-repeat;
+
+            .artists-main-bottom-img{
+                width: 100%;
+                height: 100%;
+            }
 
             .artists-main-bottom-cards{
-                width: 350px;
-                height: 466px;
+                width: 249px;
+                height: 270px;
                 position: absolute;
                 left: 62px;
-                bottom: -125px;
-                background-image: url('../images/artists-bottom.svg');
-                background-repeat: no-repeat;
+                bottom: 71px;
+
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
 
@@ -73,19 +79,25 @@
             position: absolute;
             top: 46px;
             right: 0;
-            background-image: url('../images/dots.svg');
-            background-repeat: no-repeat;
             transform: rotate(180deg);
 
+            .artists-main-top-img{
+                width: 100%;
+                height: 100%;
+            }
+
             .artists-main-top-cards{
-                width: 350px;
-                height: 466px;
+                width: 249px;
+                height: 270px;
                 position: absolute;
-                right: 198px;
-                top: -7px;
-                background-image: url('../images/artists-top.svg');
-                background-repeat: no-repeat;
+                right: 204px;
+                top: 189px;
                 transform: rotate(180deg);
+
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
     }

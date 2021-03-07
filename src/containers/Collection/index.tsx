@@ -12,6 +12,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import classNames from 'classnames';
 import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
+import CardsTopImage from '../../static/images/cards-top.png';
+import CardsBottomImage from '../../static/images/cards-bottom.png';
+import DotsImage from '../../static/images/dots.png';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -73,10 +76,16 @@ function Collection(){
                         <p className = "collection-main-container-scroll">scroll</p>
                     </div>
                     <div className = 'collection-main-bottom'>
-                        <div className = "collection-main-bottom-cards"/>
+                        <img className = "collection-main-bottom-dots" src = {DotsImage}/>
+                        <div className = "collection-main-bottom-cards">
+                            <img alt ="" src={CardsBottomImage}/>
+                        </div>
                     </div>
                     <div className = 'collection-main-top'>
-                        <div className = "collection-main-top-cards"/>
+                        <img className = "collection-main-top-dots" src = {DotsImage}/>
+                        <div className = "collection-main-top-cards">
+                            <img alt = "" src = {CardsTopImage}/>
+                        </div>
                     </div>
                 </div>
                 <div className = "collection-explore-root">

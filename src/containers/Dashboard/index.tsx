@@ -123,7 +123,7 @@ function Dashboard({ web3 }: DashboardProps){
                                     {state.list.map((item) => (
                                         <Card disableDialog key = {item.id} metadata={item}/>
                                     ))}
-                                    {state.list.length === 0 && <div className = "dashboard-list-empty-wrap">
+                                    {state.list.length === 0 && state.load === false && <div className = "dashboard-list-empty-wrap">
                                         <div className = "dashboard-list-empty-img-wrap">
                                             <img alt="" src={NoAssets}/>
                                         </div>

@@ -9,6 +9,9 @@ import Card from './Card';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetch } from '../../libs';
 import { ARTISTS } from '../../constants/endpoints';
+import DotsImage from '../../static/images/dots.png';
+import ArtistsTopImage from '../../static/images/artists-top.png';
+import ArtistsBottomImage from '../../static/images/artists-bottom.png';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -49,10 +52,16 @@ function Artists(){
                         <p className = "artists-main-container-text">NFT stands for non-fungible tokens like ERC-721 (a smart contract standard) tokens which are hosted on Ethereum’s own blockchain.</p>
                     </div>
                     <div className = 'artists-main-bottom'>
-                        <div className = "artists-main-bottom-cards"/>
+                        <img className = "artists-main-bottom-img" alt = "" src = {DotsImage}/>
+                        <div className = "artists-main-bottom-cards">
+                            <img alt='' src={ArtistsBottomImage}/>
+                        </div>
                     </div>
                     <div className = 'artists-main-top'>
-                        <div className = "artists-main-top-cards"/>
+                        <img className = "artists-main-top-img" alt = "" src = {DotsImage}/>
+                        <div className = "artists-main-top-cards">
+                            <img alt='' src={ArtistsTopImage}/>
+                        </div>
                     </div>
                 </div>
                 <div className = "artists-explore-root">
