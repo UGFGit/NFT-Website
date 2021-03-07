@@ -16,6 +16,7 @@
     .navigation-title-wrap{
         display: flex;
         flex-direction: row;
+        cursor: pointer;
 
         .navigation-logo-wrap{
             .navigation-logo-wrap-title{
@@ -25,7 +26,6 @@
                 font-family: Poller One;
                 font-size: 20px;
                 line-height: 24px;
-                cursor: default;
             }
 
             .navigation-logo-wrap-by{

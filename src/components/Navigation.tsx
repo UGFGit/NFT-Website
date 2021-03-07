@@ -36,7 +36,7 @@ function Navigation({ location, config }: NavigationProps){
 
     return(
         <div className= 'navigation-root'>
-            <div className = "navigation-title-wrap">
+            <div className = "navigation-title-wrap" onClick = {() => history.push('/')}>
                 <div className = 'navigation-logo-wrap'>
                     <p className='navigation-logo-wrap-title'>Genesis arts</p>
                     <p className='navigation-logo-wrap-by'>by utopia genesis foundation</p>

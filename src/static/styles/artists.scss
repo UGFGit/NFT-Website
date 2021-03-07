@@ -174,7 +174,7 @@
 
                 .artists-explore-cards-wrap{
                     display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
                     padding: 0px 122px 80px;
                     column-gap: 15px;
                 }

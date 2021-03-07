@@ -119,21 +119,21 @@ function Dashboard({ web3 }: DashboardProps){
                                 loader={<div className="dashboard-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
                                 useWindow={true}
                             >
-                                <div className = "dashboard-explore-cards-wrap">
+                                {(state.list.length > 0 || state.load) &&<div className = "dashboard-explore-cards-wrap">
                                     {state.list.map((item) => (
                                         <Card disableDialog key = {item.id} metadata={item}/>
                                     ))}
-                                    {state.list.length === 0 && state.load === false && <div className = "dashboard-list-empty-wrap">
-                                        <div className = "dashboard-list-empty-img-wrap">
-                                            <img alt="" src={NoAssets}/>
-                                        </div>
-                                        <div className = "dashboard-list-empty-text-wrap">
-                                            <p className = "dashboard-list-empty-text-title">You haven’t items</p>
-                                            <p className = "dashboard-list-empty-text-desc">Come back soon! Or try to browse something for you on our marketplace</p>
-                                        </div>
-                                        <button onClick = {() => history.push('/')} className = "dashboard-list-empty-btn">Collection</button>
-                                    </div>}
-                                </div>
+                                </div>}
+                                {state.list.length === 0 && state.load === false && <div className = "dashboard-list-empty-wrap">
+                                    <div className = "dashboard-list-empty-img-wrap">
+                                        <img alt="" src={NoAssets}/>
+                                    </div>
+                                    <div className = "dashboard-list-empty-text-wrap">
+                                        <p className = "dashboard-list-empty-text-title">You haven’t items</p>
+                                        <p className = "dashboard-list-empty-text-desc">Come back soon! Or try to browse something for you on our marketplace</p>
+                                    </div>
+                                    <button onClick = {() => history.push('/')} className = "dashboard-list-empty-btn">Collection</button>
+                                </div>}
                             </InfiniteScroll>
                             <div className = "dashboard-explore-footer-wrap">
                                 <Footer/>

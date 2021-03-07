@@ -9,6 +9,10 @@ import { FILESTORE } from '../constants/endpoints';
 import Avatar from '@material-ui/core/Avatar';
 import '../static/styles/dialog.scss';
 import { IMetadata } from '../interfaces/containers/Application/metadata.interface';
+//@ts-ignore
+import ImageLoader from 'react-load-image';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ImageNotFound from '../static/images/image-not-found.jpg';
 
 interface DialogProps{
     metadata: IMetadata;
@@ -35,9 +39,16 @@ function TokenDialog({ metadata , open, handleBuy, onClose}: DialogProps){
             </DialogTitle>
             <DialogContent>
                 <div className = 'dialog-content'>
-                    <div className = "dialog-content-image-wrap">
-                        <img alt = "" src = {FILESTORE(filename)}/>
-                    </div>
+                    <ImageLoader
+                        className = "dialog-content-image-wrap"
+                        src={FILESTORE(filename)}
+                    >
+                        <img alt = "" />
+                        <img alt = "" src = {ImageNotFound} />
+                        <div className = "dialog-content-image-loader">
+                            <CircularProgress size={80} thickness={5} />
+                        </div>
+                    </ImageLoader>
                     <div className = "dialog-content-text-wrap">
                         <p className = "dialog-content-text-title">{name}</p>
                         <p className = "dialog-content-text-description">{description}</p>
