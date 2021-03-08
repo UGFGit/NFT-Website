@@ -36,13 +36,13 @@ function Navigation({ location, config }: NavigationProps){
 
     return(
         <div className= 'navigation-root'>
-            <div className = "navigation-title-wrap" onClick = {() => history.push('/')}>
-                <div className = 'navigation-logo-wrap'>
+            <div className = "navigation-title-wrap">
+                <div className = 'navigation-logo-wrap' onClick = {() => history.push('/')}>
                     <p className='navigation-logo-wrap-title'>Genesis arts</p>
                     <p className='navigation-logo-wrap-by'>by utopia genesis foundation</p>
                 </div>
                 { !config.main && 
-                    <div className = "navigation-artist-logo-wrap">
+                    <div className = "navigation-artist-logo-wrap" onClick = {() => history.push('/')}>
                         <div className = "navigation-artist-logo-cross"/>
                         <p className = "navigation-artist-logo-title">{config.artist?.name}</p>
                     </div>

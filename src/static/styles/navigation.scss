@@ -16,9 +16,10 @@
     .navigation-title-wrap{
         display: flex;
         flex-direction: row;
-        cursor: pointer;
 
         .navigation-logo-wrap{
+            cursor: pointer;
+
             .navigation-logo-wrap-title{
                 color: $white;
                 font-style: normal;
@@ -42,6 +43,7 @@
         .navigation-artist-logo-wrap{
             display: flex;
             flex-direction: row;
+            cursor: pointer;
             
             .navigation-artist-logo-cross{
                 width: 20px;
@@ -106,7 +108,7 @@
     }
 }
 
-@media screen and (max-width: 775px){
+@media screen and (max-width: 894px){
     .navigation-root{
         flex-direction: column;
         padding: 25px 16px;
