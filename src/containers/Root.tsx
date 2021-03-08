@@ -13,6 +13,8 @@ import { setConfig } from '../actions/config';
 import { IConfigState } from '../interfaces/reducers/config.interface';
 import ArtistPage from './Artists/ArtistPage';
 import Dashboard from './Dashboard';
+import PrivacyPolicy from './PrivacyPolicy';
+import TermsOfService from './TermsOfService';
 
 interface AppProps{
     setConfig: typeof setConfig;
@@ -71,6 +73,8 @@ function App({ setConfig }: AppProps) {
                 {config.main && <Route component={Application} path="/application"/>}
                 {config.main && <Route component={Artists} path="/artists"/>}
                 <Route component={Dashboard} path="/dashboard"/>
+                <Route component={PrivacyPolicy} path="/privacy-policy"/>
+                <Route component={TermsOfService} path="/terms-of-service"/>
             </Switch>
         </Router>
     );

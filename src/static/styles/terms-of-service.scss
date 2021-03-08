@@ -1,0 +1,47 @@
+@import "./colors.scss";
+@import "./fonts.scss";
+
+.terms-of-service-root{
+    min-height: 100vh;
+    background-color: $grey;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .terms-of-service-body{
+        flex: 1;
+        padding: 100px 122px;
+
+        .terms-of-service-body-title{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 44px;
+            line-height: 60px;
+            color: #252423;
+        }
+
+        .terms-of-service-body-text-wrap{
+            margin-top: 40px;
+            font-family: Open Sans;
+            font-style: normal;
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 22px;
+            color: #252423;
+            white-space: pre-line;
+        }
+    }
+
+    .terms-of-service-footer-wrap{
+        margin-top: auto;
+    }
+}
+
+@media screen and (max-width: 584px){
+    .terms-of-service-root{
+        .terms-of-service-body{
+            padding: 100px 20px;
+        }
+    }
+}

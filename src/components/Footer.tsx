@@ -1,7 +1,10 @@
 import React from 'react';
 import '../static/styles/footer.scss';
+import { useHistory } from "react-router-dom";
 
 function Footer(){
+    const history = useHistory();
+
     return(
         <div className='footer-root'>
             <div className = 'footer-logo-wrap'>
@@ -10,8 +13,8 @@ function Footer(){
             </div>
             <p className='footer-title'>© All rights reserved</p>
             <div className='footer-items-wrap'>
-                <p>Terms of Service</p>
-                <p>Privacy Policy</p>
+                <p onClick = {() => history.push('/terms-of-service')}>Terms of Service</p>
+                <p onClick = {() => history.push('/privacy-policy')}>Privacy Policy</p>
             </div>
         </div>
     )
