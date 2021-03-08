@@ -1,0 +1,37 @@
+@import "./colors.scss";
+@import "./fonts.scss";
+
+.not-found-page-root{
+    min-height: 100vh;
+    background-color: $grey;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .not-found-page-body{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .not-found-page-title{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 60px;
+            line-height: 60px;
+            color: #252423;
+        }
+
+        .not-found-page-text{
+            margin-top: 20px;
+            font-family: Open Sans;
+            font-style: normal;
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 22px;
+            color: #252423;
+        }
+    }
+}

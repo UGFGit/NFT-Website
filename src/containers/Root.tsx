@@ -15,6 +15,7 @@ import ArtistPage from './Artists/ArtistPage';
 import Dashboard from './Dashboard';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
+import NotFoundPage from './NotFoundPage';
 
 interface AppProps{
     setConfig: typeof setConfig;
@@ -75,6 +76,7 @@ function App({ setConfig }: AppProps) {
                 <Route component={Dashboard} path="/dashboard"/>
                 <Route component={PrivacyPolicy} path="/privacy-policy"/>
                 <Route component={TermsOfService} path="/terms-of-service"/>
+                <Route component={NotFoundPage} path="*"/>
             </Switch>
         </Router>
     );
