@@ -14,6 +14,7 @@ import Footer from '../../components/Footer';
 import Navigation from '../../components/Navigation';
 import Avatar from '@material-ui/core/Avatar';
 import classNames from 'classnames';
+import NoAssets from '../../static/images/no-assets.png';
 
 interface IArtistProps{
     artist: IArtist
@@ -102,11 +103,20 @@ function ArtistPage({ artist }: IArtistProps){
                                 loader={<div className="artist-page-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
                                 useWindow={true}
                             >
-                                <div className = "artist-page-explore-cards-wrap">
+                                {(state.list.length > 0 || state.load) && <div className = "artist-page-explore-cards-wrap">
                                     {state.list.map((item) => (
                                         <Card key = {item.id} metadata={item}/>
                                     ))}
-                                </div>
+                                </div>}
+                                {state.list.length === 0 && state.load === false && <div className = "artist-page-explore-list-empty-wrap">
+                                    <div className = "artist-page-explore-list-empty-img-wrap">
+                                        <img alt="" src={NoAssets}/>
+                                    </div>
+                                    <div className = "artist-page-explore-list-empty-text-wrap">
+                                        <p className = "artist-page-explore-list-empty-text-title">Artists not available</p>
+                                        <p className = "artist-page-explore-list-empty-text-desc">Come back soon!</p>
+                                    </div>
+                                </div>}
                             </InfiniteScroll>
                             <div className = "artist-page-explore-footer-wrap">
                                 <Footer/>

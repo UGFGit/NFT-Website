@@ -15,6 +15,7 @@ import { SocketEventsEnum } from '../../constants/socket/events';
 import CardsTopImage from '../../static/images/cards-top.png';
 import CardsBottomImage from '../../static/images/cards-bottom.png';
 import DotsImage from '../../static/images/dots.png';
+import NoAssets from '../../static/images/no-assets.png';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -115,11 +116,20 @@ function Collection(){
                                 loader={<div className="collection-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
                                 useWindow={true}
                             >
-                                <div className = "collection-explore-cards-wrap">
+                                {(state.list.length > 0 || state.load) && <div className = "collection-explore-cards-wrap">
                                     {state.list.map((item) => (
                                         <Card key = {item.id} metadata={item}/>
                                     ))}
-                                </div>
+                                </div>}
+                                {state.list.length === 0 && state.load === false && <div className = "collection-explore-list-empty-wrap">
+                                    <div className = "collection-explore-list-empty-img-wrap">
+                                        <img alt="" src={NoAssets}/>
+                                    </div>
+                                    <div className = "collection-explore-list-empty-text-wrap">
+                                        <p className = "collection-explore-list-empty-text-title">Items not available</p>
+                                        <p className = "collection-explore-list-empty-text-desc">Come back soon!</p>
+                                    </div>
+                                </div>}
                             </InfiniteScroll>
                             <div className = "collection-explore-footer-wrap">
                                 <Footer/>

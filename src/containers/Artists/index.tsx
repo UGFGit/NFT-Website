@@ -12,6 +12,7 @@ import { ARTISTS } from '../../constants/endpoints';
 import DotsImage from '../../static/images/dots.png';
 import ArtistsTopImage from '../../static/images/artists-top.png';
 import ArtistsBottomImage from '../../static/images/artists-bottom.png';
+import NoAssets from '../../static/images/no-assets.png';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -75,11 +76,20 @@ function Artists(){
                                 loader={<div className="artists-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
                                 useWindow={true}
                             >
-                                <div className = "artists-explore-cards-wrap">
+                                {(state.list.length > 0 || state.load) && <div className = "artists-explore-cards-wrap">
                                     {state.list.map((item) => (
                                         <Card key = {item.id} {...item}/>
                                     ))}
-                                </div>
+                                </div>}
+                                {state.list.length === 0 && state.load === false && <div className = "artists-explore-list-empty-wrap">
+                                    <div className = "artists-explore-list-empty-img-wrap">
+                                        <img alt="" src={NoAssets}/>
+                                    </div>
+                                    <div className = "artists-explore-list-empty-text-wrap">
+                                        <p className = "artists-explore-list-empty-text-title">Artists not available</p>
+                                        <p className = "artists-explore-list-empty-text-desc">Come back soon!</p>
+                                    </div>
+                                </div>}
                             </InfiniteScroll>
                             <div className = "artists-explore-footer-wrap">
                                 <Footer/>

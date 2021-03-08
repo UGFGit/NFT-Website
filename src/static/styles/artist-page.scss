@@ -125,6 +125,50 @@
                 flex-direction: column;
                 flex: 1;
 
+                .artist-page-explore-list-empty-wrap{
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    margin-top: 20px;
+    
+                    .artist-page-explore-list-empty-img-wrap{
+                        width: 120px;
+                        height: 160px;
+    
+                        img{
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+    
+                    .artist-page-explore-list-empty-text-wrap{
+                        text-align: center;
+                        margin-top: 20px;
+                        margin-bottom: 40px;
+    
+                        .artist-page-explore-list-empty-text-title{
+                            font-family: Open Sans;
+                            font-style: normal;
+                            font-weight: bold;
+                            font-size: 24px;
+                            line-height: 33px;
+                            color: #252423;
+                        }
+    
+                        .artist-page-explore-list-empty-text-desc{
+                            margin-top: 10px;
+                            font-family: Open Sans;
+                            font-style: normal;
+                            font-weight: 300;
+                            font-size: 19px;
+                            line-height: 27px;
+                            text-align: center;
+                            color: #252423;
+                            max-width: 357px;
+                        }   
+                    }
+                }
+
                 .artist-page-explore-scroll-loader{
                     display: flex;
                     align-items: center;
