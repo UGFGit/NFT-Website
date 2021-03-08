@@ -31,12 +31,29 @@ function TokenCard({ web3, metadata, disableDialog }: CardProps){
 
     const [open, setOpen ] = useState(false);
 
+    const checkAllowance = async (client:Web3, contractAddress: string) => {
+        //@ts-ignore
+        const contract = new client.eth.Contract(ABI, PAYMENT_CONTRACT);
+        const allowance = await contract.methods.allowance(web3.account, contractAddress).call();
+        if(Number(allowance) === 0){
+            const amount = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
+            const tx = contract.methods.increaseAllowance(contractAddress, amount);
+            const abi = tx.encodeABI();
+            const gas = await tx.estimateGas({ from: web3.account });
+            const gasPrice = await client.eth.getGasPrice();
+            await client.eth.sendTransaction({ from: web3.account, to: PAYMENT_CONTRACT, data: abi,  gas, gasPrice });
+            enqueueSnackbar(`Allowance was send`, { variant: 'success' });
+        }
+        return;
+    } 
+
     const handleBuy = async () => {
         if(web3.available){
             try{
                 const client = new Web3(web3.provider);
                 const token = tokens.find((token) => !token.sold);
-                
+                //@ts-ignore
+                await checkAllowance(client, token?.contract);
                 //@ts-ignore
                 const contract = new client.eth.Contract(ABI, PAYMENT_CONTRACT);
                 const decimal = await contract.methods.decimals().call();
