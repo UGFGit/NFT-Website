@@ -57,9 +57,9 @@ function TokenDialog({ metadata , open, handleBuy, onClose}: DialogProps){
             </DialogContent>
             <DialogActions className = 'dialog-actions'>
                 <div className = "dialog-actions-price-wrap">
-                    <p>{cryptoPrice} UOP</p>
+                    <p>{cryptoPrice} WETH</p>
                     <div/>
-                    <p>{price} €</p>
+                    <p>{price} $</p>
                 </div>
 
                 <button onClick = {handleBuy} className = "dialog-actions-buy-btn">Buy</button>

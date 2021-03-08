@@ -83,8 +83,8 @@ function TokenCard({ web3, metadata, disableDialog }: CardProps){
                 </div>
                 <div className = "card-body-footer">
                     <div className = "card-body-footer-price-wrap">
-                        <p>{cryptoPrice} UOP</p>
-                        <p>{price} €</p>
+                        <p>{cryptoPrice} WETH</p>
+                        <p>${price}</p>
                     </div>
                 </div>        
             </div>

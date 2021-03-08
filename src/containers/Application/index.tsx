@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DocumentTitle from 'react-document-title';
 import Navigation, { LocationEnum } from '../../components/Navigation';
 import Footer from '../../components/Footer';
 import '../../static/styles/application.scss';
 import Input from  '../../components/Input';
-import { APPLICATION_CREATE, FILESTORE, FILESTORE_UPLOAD } from '../../constants/endpoints';
+import { APPLICATION_CREATE, FILESTORE, FILESTORE_UPLOAD, CRYPTO_COMPARE } from '../../constants/endpoints';
 import { fetch } from '../../libs';
 import { useHistory } from 'react-router-dom';
 import Dropzone, { IFile } from '../../components/Dropzone';
@@ -22,6 +22,12 @@ interface Errors{
     description?: string;
     filename?: string;
     mimetype?: string;
+}
+
+interface IPrices{
+    [key: string]: {
+        [key: string]: number
+    }
 }
 
 function Application(){
@@ -42,6 +48,8 @@ function Application(){
     const [errors, setErrors] = useState<Errors>({});
     const [avatar, setAvatar] = useState("");
     const [background, setBackground] = useState("");
+
+    const [prices, setPices] = useState<IPrices>({});
 
     const handleSubmit = async () => {
         const data = { 
@@ -112,6 +120,18 @@ function Application(){
         
         setBannerDialogOpen(false);
     }
+
+    const loadPrices = async () => {
+        const response = await fetch.get(CRYPTO_COMPARE);
+        if(response.ok){
+            const body = await response.json();
+            setPices(body);
+        }
+    }
+
+    useEffect(() => {
+        loadPrices();
+    }, []);
    
     return(
         <DocumentTitle title="Application">
@@ -179,22 +199,28 @@ function Application(){
                     </div>
                     <div className = 'prices-wrap'>
                         <Input
-                            lable = "Price (UOP)"
+                            lable = "Price (WETH)"
                             value = {cryptoPrice}
                             onChange= {(value) => {
                                 setCryptoPrice(value);
                                 setErrors({...errors, cryptoPrice: undefined});
+                            }}
+                            onBlur = {() => {
+                                setPrice(`${Number(cryptoPrice) * prices.WETH.USD}`)
                             }}
                             placeholder = "Amount"
                             type = 'number'
                             error = {errors.cryptoPrice}
                         />
                         <Input
-                            lable = "Price (€)"
+                            lable = "Price ($)"
                             value = {price}
                             onChange= {(value) => {
                                 setPrice(value);
                                 setErrors({...errors, price: undefined});
+                            }}
+                            onBlur = {() => {
+                                setCryptoPrice(`${Number(price) * prices.USD.WETH}`)
                             }}
                             placeholder = "Amount"
                             type = 'number'

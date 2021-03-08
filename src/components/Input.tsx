@@ -6,6 +6,7 @@ interface InputProps{
     lable: string;
     value: number | string;
     onChange: (value: string) => void;
+    onBlur?: () => void;
     placeholder: string;
     type?: 'text' | 'number',
     optional?: boolean;
@@ -14,7 +15,7 @@ interface InputProps{
     error?: string;
 }
 
-function Input({ lable, value, onChange, placeholder, type, optional, helperText, maxLength, error }: InputProps){
+function Input({ lable, value, onChange, placeholder, type, optional, helperText, maxLength, error, onBlur }: InputProps){
     return(
         <div className='input-root'>
             <div className = "input-lable-wrap">
@@ -24,6 +25,7 @@ function Input({ lable, value, onChange, placeholder, type, optional, helperText
             <input 
                 value = {value} 
                 onChange={(event) => onChange(event.target.value)} 
+                onBlur = {onBlur}
                 className = {classNames("input", { error: Boolean(error)})}
                 placeholder = {placeholder}
                 type={type || 'text'}
