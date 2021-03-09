@@ -1,0 +1,46 @@
+@import "./colors.scss";
+@import "./fonts.scss";
+
+.multiple-group-root{
+    width: 100%;
+
+    .multiple-group-items-wrap{
+        position: relative;
+
+        .multiple-group-items-remove-btn{
+            width: 22px;
+            height: 24px;
+            position: absolute;
+            right: 0;
+            top: 25px;
+            cursor: pointer;
+
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    .multiple-group-added-btn{
+        border: none; 
+        cursor: pointer;
+        outline: none;
+
+        margin-top: 16px;
+
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 19px;
+        background: rgba(0,0,0,0);
+        /* identical to box height */
+
+        text-align: center;
+
+        /* #2BD2F7 */
+
+        color: #2BD2F7;
+    }
+}

@@ -13,9 +13,10 @@ interface InputProps{
     helperText?: string;
     maxLength?: number;
     error?: string;
+    min?: number
 }
 
-function Input({ lable, value, onChange, placeholder, type, optional, helperText, maxLength, error, onBlur }: InputProps){
+function Input({ lable, value, onChange, placeholder, type, optional, helperText, maxLength, error, onBlur, min = 0 }: InputProps){
     return(
         <div className='input-root'>
             <div className = "input-lable-wrap">
@@ -30,7 +31,7 @@ function Input({ lable, value, onChange, placeholder, type, optional, helperText
                 placeholder = {placeholder}
                 type={type || 'text'}
                 maxLength = {maxLength}
-                min = {0}
+                min = {min}
             />
             <div className = "input-help-wrap">
                 { error && <p className = "error-text">{error}</p>}

@@ -106,10 +106,31 @@
                 margin-right: 20px;
             }
         }
+
+        .collection-title{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 33px;
+            color: $black;
+            margin-bottom: 20px;
+        }
         
         .dropzone-wrap{
             margin: 10px 0px;
             width: 100%;
+
+            .dropzone-wrap-title{
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 22px;
+                letter-spacing: -0.5px;
+                color: #252423;
+                margin: 20px 10px;
+            }
         }
 
         .submit-btn{
@@ -132,7 +153,7 @@
     }
 }
 
-@media screen and (max-width: 460px){
+@media screen and (max-width: 723px){
     .application-root{
         .application-body{
             padding: 120px 16px 80px;

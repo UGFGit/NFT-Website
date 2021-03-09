@@ -11,6 +11,7 @@ import Dropzone, { IFile } from '../../components/Dropzone';
 import { serialize } from 'object-to-formdata';
 import CropDialog from './CropDialog';
 import { useSnackbar } from 'notistack';
+import MultipleGroup from '../../components/MultipleGroup';
 
 interface Errors{
     nickname?: string;
@@ -30,6 +31,24 @@ interface IPrices{
     }
 }
 
+interface Nft{
+    file?: IFile,
+    filePlaceholder?: IFile;
+    price: string,
+    cryptoPrice: string,
+    name: string;
+    description: string;
+    number: string
+}
+
+const DEFAULT_NFT: Nft = {
+    price: "",
+    cryptoPrice : "",
+    description : "",
+    number: "1",
+    name: ""
+}
+
 function Application(){
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
@@ -37,32 +56,36 @@ function Application(){
     const [avatarDialogOpen, setAvatarDialogOpen] = useState(false);
     const [bannerDialogOpen, setBannerDialogOpen] = useState(false);
     
-    const [nickname, setNickname] = useState("");
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [address, setAddress] = useState("");
-    const [price, setPrice] = useState('');
-    const [description, setDescription] = useState("");
-    const [file, setFile] = useState<IFile>();
-    const [cryptoPrice, setCryptoPrice] = useState('');
-    const [errors, setErrors] = useState<Errors>({});
     const [avatar, setAvatar] = useState("");
     const [background, setBackground] = useState("");
+    const [nickname, setNickname] = useState("");
+
+    const [email, setEmail] = useState("");
+    const [address, setAddress] = useState("");
+
+    const [nfts, setNfts] = useState<Nft[]>([Object.assign({}, DEFAULT_NFT)]);
+
+    const [errors, setErrors] = useState<Errors>({});
+    
 
     const [prices, setPices] = useState<IPrices>({});
 
     const handleSubmit = async () => {
         const data = { 
-            nickname, 
-            name, 
-            email, 
-            address, 
-            price: price && Number(price), 
-            cryptoPrice: cryptoPrice && Number(cryptoPrice), 
-            description, 
             avatar,
             background,
-            ...file 
+            nickname, 
+            email, 
+            address, 
+            nfts: nfts.map((nft) => ({
+                ...nft.file,
+                filePlaceholder: nft.filePlaceholder && nft.filePlaceholder.filename,
+                price: Number(nft.price),
+                cryptoPrice: Number(nft.cryptoPrice),
+                name: nft.name,
+                description: nft.description,
+                number: Number(nft.number)
+            }))
         };
         const response = await fetch.post(APPLICATION_CREATE, data);
 
@@ -71,18 +94,20 @@ function Application(){
             return history.push('/');
         }
 
-        const { code, desc } = await response.json();
+        //const res = await response.json();
 
-        if(code && code === 3){
-            const errs = {} as any;
+        // if(res.code && res.code === 3){
+        //     const errs = {} as any;
 
-            for(let i=0; i < desc.length; i++){
-                const err = desc[i];
-                errs[err.property] = Object.values(err.constraints)[0];
-            }
+        //     for(let i=0; i < res.desc.length; i++){
+        //         const err = res.desc[i];
+        //         if(err.constraints){
+        //             errs[err.property] = Object.values(err.constraints)[0];
+        //         }                
+        //     }
 
-            setErrors(errs);
-        }
+        //     setErrors(errs);
+        // }
 
         enqueueSnackbar('Fill in all the fields of the application', { variant: 'error' });
     }
@@ -93,7 +118,7 @@ function Application(){
         const response = await fetch.post(FILESTORE_UPLOAD, formData);
         const body = await response.json();
         if(response.ok){
-            return setFile({ filename: body.filename, mimetype: body. mimetype});
+            return { filename: body.filename, mimetype: body.mimetype};
         }
     }
 
@@ -189,68 +214,116 @@ function Application(){
                         placeholder = "Wallet address"
                         error = {errors.address}
                     />
-                    <div className = "divader"/>
-                    <div className = 'dropzone-wrap'>
-                        <Dropzone
-                            file = {file}
-                            onChange = {sendFile}
-                            error = {errors.filename && errors.mimetype}
-                        />
-                    </div>
-                    <div className = 'prices-wrap'>
-                        <Input
-                            lable = "Price (WETH)"
-                            value = {cryptoPrice}
-                            onChange= {(value) => {
-                                setCryptoPrice(value);
-                                setErrors({...errors, cryptoPrice: undefined});
-                            }}
-                            onBlur = {() => {
-                                setPrice(`${Number(cryptoPrice) * prices.WETH.USD}`)
-                            }}
-                            placeholder = "Amount"
-                            type = 'number'
-                            error = {errors.cryptoPrice}
-                        />
-                        <Input
-                            lable = "Price ($)"
-                            value = {price}
-                            onChange= {(value) => {
-                                setPrice(value);
-                                setErrors({...errors, price: undefined});
-                            }}
-                            onBlur = {() => {
-                                setCryptoPrice(`${Number(price) * prices.USD.WETH}`)
-                            }}
-                            placeholder = "Amount"
-                            type = 'number'
-                            error = {errors.price}
-                        />
-                    </div>
-                    <Input
-                        lable = "Name"
-                        value = {name}
-                        onChange= {(value) => {
-                            setName(value);
-                            setErrors({...errors, name: undefined});
-                        }}
-                        placeholder = "Name of your artwork"
-                        error = {errors.name}
-                    />
-                    <Input
-                        lable = "Description"
-                        optional = {true}
-                        value = {description}
-                        maxLength = {100}
-                        onChange= {(value) => {
-                            setDescription(value);
-                            setErrors({...errors, description: undefined});
-                        }}
-                        placeholder = "Description of your artwork"
-                        helperText = 'max 100 words'
-                        error = {errors.description}
-                    />
+                    <MultipleGroup
+                        values = {nfts}
+                        defaultValue = {Object.assign({}, DEFAULT_NFT)}
+                        handleAdd = {(list) => setNfts(list)}
+                        handleRemove = {(list) => setNfts(list)}
+                        renderItem = {(nft: Nft, index) => (
+                            <div key = {index}>
+                                <p className = "collection-title">Collection {index + 1}</p>
+                                <div className = 'dropzone-wrap'>
+                                    <Dropzone
+                                        file = {nft.file}
+                                        accept = {['audio/*', 'video/*', 'image/*']}
+                                        type = "file"
+                                        onChange = {async (file) => {
+                                            const data = await sendFile(file);
+                                            nft.file = data;
+                                            nfts[index] = nft;
+                                            setNfts([...nfts]);
+                                        }}
+                                        error = {errors.filename && errors.mimetype}
+                                    />
+                                </div>
 
+                                {nft.file && nft.file.mimetype.split('/')[0] !== 'image' && <div className = 'dropzone-wrap'>
+                                    <p className = "dropzone-wrap-title">Icon</p>
+                                    <Dropzone
+                                        file = {nft.filePlaceholder}
+                                        accept = 'image/*'
+                                        type = 'icon'
+                                        onChange = {async (file) => {
+                                            const data = await sendFile(file);
+                                            nft.filePlaceholder = data;
+                                            nfts[index] = nft;
+                                            setNfts([...nfts]);
+                                        }}
+                                        error = {errors.filename && errors.mimetype}
+                                    />
+                                </div>}
+                                <div className = 'prices-wrap'>
+                                    <Input
+                                        lable = "Price (WETH)"
+                                        value = {nft.cryptoPrice}
+                                        onChange= {(value) => {
+                                            nft.cryptoPrice = value;
+                                            nfts[index] = nft;
+                                            setNfts([...nfts])
+                                        }}
+                                        onBlur = {() => {
+                                            nft.price = `${Number(nft.cryptoPrice) * prices.WETH.USD}`;
+                                            nfts[index] = nft;
+                                            setNfts([...nfts])
+                                        }}
+                                        placeholder = "Amount"
+                                        type = 'number'
+                                    />
+                                    <Input
+                                        lable = "Price ($)"
+                                        value = {nft.price}
+                                        onChange= {(value) => {
+                                            nft.price = value;
+                                            nfts[index] = nft;
+                                            setNfts([...nfts])
+                                        }}
+                                        onBlur = {() => {
+                                            nft.cryptoPrice = `${Number(nft.price) * prices.USD.WETH}`;
+                                            nfts[index] = nft;
+                                            setNfts([...nfts])
+                                        }}
+                                        placeholder = "Amount"
+                                        type = 'number'
+                                    />
+                                </div>
+                                <Input
+                                    lable = "Name"
+                                    value = {nft.name}
+                                    onChange= {(value) => {
+                                        nft.name = value;
+                                        nfts[index] = nft;
+                                        setNfts([...nfts])
+                                    }}
+                                    placeholder = "Name of your artwork"
+                                />
+                                <Input
+                                    lable = "Description"
+                                    optional = {true}
+                                    value = {nft.description}
+                                    maxLength = {100}
+                                    onChange= {(value) => {
+                                        nft.description = value;
+                                        nfts[index] = nft;
+                                        setNfts([...nfts])
+                                    }}
+                                    placeholder = "Description of your artwork"
+                                    helperText = 'max 100 words'
+                                />
+                                <Input
+                                    lable = "Number of copies"
+                                    value = {nft.number}
+                                    min = {1}
+                                    onChange= {(value) => {
+                                        nft.number = value;
+                                        nfts[index] = nft;
+                                        setNfts([...nfts])
+                                    }}
+                                    placeholder = "Number"
+                                    type = 'number'
+                                />
+                            </div>
+                        )}
+                    />
                     <button onClick={handleSubmit} className="submit-btn">Submit</button>
                 </div>
                 <Footer/>

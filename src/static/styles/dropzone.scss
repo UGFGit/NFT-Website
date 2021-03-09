@@ -4,49 +4,46 @@
 .dropzone-root{
     width: 100%;
 
-    .dropzone-title{
-        font-family: Open Sans;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 24px;
-        line-height: 33px;
-        color: $black;
-        margin-bottom: 20px;
-    }
-
     .dropzone-body-wrap.error{
         border: 1px solid red;
     }
 
     .dropzone-body-wrap{
-        max-height: 160px;
+        max-height: 152px;
         width: 100%;
         background: $white;
         border: 1px solid $input-border;
         border-radius: 8px;
-        padding: 48px 0px 29px;
+        padding: 26px 0px 29px;
         display: flex;
         flex-direction: column;
         align-items: center;
 
-        .dropzone-body-title{
-            font-family: Open Sans;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 12px;
-            line-height: 16px;
-            color: $btn-black;
-        }
+        .dropzone-body-title-wrap{
+            text-align: center;
+            white-space: pre-line;
+            
+            .dropzone-body-title{
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 19px;
+                color: #868686;
+                max-width: 377px;
 
-        .dropzone-body-title.error{
-            color: red;
+            }
+    
+            .dropzone-body-title.error{
+                color: red;
+            }
         }
 
         .dropzone-btn{
             background: $btn-white;
             border: 1px solid $btn-border;
             border-radius: 39px;
-            margin-top: 27px;
+            margin-top: 16px;
             padding: 8px 25px;
             cursor: pointer;
 
