@@ -3,7 +3,7 @@ import DocumentTitle from 'react-document-title';
 import Navigation, { LocationEnum } from '../../components/Navigation';
 import '../../static/styles/collection.scss';
 import Footer from '../../components/Footer';
-import { METADATA } from '../../constants/endpoints';
+import { METADATA, ARTISTS } from '../../constants/endpoints';
 import { fetch } from '../../libs';
 import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -16,6 +16,8 @@ import CardsTopImage from '../../static/images/cards-top.png';
 import CardsBottomImage from '../../static/images/cards-bottom.png';
 import DotsImage from '../../static/images/dots.png';
 import NoAssets from '../../static/images/no-assets.png';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -23,17 +25,19 @@ interface IState{
     list: IMetadata[];
     load: boolean;
     mimetype: string | null;
+    artist: string | null;
 }
 
 function Collection(){
-    const [state, setState] = useState<IState>({ list: [], load: true, mimetype: null });
+    const [state, setState] = useState<IState>({ list: [], load: true, mimetype: null, artist: null });
+    const [artistsList, setArtistsList] = useState<{id: string, name: string}[]>([]);
 
     const socket = useSocket();
 
     const scrollRef = useRef(null);
 
     const loadApplication = async (pageNumber = 0) => {
-        const response = await fetch.post(METADATA, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype } });
+        const response = await fetch.post(METADATA, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, artist: state.artist } });
         if(response.ok){
             const { metadatas, pagination} = await response.json();
             const list = [...state.list, ...metadatas];
@@ -50,9 +54,17 @@ function Collection(){
         }
     }
 
+    const loadArtists = async () => {
+        const response = await fetch.get(ARTISTS);
+        if(response.ok){
+            const { artists } = await response.json();
+            setArtistsList(artists);
+        }
+    }
+
     useEffect(() => {
         socket?.on(SocketEventsEnum.METADATA_SOLD, ({ id }: {id: string}) => {
-            setState({ load: state.load, mimetype: state.mimetype, list: state.list.filter((app) => app.id !== id)});
+            setState({ load: state.load, mimetype: state.mimetype, list: state.list.filter((app) => app.id !== id), artist: state.artist});
         })
 
         return () => {
@@ -60,12 +72,16 @@ function Collection(){
         }
     }, [socket, state])
 
+    useEffect(() => {
+        loadArtists();
+    }, [])
+
     const setFilter = (filter: string | null) => () => {
         //@ts-ignore
         scrollRef.current.pageLoaded = -1;
-        setState({ mimetype: filter, list: [], load: true});
+        setState({ mimetype: filter, list: [], load: true, artist: state.artist});
     }
-    
+
     return(
         <DocumentTitle title="Collection">
             <div className = 'collection-root'>
@@ -93,18 +109,46 @@ function Collection(){
                     <div className = 'collection-explore-wrap'>
                         <p className = "collection-explore-title">Explore</p>
                         <div className = 'collection-explore-filters-wrap'>
-                            <button 
-                                className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === null })} 
-                                onClick = {setFilter(null)}
-                            >All</button>
-                            <button 
-                                className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === 'image' })} 
-                                onClick = {setFilter('image')}
-                            >Art</button>
-                            <button 
-                                className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === 'audio' })} 
-                                onClick = {setFilter('audio')}
-                            >Music</button>
+                            <div className = 'collection-explore-filters-btn-wrap'>
+                                <button 
+                                    className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === null })} 
+                                    onClick = {setFilter(null)}
+                                >All</button>
+                                <button 
+                                    className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === 'image' })} 
+                                    onClick = {setFilter('image')}
+                                >Art</button>
+                                <button 
+                                    className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === 'audio' })} 
+                                    onClick = {setFilter('audio')}
+                                >Music</button>
+                            </div>
+                            <Select
+                                className = "collection-explore-filter-select"
+                                value={state.artist || "placeholder"}
+                                //@ts-ignore
+                                onChange={(event) => {
+                                    //@ts-ignore
+                                    scrollRef.current.pageLoaded = -1;
+                                    //@ts-ignore
+                                    setState({ mimetype: state.mimetype, list: [], load: true, artist: event.target.value !== "placeholder"? event.target.value: null });
+                                }}
+                                disableUnderline = {true}    
+                                MenuProps={{
+                                    getContentAnchorEl: null,
+                                    anchorOrigin: {
+                                      vertical: "bottom",
+                                      horizontal: "left",
+                                    }
+                                }}                            
+                            >
+                                <MenuItem value="placeholder">
+                                    Choose artist
+                                </MenuItem>
+                                {artistsList.map(({id, name}) => (
+                                    <MenuItem key = {id} value={id}>{name}</MenuItem>
+                                ))}
+                            </Select>
                         </div>
 
                         <div className = "collection-explore-scroll-wrap">
