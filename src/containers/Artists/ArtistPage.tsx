@@ -89,6 +89,10 @@ function ArtistPage({ artist }: IArtistProps){
                                 onClick = {setFilter('image')}
                             >Art</button>
                             <button 
+                                className = {classNames("artist-page-explore-filter-btn", { "artist-page-explore-filter-btn-active": state.mimetype === 'audio' })} 
+                                onClick = {setFilter('audio')}
+                            >Music</button>
+                            <button 
                                 className = {classNames("artist-page-explore-filter-btn", { "artist-page-explore-filter-btn-active": state.mimetype === 'video' })} 
                                 onClick = {setFilter('video')}
                             >Video</button>

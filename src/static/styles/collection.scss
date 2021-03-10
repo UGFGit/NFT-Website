@@ -168,32 +168,37 @@
                     display: flex;
                     flex-direction: row;
 
-                    .collection-explore-filter-btn{
-                        color: $black;
-                        font-family: Roboto;
-                        font-style: normal;
-                        font-weight: normal;
-                        font-size: 16px;
-                        line-height: 19px;
-                        padding: 10px 20px;
-                        border: 1px solid $optional-lable;
-                        border-radius: 39px;
-                        outline: 0;
-                        cursor: pointer;
-                        margin: 0px 10px;
-                        background-color: $grey;
-    
-                        &:hover{
+                    .collection-explore-filters-btn-group{
+                        display: flex;
+                        flex-direction: row;
+
+                        .collection-explore-filter-btn{
+                            color: $black;
+                            font-family: Roboto;
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 16px;
+                            line-height: 19px;
+                            padding: 10px 20px;
+                            border: 1px solid $optional-lable;
+                            border-radius: 39px;
+                            outline: 0;
+                            cursor: pointer;
+                            margin: 0px 10px;
+                            background-color: $grey;
+        
+                            &:hover{
+                                background: $black;
+                                border: 1px solid $black;
+                                color: $white;
+                            }
+                        }
+        
+                        .collection-explore-filter-btn-active{
                             background: $black;
                             border: 1px solid $black;
                             color: $white;
                         }
-                    }
-    
-                    .collection-explore-filter-btn-active{
-                        background: $black;
-                        border: 1px solid $black;
-                        color: $white;
                     }
                 }                
             }
@@ -334,7 +339,7 @@
     }
 }
 
-@media screen and (max-width: 450px){
+@media screen and (max-width: 572px){
     .collection-root{
         .collection-explore-root{
             .collection-explore-wrap{
@@ -344,6 +349,25 @@
 
                     .collection-explore-filter-select{
                         margin-top: 20px;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 389px){
+    .collection-root{
+        .collection-explore-root{
+            .collection-explore-wrap{
+                .collection-explore-filters-wrap{
+                    .collection-explore-filters-btn-wrap{
+                        flex-direction: column;
+
+                        .collection-explore-filters-btn-group:last-child{
+                            margin-top: 20px;
+                        }
                     }
                 }
             }

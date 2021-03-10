@@ -110,18 +110,26 @@ function Collection(){
                         <p className = "collection-explore-title">Explore</p>
                         <div className = 'collection-explore-filters-wrap'>
                             <div className = 'collection-explore-filters-btn-wrap'>
-                                <button 
-                                    className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === null })} 
-                                    onClick = {setFilter(null)}
-                                >All</button>
-                                <button 
-                                    className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === 'image' })} 
-                                    onClick = {setFilter('image')}
-                                >Art</button>
-                                <button 
-                                    className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === 'audio' })} 
-                                    onClick = {setFilter('audio')}
-                                >Music</button>
+                                <div className = "collection-explore-filters-btn-group">
+                                    <button 
+                                        className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === null })} 
+                                        onClick = {setFilter(null)}
+                                    >All</button>
+                                    <button 
+                                        className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === 'image' })} 
+                                        onClick = {setFilter('image')}
+                                    >Art</button>
+                                </div>
+                                <div className = "collection-explore-filters-btn-group">
+                                    <button 
+                                        className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === 'audio' })} 
+                                        onClick = {setFilter('audio')}
+                                    >Music</button>
+                                    <button 
+                                        className = {classNames("collection-explore-filter-btn", { "collection-explore-filter-btn-active": state.mimetype === 'video' })} 
+                                        onClick = {setFilter('video')}
+                                    >Video</button>
+                                </div>
                             </div>
                             <Select
                                 className = "collection-explore-filter-select"

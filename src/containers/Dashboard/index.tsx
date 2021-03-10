@@ -105,6 +105,10 @@ function Dashboard({ web3 }: DashboardProps){
                                 onClick = {setFilter('image')}
                             >Art</button>
                             <button 
+                                className = {classNames("dashboard-explore-filter-btn", { "dashboard-explore-filter-btn-active": state.mimetype === 'audio' })} 
+                                onClick = {setFilter('audio')}
+                            >Music</button>
+                            <button 
                                 className = {classNames("dashboard-explore-filter-btn", { "dashboard-explore-filter-btn-active": state.mimetype === 'video' })} 
                                 onClick = {setFilter('video')}
                             >Video</button>
