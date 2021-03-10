@@ -13,18 +13,6 @@ import CropDialog from './CropDialog';
 import { useSnackbar } from 'notistack';
 import MultipleGroup from '../../components/MultipleGroup';
 
-interface Errors{
-    nickname?: string;
-    email?: string;
-    address?: string;
-    price?: string;
-    cryptoPrice?: string;
-    name?: string;
-    description?: string;
-    filename?: string;
-    mimetype?: string;
-}
-
 interface IPrices{
     [key: string]: {
         [key: string]: number
@@ -65,9 +53,6 @@ function Application(){
 
     const [nfts, setNfts] = useState<Nft[]>([Object.assign({}, DEFAULT_NFT)]);
 
-    const [errors, setErrors] = useState<Errors>({});
-    
-
     const [prices, setPices] = useState<IPrices>({});
 
     const handleSubmit = async () => {
@@ -91,23 +76,9 @@ function Application(){
 
         if(response.ok){
             enqueueSnackbar('Your application is accepted', { variant: 'success' });
+            window.scrollTo(0, 0);
             return history.push('/');
         }
-
-        //const res = await response.json();
-
-        // if(res.code && res.code === 3){
-        //     const errs = {} as any;
-
-        //     for(let i=0; i < res.desc.length; i++){
-        //         const err = res.desc[i];
-        //         if(err.constraints){
-        //             errs[err.property] = Object.values(err.constraints)[0];
-        //         }                
-        //     }
-
-        //     setErrors(errs);
-        // }
 
         enqueueSnackbar('Fill in all the fields of the application', { variant: 'error' });
     }
@@ -185,34 +156,22 @@ function Application(){
                     <Input
                         lable = "Name"
                         value = {nickname}
-                        onChange= {(value) => {
-                            setNickname(value);
-                            setErrors({...errors, nickname: undefined});
-                        }}
+                        onChange= {(value) => setNickname(value)}
                         placeholder = "Your name"
-                        error = {errors.nickname}
                     />
                     <div className = "divader"/>
                     <p className='application-body-block-title'>Contact information</p>
                     <Input
                         lable = "Email"
                         value = {email}
-                        onChange= {(value) => {
-                            setEmail(value)
-                            setErrors({...errors, email: undefined});
-                        }}
+                        onChange= {(value) => setEmail(value)}
                         placeholder = "Email"
-                        error = {errors.email}
                     />
                     <Input
                         lable = "Wallet address"
                         value = {address}
-                        onChange= {(value) => {
-                            setAddress(value);
-                            setErrors({...errors, address: undefined});
-                        }}
+                        onChange= {(value) => setAddress(value)}
                         placeholder = "Wallet address"
-                        error = {errors.address}
                     />
                     <MultipleGroup
                         values = {nfts}
@@ -233,7 +192,6 @@ function Application(){
                                             nfts[index] = nft;
                                             setNfts([...nfts]);
                                         }}
-                                        error = {errors.filename && errors.mimetype}
                                     />
                                 </div>
 
@@ -249,7 +207,6 @@ function Application(){
                                             nfts[index] = nft;
                                             setNfts([...nfts]);
                                         }}
-                                        error = {errors.filename && errors.mimetype}
                                     />
                                 </div>}
                                 <div className = 'prices-wrap'>
