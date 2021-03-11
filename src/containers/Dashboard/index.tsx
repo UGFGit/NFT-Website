@@ -64,12 +64,12 @@ function Dashboard({ web3 }: DashboardProps){
     }
 
     useEffect(() => {
-        socket?.on(SocketEventsEnum.METADATA_SOLD, ({ id }: {id: string}) => {
+        socket?.on(SocketEventsEnum.ASSET_SOLD, ({ id }: {id: string}) => {
             setState({ load: state.load, mimetype: state.mimetype, list: state.list.filter((app) => app.id !== id)});
         })
         
         return () => {
-            socket?.removeListener(SocketEventsEnum.METADATA_SOLD);
+            socket?.removeListener(SocketEventsEnum.ASSET_SOLD);
         }
     }, [socket, state]);
 

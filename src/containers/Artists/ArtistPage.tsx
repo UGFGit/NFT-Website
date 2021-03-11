@@ -54,12 +54,22 @@ function ArtistPage({ artist }: IArtistProps){
     }
 
     useEffect(() => {
-        socket?.on(SocketEventsEnum.METADATA_SOLD, ({ id }: {id: string}) => {
+        socket?.on(SocketEventsEnum.ASSET_SOLD, ({ id }: {id: string}) => {
             setState({ load: state.load, mimetype: state.mimetype, list: state.list.filter((app) => app.id !== id)});
         })
 
+        socket?.on(SocketEventsEnum.ASSET_UPDATE, (newAsset: IAsset) => {
+            const assetIndex = state.list.findIndex((asset) => newAsset.id === asset.id);
+            if(assetIndex !== -1){
+                const list = [...state.list];
+                list[assetIndex] = newAsset;
+                setState({ load: state.load, mimetype: state.mimetype, list});
+            }
+        })
+
         return () => {
-            socket?.removeListener(SocketEventsEnum.METADATA_SOLD);
+            socket?.removeListener(SocketEventsEnum.ASSET_SOLD);
+            socket?.removeListener(SocketEventsEnum.ASSET_UPDATE);
         }
     }, [socket, state])
 

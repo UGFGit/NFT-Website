@@ -19,6 +19,8 @@ import WethImage from '../../static/images/weth-img.png';
 import Tooltip from '@material-ui/core/Tooltip';
 import { TYPES, PRIMARY_TYPE, REQUEST_METHOD } from '../../constants/blockchain/erc1155';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useSocket } from '../../socket';
+import { SocketEventsEnum } from '../../constants/socket/events';
 
 
 interface AssetPageProps{
@@ -31,6 +33,10 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const [asset, setAsset] = useState<IAsset>({} as IAsset);
     const [load, setLoad] = useState(true);
     const [ buyLoading, setbuyLoading ] = useState(false);
+
+    const [assetSold, setAssetSold] = useState(false);
+
+    const socket = useSocket();
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -49,6 +55,23 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     useEffect(() => {
         loadAsset();
     }, []);
+
+    useEffect(() => {
+        socket?.on(SocketEventsEnum.ASSET_SOLD, ({ id }: {id: string}) => {
+            if(asset.id === id){
+                setAssetSold(true);
+            }
+        })
+
+        socket?.on(SocketEventsEnum.ASSET_UPDATE, (newAsset: IAsset) => {
+            setAsset(newAsset);
+        })
+
+        return () => {
+            socket?.removeListener(SocketEventsEnum.ASSET_SOLD);
+            socket?.removeListener(SocketEventsEnum.ASSET_UPDATE);
+        }
+    }, [socket, asset])
 
 
     const checkAllowance = async (client:Web3, contractAddress: string, paymentAddress: string) => {
@@ -122,7 +145,8 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                     tokenId: asset.token.tokenId, 
                     price: value, 
                     tradingTokenAddress: asset.tradingTokenAddress, 
-                    signature
+                    signature,
+                    assetId: asset.id
                 });
 
                 enqueueSnackbar(`The purchase was made`, { variant: 'success' });
@@ -134,11 +158,11 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
         }
     }
 
-    console.log(asset);
-
     if(load){
         return <Progress/>
     }
+
+    const disableButton = assetSold || web3.account ? web3.account.toLowerCase() === asset.owner.toLowerCase(): false;
 
     return (
         <DocumentTitle title="Dashboard">
@@ -172,10 +196,17 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                                 <p className = "asset-description-container-price-container-price">{asset.cryptoPrice}</p>
                                 <div className = "asset-description-container-price-devider"/>
                                 <p className = "asset-description-container-price-container-price">${asset.price}</p>
-                                <p className = "asset-description-container-price-container-counts">{asset.token.available} of {asset.token.count}</p>
+                                <p className = "asset-description-container-price-container-counts">{assetSold? 'Sold out' : `${asset.token.available} of ${asset.token.count}`}</p>
                             </div>
                             <div className = "asset-description-container-price-container-btn-wrap">
-                                {!buyLoading && <button onClick = {handleBuy} className = "asset-description-container-price-container-buy-btn">Buy</button>}
+                                {   !buyLoading && 
+                                    <button 
+                                        disabled = {disableButton} 
+                                        onClick = {handleBuy} 
+                                        className = "asset-description-container-price-container-buy-btn"
+                                        style = {{ opacity: disableButton? '0.2' : '1'}}
+                                        >Buy
+                                    </button>}
                                 {buyLoading && <div className = "asset-description-container-price-container-buy-loader"> <CircularProgress size={40} thickness={5} /></div>}
                             </div>
                         </div>
