@@ -7,9 +7,9 @@ import { SocketEventsEnum } from '../../constants/socket/events';
 import InfiniteScroll from 'react-infinite-scroller';
 import Card from '../../components/TokenCard';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { METADATA, FILESTORE } from '../../constants/endpoints';
+import { ASSETS, FILESTORE } from '../../constants/endpoints';
 import { fetch } from '../../libs';
-import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
+import { IAsset } from '../../interfaces/containers/Application/asset.interface';
 import Footer from '../../components/Footer';
 import Navigation from '../../components/Navigation';
 import Avatar from '@material-ui/core/Avatar';
@@ -23,7 +23,7 @@ interface IArtistProps{
 const DEFAULT_PAGE_SIZE = 20;
 
 interface IState{
-    list: IMetadata[];
+    list: IAsset[];
     load: boolean;
     mimetype: string | null;
 }
@@ -36,13 +36,13 @@ function ArtistPage({ artist }: IArtistProps){
     const scrollRef = useRef(null);
 
     const loadApplication = async (pageNumber = 0) => {
-        const response = await fetch.post(METADATA, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, artist: artist.id } });
+        const response = await fetch.post(ASSETS, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, artist: artist.id, onSale: true } });
         if(response.ok){
-            const { metadatas, pagination} = await response.json();
-            const list = [...state.list, ...metadatas];
+            const { assets, pagination} = await response.json();
+            const list = [...state.list, ...assets];
             const newState = { ...state };
 
-            if(list.length === pagination.total || metadatas.length === 0){
+            if(list.length === pagination.total || assets.length === 0){
                 newState.load = false;
                 setState(newState);
             }
@@ -109,7 +109,7 @@ function ArtistPage({ artist }: IArtistProps){
                             >
                                 {(state.list.length > 0 || state.load) && <div className = "artist-page-explore-cards-wrap">
                                     {state.list.map((item) => (
-                                        <Card key = {item.id} metadata={item}/>
+                                        <Card key = {item.id} asset={item}/>
                                     ))}
                                 </div>}
                                 {state.list.length === 0 && state.load === false && <div className = "artist-page-explore-list-empty-wrap">

@@ -9,7 +9,7 @@ export const APPLICATION_CREATE = '/api/application/create';
 export const BLOCKCHAIN_CHARGE = '/api/blockchain/charge';
 
 //Metadata
-export const METADATA = '/api/metadata';
+export const ASSETS = '/api/assets';
 
 //Artists
 export const ARTISTS = '/api/artists';
@@ -18,4 +18,4 @@ export const ARTISTS = '/api/artists';
 export const HOST_CONFIG = '/api/host/config';
 
 //CryptoCompare
-export const CRYPTO_COMPARE = '/api/cryptocompare'
+export const CRYPTO_COMPARE = '/api/cryptocompare';

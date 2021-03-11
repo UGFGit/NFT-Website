@@ -3,9 +3,9 @@ import DocumentTitle from 'react-document-title';
 import Navigation, { LocationEnum } from '../../components/Navigation';
 import '../../static/styles/collection.scss';
 import Footer from '../../components/Footer';
-import { METADATA, ARTISTS } from '../../constants/endpoints';
+import { ASSETS, ARTISTS } from '../../constants/endpoints';
 import { fetch } from '../../libs';
-import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
+import { IAsset } from '../../interfaces/containers/Application/asset.interface';
 import InfiniteScroll from 'react-infinite-scroller';
 import Card from '../../components/TokenCard';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -22,7 +22,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 const DEFAULT_PAGE_SIZE = 20;
 
 interface IState{
-    list: IMetadata[];
+    list: IAsset[];
     load: boolean;
     mimetype: string | null;
     artist: string | null;
@@ -37,13 +37,13 @@ function Collection(){
     const scrollRef = useRef(null);
 
     const loadApplication = async (pageNumber = 0) => {
-        const response = await fetch.post(METADATA, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, artist: state.artist } });
+        const response = await fetch.post(ASSETS, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, artist: state.artist, onSale: true } });
         if(response.ok){
-            const { metadatas, pagination} = await response.json();
-            const list = [...state.list, ...metadatas];
+            const { assets, pagination} = await response.json();
+            const list = [...state.list, ...assets];
             const newState = { ...state };
 
-            if(list.length === pagination.total || metadatas.length === 0){
+            if(list.length === pagination.total || assets.length === 0){
                 newState.load = false;
                 setState(newState);
             }
@@ -170,7 +170,7 @@ function Collection(){
                             >
                                 {(state.list.length > 0 || state.load) && <div className = "collection-explore-cards-wrap">
                                     {state.list.map((item) => (
-                                        <Card key = {item.id} metadata={item}/>
+                                        <Card key = {item.id} asset={item}/>
                                     ))}
                                 </div>}
                                 {state.list.length === 0 && state.load === false && <div className = "collection-explore-list-empty-wrap">

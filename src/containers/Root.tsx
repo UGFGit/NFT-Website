@@ -16,6 +16,7 @@ import Dashboard from './Dashboard';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import NotFoundPage from './NotFoundPage';
+import AssetPage from './Collection/AssetPage';
 
 interface AppProps{
     setConfig: typeof setConfig;
@@ -76,6 +77,12 @@ function App({ setConfig }: AppProps) {
                 <Route component={Dashboard} path="/dashboard"/>
                 <Route component={PrivacyPolicy} path="/privacy-policy"/>
                 <Route component={TermsOfService} path="/terms-of-service"/>
+                <Route path="/assets/:contract/:id" render={({match}) => (
+                    <AssetPage
+                        contract = {match.params.contract}
+                        tokenId = {match.params.id}
+                    />
+                )}/>
                 <Route component={NotFoundPage} path="*"/>
             </Switch>
         </Router>

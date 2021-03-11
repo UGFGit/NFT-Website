@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { IMetadata } from '../../interfaces/containers/Application/metadata.interface';
+import { IAsset } from '../../interfaces/containers/Application/asset.interface';
 import '../../static/styles/dashboard.scss';
-import { METADATA } from '../../constants/endpoints';
+import { ASSETS } from '../../constants/endpoints';
 import { fetch } from '../../libs';
 import DocumentTitle from 'react-document-title';
 import { useSocket } from '../../socket';
@@ -27,7 +27,7 @@ interface DashboardProps{
 }
 
 interface IState{
-    list: IMetadata[];
+    list: IAsset[];
     load: boolean;
     mimetype: string | null;
 }
@@ -46,13 +46,13 @@ function Dashboard({ web3 }: DashboardProps){
             setState({list: [], load: false, mimetype: state.mimetype});
             return;
         }
-        const response = await fetch.post(METADATA, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, address: web3.account } });
+        const response = await fetch.post(ASSETS, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, address: web3.account } });
         if(response.ok){
-            const { metadatas, pagination} = await response.json();
-            const list = [...state.list, ...metadatas];
+            const { assets, pagination} = await response.json();
+            const list = [...state.list, ...assets];
             const newState = { ...state };
 
-            if(list.length === pagination.total || metadatas.length === 0){
+            if(list.length === pagination.total || assets.length === 0){
                 newState.load = false;
                 setState(newState);
             }
@@ -125,7 +125,7 @@ function Dashboard({ web3 }: DashboardProps){
                             >
                                 {(state.list.length > 0 || state.load) &&<div className = "dashboard-explore-cards-wrap">
                                     {state.list.map((item) => (
-                                        <Card disableDialog key = {item.id} metadata={item}/>
+                                        <Card key = {item.id} asset={item}/>
                                     ))}
                                 </div>}
                                 {state.list.length === 0 && state.load === false && <div className = "dashboard-list-empty-wrap">
