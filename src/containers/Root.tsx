@@ -4,7 +4,6 @@ import Faq from './Faq';
 import Collection from './Collection';
 import Application from './Application';
 import Artists from './Artists';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetch } from '../libs';
 import { HOST_CONFIG } from '../constants/endpoints';
 import {connect} from 'react-redux';
@@ -16,27 +15,12 @@ import Dashboard from './Dashboard';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import NotFoundPage from './NotFoundPage';
-import AssetPage from './Collection/AssetPage';
+import AssetPage from './Asset';
+import Progress from '../components/Progress';
 
 interface AppProps{
     setConfig: typeof setConfig;
 }
-
-const Progress = () => {
-    const style = {
-        width: '100%',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    };
-
-    return (
-        <div style={style}>
-            <CircularProgress size={80} thickness={5} />
-        </div>
-    )
-};
 
 function App({ setConfig }: AppProps) {
     const [loading, setLoading] = useState(true);
@@ -77,10 +61,9 @@ function App({ setConfig }: AppProps) {
                 <Route component={Dashboard} path="/dashboard"/>
                 <Route component={PrivacyPolicy} path="/privacy-policy"/>
                 <Route component={TermsOfService} path="/terms-of-service"/>
-                <Route path="/assets/:contract/:id" render={({match}) => (
+                <Route path="/assets/:id" render={({match}) => (
                     <AssetPage
-                        contract = {match.params.contract}
-                        tokenId = {match.params.id}
+                        assetId = {match.params.id}
                     />
                 )}/>
                 <Route component={NotFoundPage} path="*"/>

@@ -5,7 +5,9 @@ export interface IAsset{
     token: IToken;
     metadata: IMetadata;
     artist: IArtist;
-    contract: IContract
+    contract: IContract;
+    tradingTokenAddress: string;
+    owner: string;
 }
 
 interface IToken{

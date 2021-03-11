@@ -6,10 +6,12 @@ export const FILESTORE_UPLOAD = '/api/filestore/';
 export const APPLICATION_CREATE = '/api/application/create';
 
 //Blockchain
-export const BLOCKCHAIN_CHARGE = '/api/blockchain/charge';
+export const BLOCKCHAIN_NONCE = '/api/blockchain/nonce';
+export const BLOCKCHAIN_BUY = '/api/blockchain/buy';
 
 //Metadata
 export const ASSETS = '/api/assets';
+export const ASSETS_ONE = (id: string) => `/api/assets/${id}`;
 
 //Artists
 export const ARTISTS = '/api/artists';

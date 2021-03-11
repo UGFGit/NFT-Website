@@ -1,0 +1,182 @@
+@import "./colors.scss";
+@import "./fonts.scss";
+
+.asset-root{
+    min-height: 100vh;
+    background-color: $grey;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .asset-body{
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        padding: 120px 212px;
+
+        .asset-image-container{
+            flex: 1;
+
+            .asset-image-container-nav{
+                width: 100%;
+                height: 44px;
+                display: flex;
+                flex-direction: row;
+
+                .asset-image-container-nav-resize-wrap{
+                    height: 32px;
+                    width: 32px;
+                    margin-left: auto;
+                    cursor: pointer;
+
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+
+            .asset-image-container-image-wrap{
+                width: 522px;
+                height: 496px;
+                margin-top: 31px;
+                
+                img{
+                    width: 100%;
+                }
+            }
+        }
+
+        .asset-description-container{
+            margin-left: 106px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            .asset-description-container-nav{
+                display: flex;
+                flex-direction: row;
+
+                .MuiAvatar-root{
+                    width: 44px;
+                    height: 44px;
+                }
+
+                .asset-description-container-nav-artist-name{
+                    font-family: Open Sans;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 16px;
+                    line-height: 22px;
+                    color: #252423;
+                    margin: auto 10px;
+                }
+            }
+
+            .asset-description-container-title{
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 20px;
+                line-height: 27px;
+                color: #252423;
+                margin-top: 26px;
+            }
+
+            .asset-description-container-desc{
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 19px;
+                color: #252423;
+                margin-top: 10px;
+            }
+
+            .asset-description-container-price-container{
+                width: 100%;
+                margin-top: auto;
+
+                background: #FFFFFF;
+                box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.06);
+                border-radius: 10px;
+
+                .asset-description-container-price-container-price-wrap{
+                    padding: 10px 20px 18px 11px;
+                    border-bottom: 1px solid #F6F9FA;
+                    display: flex;
+                    flex-direction: row;
+
+                    .asset-description-container-price-container-price-crypto-wrap{
+                        width: 10px;
+                        height: 8px;
+                        margin-top: 1px;
+                        margin-right: 3px;
+
+                        img{
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+
+                    .asset-description-container-price-container-price{
+                        font-family: Open Sans;
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 16px;
+                        line-height: 22px;
+                        color: #252423;
+                    }
+
+                    .asset-description-container-price-devider{
+                        background: #F6F9FA;
+                        width: 1px;
+                        height: 10px;
+                        margin: 5px 10px;
+                    }
+
+                    .asset-description-container-price-container-counts{
+                        margin-left: auto;
+                        font-family: Open Sans;
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 19px;
+                        color: #868686;
+                    }
+                }
+
+                .asset-description-container-price-container-btn-wrap{
+                    padding: 13px 20px;
+
+                    .asset-description-container-price-container-buy-btn{
+                        background: #252423;
+                        border: 1px solid #252423;
+                        border-radius: 39px;
+                        height: 44px;
+                        width: 100%;
+                        outline: 0;
+                        cursor: pointer;
+
+                        font-family: Roboto;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 16px;
+                        line-height: 19px;
+                        color: #FFFFFF;
+                    }
+
+                    .asset-description-container-price-container-buy-loader{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+    }
+
+    .asset-footer-wrap{
+        margin-top: auto;
+    }
+}
