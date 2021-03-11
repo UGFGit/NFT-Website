@@ -21,7 +21,7 @@ import { TYPES, PRIMARY_TYPE, REQUEST_METHOD } from '../../constants/blockchain/
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
-
+import Dialog from './Dialog';
 
 interface AssetPageProps{
     assetId: string;
@@ -32,7 +32,8 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const history = useHistory();
     const [asset, setAsset] = useState<IAsset>({} as IAsset);
     const [load, setLoad] = useState(true);
-    const [ buyLoading, setbuyLoading ] = useState(false);
+    const [ buyLoading, setBuyLoading ] = useState(false);
+    const [ dialogOpen, setDialogOpen ] = useState(false);
 
     const [assetSold, setAssetSold] = useState(false);
 
@@ -100,7 +101,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const handleBuy = async () => {
         if(web3.available){
             try{
-                setbuyLoading(true);
+                setBuyLoading(true);
                 const client = new Web3(web3.provider);
                 await checkAllowance(client, asset.contract.contract, asset.tradingTokenAddress);
 
@@ -150,9 +151,9 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                 });
 
                 enqueueSnackbar(`The purchase was made`, { variant: 'success' });
-                setbuyLoading(false);
+                setBuyLoading(false);
             } catch(err){
-                setbuyLoading(false);
+                setBuyLoading(false);
                 enqueueSnackbar("Something went wrong", { variant: 'error' });
             }            
         }
@@ -171,7 +172,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                 <div className = "asset-body">
                     <div className = "asset-image-container">
                         <div className = "asset-image-container-nav">
-                            <div className = "asset-image-container-nav-resize-wrap">
+                            <div onClick = {() => setDialogOpen(true)} className = "asset-image-container-nav-resize-wrap">
                                 <img alt ="" src = {ResizeImage}/>
                             </div>
                         </div>
@@ -212,6 +213,11 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                         </div>
                     </div>
                 </div>
+                <Dialog
+                    asset = {asset}
+                    open={dialogOpen}
+                    onClose = {() => setDialogOpen(false)}
+                />
                 <div className = "asset-footer-wrap">
                     <Footer/>
                 </div>
