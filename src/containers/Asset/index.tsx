@@ -3,7 +3,7 @@ import '../../static/styles/asset.scss';
 import DocumentTitle from 'react-document-title';
 import {connect} from 'react-redux';
 import { fetch } from '../../libs';
-import { ASSETS_ONE, FILESTORE, BLOCKCHAIN_NONCE, BLOCKCHAIN_BUY } from '../../constants/endpoints';
+import { ASSETS_ONE, FILESTORE, BLOCKCHAIN_NONCE, BLOCKCHAIN_BUY, ASSET_BIDS, ASSET_BID_SET, ASSET_BID_REMOVE } from '../../constants/endpoints';
 import Web3 from 'web3';
 import { ABI } from '../../constants/blockchain/abi';
 import { useSnackbar } from 'notistack';
@@ -22,20 +22,30 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
 import Dialog from './Dialog';
+import Timer from './Timer';
 
 interface AssetPageProps{
     assetId: string;
     web3: IWeb3State;
 }
 
+interface IBids{
+    id: string;
+    account: string;
+    cryptoPrice: number;
+    price: number;
+}
+
 function AssetPage({ assetId, web3 }: AssetPageProps){
     const history = useHistory();
     const [asset, setAsset] = useState<IAsset>({} as IAsset);
     const [load, setLoad] = useState(true);
-    const [ buyLoading, setBuyLoading ] = useState(false);
+    const [ buttonLoading, setButtonLoading ] = useState(false);
     const [ dialogOpen, setDialogOpen ] = useState(false);
 
     const [assetSold, setAssetSold] = useState(false);
+
+    const [bids, setBids] = useState<IBids[]>([]);
 
     const socket = useSocket();
 
@@ -53,9 +63,25 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
         return history.push('/404');        
     }
 
+    const loadBids = async () => {
+        if(!asset.id){
+            return;
+        }
+
+        const response = await fetch.post(ASSET_BIDS, { assetId: asset.id });
+        if(response.ok){
+            const { bids } = await response.json();
+            setBids(bids);
+        }
+    }
+
     useEffect(() => {
         loadAsset();
     }, []);
+
+    useEffect(() => {
+        loadBids();
+    }, [asset])
 
     useEffect(() => {
         socket?.on(SocketEventsEnum.ASSET_SOLD, ({ id }: {id: string}) => {
@@ -101,7 +127,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const handleBuy = async () => {
         if(web3.available){
             try{
-                setBuyLoading(true);
+                setButtonLoading(true);
                 const client = new Web3(web3.provider);
                 await checkAllowance(client, asset.contract.contract, asset.tradingTokenAddress);
 
@@ -138,24 +164,44 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                     from: [web3.account]
                 });
 
-                enqueueSnackbar(`Waiting for transaction complete`, { variant: 'info' });
+                if(asset.onAuction){
+                    await fetch.post(ASSET_BID_SET, { 
+                        account: web3.account, 
+                        signature,
+                        assetId: asset.id,
+                        price: asset.cryptoPrice
+                    }); 
 
-                await fetch.post(BLOCKCHAIN_BUY, { 
-                    account: web3.account, 
-                    contractAddress: asset.contract.contract, 
-                    tokenId: asset.token.tokenId, 
-                    price: value, 
-                    tradingTokenAddress: asset.tradingTokenAddress, 
-                    signature,
-                    assetId: asset.id
-                });
+                    enqueueSnackbar(`The rate is fixed`, { variant: 'success' });
+                }
 
-                enqueueSnackbar(`The purchase was made`, { variant: 'success' });
-                setBuyLoading(false);
+                if(!asset.onAuction){
+                    enqueueSnackbar(`Waiting for transaction complete`, { variant: 'info' });
+
+                    await fetch.post(BLOCKCHAIN_BUY, { 
+                        account: web3.account, 
+                        contractAddress: asset.contract.contract, 
+                        tokenId: asset.token.tokenId, 
+                        price: value, 
+                        tradingTokenAddress: asset.tradingTokenAddress, 
+                        signature,
+                        assetId: asset.id
+                    });
+
+                    enqueueSnackbar(`The purchase was made`, { variant: 'success' });
+                }
+                setButtonLoading(false);
             } catch(err){
-                setBuyLoading(false);
+                setButtonLoading(false);
                 enqueueSnackbar("Something went wrong", { variant: 'error' });
             }            
+        }
+    }
+
+    const removeBid = async (bidId: string) => {
+        const response = await fetch.post(ASSET_BID_REMOVE, { bidId });
+        if(response.ok){
+            setBids([...bids.filter(bid => bid.id !== bidId)]);
         }
     }
 
@@ -187,6 +233,38 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                         </div>
                         <p className = "asset-description-container-title">{asset.metadata.name}</p>
                         <p className = "asset-description-container-desc">{asset.metadata.description}</p>
+                        { asset.onAuction && <div className = "asset-description-container-auction-container">
+                            <Timer
+                                timeEnd = {asset.auctionEnd}
+                            />
+                            <p className = "asset-description-container-auction-title">BIDS</p>
+                            <div className = "asset-description-container-auction-table">
+                                <div className = "asset-description-container-auction-table-header">
+                                    <p className = "from-colm">From</p>
+                                    <p className = 'price-colm'>Price</p>
+                                    <p className = "expiration-colm">Expiration</p>
+                                    <p className = "action-colm"></p>
+                                </div>
+                                <div className = "asset-description-container-auction-table-body">
+                                    {bids.map((bid) => (
+                                        <div className = "table-row" key = {bid.id}>
+                                            <p className = "from-colm">{`${bid.account.slice(0, 6)}...${bid.account.slice(38)}`}</p>
+                                            <div className = "price-colm table-prices-wrap">
+                                                <Tooltip arrow title = "WETH" placement = "top">
+                                                    <div className = "table-prices-wrap-img-wrap">
+                                                        <img alt = "" src = {WethImage}/>
+                                                    </div>
+                                                </Tooltip>
+                                                <p>{bid.cryptoPrice}</p>
+                                                <p className = "table-prices-wrap-price">${bid.price}</p>
+                                            </div>
+                                            <p className = "expiration-colm">In 5 Days</p>
+                                            {web3.account === bid.account && <button onClick = {() => removeBid(bid.id)} className = "action-colm">Close</button>}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>}
                         <div className = "asset-description-container-price-container">
                             <div className = "asset-description-container-price-container-price-wrap">
                                 <Tooltip arrow title = "WETH" placement = "top">
@@ -200,15 +278,8 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                                 <p className = "asset-description-container-price-container-counts">{assetSold? 'Sold out' : `${asset.token.available} of ${asset.token.count}`}</p>
                             </div>
                             <div className = "asset-description-container-price-container-btn-wrap">
-                                {   !buyLoading && 
-                                    <button 
-                                        disabled = {disableButton} 
-                                        onClick = {handleBuy} 
-                                        className = "asset-description-container-price-container-buy-btn"
-                                        style = {{ opacity: disableButton? '0.2' : '1'}}
-                                        >Buy
-                                    </button>}
-                                {buyLoading && <div className = "asset-description-container-price-container-buy-loader"> <CircularProgress size={40} thickness={5} /></div>}
+                                { !buttonLoading && <button disabled = {disableButton} onClick = {handleBuy} className = "asset-description-container-price-container-buy-btn" style = {{ opacity: disableButton? '0.2' : '1'}}> {asset.onAuction? "Place bid" : "Buy"} </button> }
+                                { buttonLoading && <div className = "asset-description-container-price-container-buy-loader"> <CircularProgress size={40} thickness={5} /></div> }
                             </div>
                         </div>
                     </div>

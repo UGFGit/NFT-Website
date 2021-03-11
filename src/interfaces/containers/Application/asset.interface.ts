@@ -8,6 +8,8 @@ export interface IAsset{
     contract: IContract;
     tradingTokenAddress: string;
     owner: string;
+    onAuction: boolean;
+    auctionEnd: string;
 }
 
 interface IToken{

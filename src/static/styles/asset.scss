@@ -3,7 +3,7 @@
 
 .asset-root{
     min-height: 100vh;
-    background-color: $grey;
+    background: #FFFFFF;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -91,6 +91,154 @@
                 line-height: 19px;
                 color: #252423;
                 margin-top: 10px;
+            }
+
+
+            .asset-description-container-auction-container{
+                .auction-timer-root{
+                    background: rgba(43, 210, 247, 0.1);
+                    border: 1px solid #2BD2F7;
+                    box-sizing: border-box;
+                    border-radius: 8px;
+                    padding: 12px;
+                    margin-top: 20px;
+                    margin-bottom: 27px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+    
+                    .auction-timer-img-wrap{
+                        width: 16px;
+                        height: 16px;
+    
+                        img{
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+    
+                    .auction-timer-time{
+                        font-family: Roboto;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 14px;
+                        line-height: 16px;
+                        color: #252423;
+                        margin-left: 10px;
+    
+                        span{
+                            color: rgb(155, 155, 155);
+                        }
+                    }
+                }
+
+                .asset-description-container-auction-title{
+                    font-family: Open Sans;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 20px;
+                    line-height: 27px;
+                    color: #252423;
+                }
+
+                .asset-description-container-auction-table{
+                    margin-top: 6px;
+                    margin-bottom: 31px;
+
+                    .asset-description-container-auction-table-header{
+                        display: flex;
+                        flex-direction: row;
+                        height: 34px;
+                        align-items: center;
+
+                        p{
+                            font-family: Open Sans;
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 12px;
+                            line-height: 16px;
+                            color: #868686;
+                        }
+                    }
+                    .asset-description-container-auction-table-body{
+                        max-height: 200px;
+                        overflow: auto;
+
+                        .table-row{
+                            height: 40px;
+                            padding: 10px 0;
+                            border-bottom: 1px solid #F6F9FA;
+
+                            display: flex;
+                            flex-direction: row;
+
+                            .table-prices-wrap{
+                                display: flex;
+                                flex-direction: row;
+
+                                .table-prices-wrap-img-wrap{
+                                    width: 10px;
+                                    height: 8px;
+                                    margin-right: 2px;
+
+                                    img{
+                                        width: 100%;
+                                        height: 100%;
+                                    }
+                                }
+
+                                .table-prices-wrap-price{
+                                    font-family: Open Sans;
+                                    font-style: normal;
+                                    font-weight: normal;
+                                    font-size: 14px;
+                                    line-height: 19px;
+                                    color: #868686;
+                                    margin-left: 4px;
+                                }
+                            }
+
+                            p{
+                                font-family: Open Sans;
+                                font-style: normal;
+                                font-weight: normal;
+                                font-size: 14px;
+                                line-height: 19px;
+                                color: #252423;
+                            }
+
+                            button{
+                                font-family: Roboto;
+                                font-style: normal;
+                                font-weight: normal;
+                                font-size: 14px;
+                                line-height: 16px;
+                                text-align: center;
+                                color: #2BD2F7;
+                                background: #FFFFFF;
+                                border: 0;
+                                outline: 0;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    .from-colm{
+                        width: 20%;
+                    }
+
+                    .price-colm{
+                        width: 50%;
+                    }
+
+                    .expiration-colm{
+                        width: 20%;
+                    }
+
+                    .action-colm{
+                        width: 10%;
+                    }
+                }
             }
 
             .asset-description-container-price-container{

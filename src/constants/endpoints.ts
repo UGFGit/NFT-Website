@@ -12,6 +12,9 @@ export const BLOCKCHAIN_BUY = '/api/blockchain/buy';
 //Metadata
 export const ASSETS = '/api/assets';
 export const ASSETS_ONE = (id: string) => `/api/assets/${id}`;
+export const ASSET_BIDS = "/api/assets/bids";
+export const ASSET_BID_SET = "/api/assets/bids/set";
+export const ASSET_BID_REMOVE = "/api/assets/bids/remove";
 
 //Artists
 export const ARTISTS = '/api/artists';
