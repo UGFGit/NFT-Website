@@ -209,7 +209,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
         return <Progress/>
     }
 
-    const disableButton = assetSold || web3.account ? web3.account.toLowerCase() === asset.owner.toLowerCase(): false;
+    const disableButton = assetSold || (web3.account ? web3.account.toLowerCase() === asset.owner.toLowerCase(): false) || asset.onAuction && (new Date(asset.auctionEnd).getTime() - Date.now() < 0);
 
     return (
         <DocumentTitle title="Dashboard">
@@ -259,7 +259,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                                                 <p className = "table-prices-wrap-price">${bid.price}</p>
                                             </div>
                                             <p className = "expiration-colm">In 5 Days</p>
-                                            {web3.account === bid.account && <button onClick = {() => removeBid(bid.id)} className = "action-colm">Close</button>}
+                                            {web3.account === bid.account && <button disabled = {new Date(asset.auctionEnd).getTime() - Date.now() < 0} onClick = {() => removeBid(bid.id)} className = "action-colm">Close</button>}
                                         </div>
                                     ))}
                                 </div>

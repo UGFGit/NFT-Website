@@ -16,14 +16,15 @@ function Timer({ timeEnd }: TimerProps){
             <div className = "auction-timer-img-wrap">
                 <AccessTimeIcon style = {{fontSize: 16}}/>
             </div>
-            {diff === 0 && <CompoundTimer
+            {initialTime < 0 && <p className = "auction-timer-time">Auction close</p>}
+            {diff === 0 && initialTime > 0 && <CompoundTimer
                 initialTime={initialTime}
                 direction="backward"
                 formatValue={(value) => value >= 10 ? `${value}` : `0${value}`}
             >
                 <p className = "auction-timer-time">Sale ends today in <CompoundTimer.Hours />:<CompoundTimer.Minutes/>:<CompoundTimer.Seconds/></p>
             </CompoundTimer>}
-            {diff > 0 && <p className = "auction-timer-time">Sale ends in {diff} day{diff !== 1? 's': ''} <span className = "auction-timer-time-date">({moment(timeEnd).format('MMMM DD,YYYY')} at {moment(timeEnd).format('h:mma')})</span></p>}
+            {diff > 0 && initialTime > 0 && <p className = "auction-timer-time">Sale ends in {diff} day{diff !== 1? 's': ''} <span className = "auction-timer-time-date">({moment(timeEnd).format('MMMM DD,YYYY')} at {moment(timeEnd).format('h:mma')})</span></p>}
         </div>
     )
 }
