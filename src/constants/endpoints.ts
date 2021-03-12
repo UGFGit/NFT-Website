@@ -15,6 +15,7 @@ export const ASSETS_ONE = (id: string) => `/api/assets/${id}`;
 export const ASSET_BIDS = "/api/assets/bids";
 export const ASSET_BID_SET = "/api/assets/bids/set";
 export const ASSET_BID_REMOVE = "/api/assets/bids/remove";
+export const ASSET_BID_MAX_BID = "/api/assets/bids/max-bid";
 
 //Artists
 export const ARTISTS = '/api/artists';

@@ -3,9 +3,8 @@ import '../../static/styles/asset.scss';
 import DocumentTitle from 'react-document-title';
 import {connect} from 'react-redux';
 import { fetch } from '../../libs';
-import { ASSETS_ONE, FILESTORE, BLOCKCHAIN_NONCE, BLOCKCHAIN_BUY, ASSET_BIDS, ASSET_BID_SET, ASSET_BID_REMOVE } from '../../constants/endpoints';
+import { ASSETS_ONE, FILESTORE, BLOCKCHAIN_BUY, ASSET_BID_SET } from '../../constants/endpoints';
 import Web3 from 'web3';
-import { ABI } from '../../constants/blockchain/abi';
 import { useSnackbar } from 'notistack';
 import { IWeb3State } from '../../interfaces/reducers/web3.interface';
 import { IAsset } from '../../interfaces/containers/Application/asset.interface';
@@ -17,13 +16,14 @@ import Progress from '../../components/Progress';
 import Avatar from '@material-ui/core/Avatar';
 import WethImage from '../../static/images/weth-img.png';
 import Tooltip from '@material-ui/core/Tooltip';
-import { TYPES, PRIMARY_TYPE, REQUEST_METHOD } from '../../constants/blockchain/erc1155';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
 import Dialog from './Dialog';
 import Timer from './Timer';
 import Table from './Table';
+import { checkAllowance, createSignature } from './blockchain';
+import PlaceBidDialog from './PlaceBidDialog';
 
 interface AssetPageProps{
     assetId: string;
@@ -36,6 +36,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const [load, setLoad] = useState(true);
     const [ buttonLoading, setButtonLoading ] = useState(false);
     const [ dialogOpen, setDialogOpen ] = useState(false);
+    const [ placeBidDialogOpen, setPlaceBidDialogOpen ] = useState(false);
 
     const [assetSold, setAssetSold] = useState(false);
 
@@ -75,112 +76,68 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
             socket?.removeListener(SocketEventsEnum.ASSET_UPDATE);
         }
     }, [socket, asset])
-
-
-    const checkAllowance = async (client:Web3, contractAddress: string, paymentAddress: string) => {
-        //@ts-ignore
-        const contract = new client.eth.Contract(ABI, paymentAddress);
-        const allowance = await contract.methods.allowance(web3.account, contractAddress).call();
-        if(Number(allowance) === 0){
-            const amount = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
-            const tx = contract.methods.approve(contractAddress, amount);
-            const abi = tx.encodeABI();
-            const gas = await tx.estimateGas({ from: web3.account });
-            const gasPrice = await client.eth.getGasPrice();
-            await client.eth.sendTransaction({ from: web3.account, to: paymentAddress, data: abi,  gas, gasPrice });
-            enqueueSnackbar(`Allowance was send`, { variant: 'success' });
-        }
-        return;
-    } 
-
-    const getNonce = async () => {
-        const response = await fetch.post(BLOCKCHAIN_NONCE, { contractAddress: asset.contract.contract, account: web3.account});
-        const { nonce } = await response.json();
-        return nonce;
-    }
-
-
+    
     const handleBuy = async () => {
         if(web3.available){
             try{
                 setButtonLoading(true);
                 const client = new Web3(web3.provider);
-                await checkAllowance(client, asset.contract.contract, asset.tradingTokenAddress);
-
-                //@ts-ignore
-                const contract = new client.eth.Contract(ABI, asset.tradingTokenAddress);
-                const decimal = await contract.methods.decimals().call();
-                const value = `${asset.cryptoPrice * Math.pow(10, decimal)}`;
-
-                const data = {
-                    types: TYPES,
-                    primaryType: PRIMARY_TYPE,
-                    domain: {
-                        name: asset.contract.domainName,
-                        version: asset.contract.version,
-                        chainId: asset.contract.chainId,
-                        verifyingContract: asset.contract.contract
-                    },
-                    message: {
-                        from: web3.account,
-                        to: asset.owner,
-                        tradingTokenAddr: asset.tradingTokenAddress,
-                        id: asset.token.tokenId,
-                        amount: 1,
-                        value,
-                        nonce: await getNonce()
-                    }
-                }
-
-                enqueueSnackbar(`Transaction build complete`, { variant: 'success' });
-
-                const signature = await web3.provider.request({
-                    method: REQUEST_METHOD,
-                    params: [web3.account, JSON.stringify(data)],
-                    from: [web3.account]
+                await checkAllowance(web3.account ,client, asset.contract.contract, asset.tradingTokenAddress, enqueueSnackbar);
+                const {signature, value} = await createSignature(asset, client, web3, enqueueSnackbar);
+                enqueueSnackbar(`Waiting for transaction complete`, { variant: 'info' });
+                await fetch.post(BLOCKCHAIN_BUY, { 
+                    account: web3.account, 
+                    contractAddress: asset.contract.contract, 
+                    tokenId: asset.token.tokenId, 
+                    price: value, 
+                    tradingTokenAddress: asset.tradingTokenAddress, 
+                    signature,
+                    assetId: asset.id
                 });
 
-                if(asset.onAuction){
-                    await fetch.post(ASSET_BID_SET, { 
-                        account: web3.account, 
-                        signature,
-                        assetId: asset.id,
-                        price: asset.cryptoPrice
-                    }); 
-
-                    enqueueSnackbar(`The rate is fixed`, { variant: 'success' });
-                }
-
-                if(!asset.onAuction){
-                    enqueueSnackbar(`Waiting for transaction complete`, { variant: 'info' });
-
-                    await fetch.post(BLOCKCHAIN_BUY, { 
-                        account: web3.account, 
-                        contractAddress: asset.contract.contract, 
-                        tokenId: asset.token.tokenId, 
-                        price: value, 
-                        tradingTokenAddress: asset.tradingTokenAddress, 
-                        signature,
-                        assetId: asset.id
-                    });
-
-                    enqueueSnackbar(`The purchase was made`, { variant: 'success' });
-                }
+                enqueueSnackbar(`The purchase was made`, { variant: 'success' });
                 setButtonLoading(false);
             } catch(err){
+                console.log(err)
                 setButtonLoading(false);
                 enqueueSnackbar("Something went wrong", { variant: 'error' });
             }            
         }
     }
 
-    
+    const handlePlaceBit = async (price: number) => {
+        if(web3.available){
+            try{
+                setButtonLoading(true);
+                const client = new Web3(web3.provider);
+                await checkAllowance(web3.account ,client, asset.contract.contract, asset.tradingTokenAddress, enqueueSnackbar);
+                const {signature} = await createSignature(asset, client, web3, enqueueSnackbar, price);
+                
+                await fetch.post(ASSET_BID_SET, { 
+                    account: web3.account, 
+                    signature,
+                    assetId: asset.id,
+                    price
+                }); 
+
+                enqueueSnackbar(`The rate is fixed`, { variant: 'success' });
+
+                setButtonLoading(false);
+            } catch(err){
+                console.log(err)
+                setButtonLoading(false);
+                enqueueSnackbar("Something went wrong", { variant: 'error' });
+            }            
+        }
+    }
 
     if(load){
         return <Progress/>
     }
 
-    const disableButton = assetSold || (web3.account ? web3.account.toLowerCase() === asset.owner.toLowerCase(): false) || asset.onAuction && (new Date(asset.auctionEnd).getTime() - Date.now() < 0);
+    const timeEnd = new Date(asset.auctionEnd).getTime() - Date.now() < 0;
+    const curentUser = web3.account ? web3.account.toLowerCase() === asset.owner.toLowerCase(): false;
+    const disableButton = assetSold || curentUser || asset.onAuction && timeEnd;
 
     return (
         <DocumentTitle title="Dashboard">
@@ -227,7 +184,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                                 <p className = "asset-description-container-price-container-counts">{assetSold? 'Sold out' : `${asset.token.available} of ${asset.token.count}`}</p>
                             </div>
                             <div className = "asset-description-container-price-container-btn-wrap">
-                                { !buttonLoading && <button disabled = {disableButton} onClick = {handleBuy} className = "asset-description-container-price-container-buy-btn" style = {{ opacity: disableButton? '0.2' : '1'}}> {asset.onAuction? "Place bid" : "Buy"} </button> }
+                                { !buttonLoading && <button disabled = {disableButton} onClick = {() => asset.onAuction? setPlaceBidDialogOpen(true) : handleBuy()} className = "asset-description-container-price-container-buy-btn" style = {{ opacity: disableButton? '0.2' : '1'}}> {asset.onAuction? "Place bid" : "Buy"} </button> }
                                 { buttonLoading && <div className = "asset-description-container-price-container-buy-loader"> <CircularProgress size={40} thickness={5} /></div> }
                             </div>
                         </div>}
@@ -238,6 +195,17 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                     open={dialogOpen}
                     onClose = {() => setDialogOpen(false)}
                 />
+                {placeBidDialogOpen && <PlaceBidDialog
+                    open={true}
+                    onClose = {() => setPlaceBidDialogOpen(false)}
+                    web3 = {web3}
+                    paymentAddress={asset.tradingTokenAddress}
+                    handleBuy = {(price) => {
+                        handlePlaceBit(price);
+                        setPlaceBidDialogOpen(false);
+                    }}
+                    asset = {asset}
+                />}
                 <div className = "asset-footer-wrap">
                     <Footer/>
                 </div>

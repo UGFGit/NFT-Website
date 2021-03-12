@@ -328,3 +328,110 @@
         margin-top: auto;
     }
 }
+
+.place-bid-dialog-root{
+    .place-bid-dialog-title{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .place-bid-dialog-content{
+        .place-bid-dialog-content-title{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20;
+            color: #252423;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .place-bid-dialog-content-balance-wrap{
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 5px;
+
+            .place-bid-dialog-content-balance-title{
+                font-family: Open Sans;
+                font-style: normal;
+                font-size: 14px;
+                font-weight: 500;
+                color: #252423;
+            }
+
+            .place-bid-dialog-content-balance-balance{
+                font-family: Open Sans;
+                font-style: normal;
+                font-size: 14px;
+                font-weight: 500;
+                color: rgb(138, 147, 155);
+                margin-left: auto;
+            }
+        }
+
+        .place-bid-dialog-content-prices-wrap{
+            height: 48px;
+            display: flex;
+            flex-direction: row;
+            border: 1px solid rgb(229, 232, 235);
+            border-radius: 5px;
+
+            .place-bid-dialog-content-prices-crypto-price-wrap{
+                background-color: rgb(251, 253, 255);
+                border-right: 1px solid rgb(229, 232, 235);
+                padding: 0px 12px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                color: rgb(138, 147, 155);
+                font-size: 14px;
+                font-weight: 500;
+                width: 126px;
+            }
+
+            .place-bid-dialog-content-prices-price-wrap{
+                background-color: rgb(251, 253, 255);
+                border-left: 1px solid rgb(229, 232, 235);
+                padding: 0px 12px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                min-width: 126px;
+                p{
+                    color: rgb(138, 147, 155);
+                    font-size: 14px;
+                    font-weight: 500;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+            }
+        }
+
+        .place-bid-dialog-content-big-btn{
+            margin-top: 32px;
+
+            background: #252423;
+            border: 1px solid #252423;
+            border-radius: 39px;
+            height: 44px;
+            width: 100%;
+            outline: 0;
+            cursor: pointer;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 19px;
+            color: #FFFFFF;
+        }
+
+        .place-bid-dialog-content-big-btn-disable{
+            background-color: rgba(37, 36, 35, 0.25);
+            cursor: not-allowed;
+        }
+    }
+}
