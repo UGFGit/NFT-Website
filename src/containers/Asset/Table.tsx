@@ -82,7 +82,7 @@ function Table({ asset, web3 }: TableProps){
                                 </div>
                             </Tooltip>
                             <p>{bid.cryptoPrice}</p>
-                            <p className = "table-prices-wrap-price">${bid.price}</p>
+                            <p className = "table-prices-wrap-price">${bid.price.toFixed(2)}</p>
                         </div>
                         <p className = "expiration-colm">In 5 Days</p>
                         {web3.account === bid.account && <button disabled = {disableButton} onClick = {() => removeBid(bid.id)} className = "action-colm">Close</button>}

@@ -180,7 +180,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                                 </Tooltip>
                                 <p className = "asset-description-container-price-container-price">{asset.cryptoPrice}</p>
                                 <div className = "asset-description-container-price-devider"/>
-                                <p className = "asset-description-container-price-container-price">${asset.price}</p>
+                                <p className = "asset-description-container-price-container-price">${asset.price.toFixed(2)}</p>
                                 <p className = "asset-description-container-price-container-counts">{assetSold? 'Sold out' : `${asset.token.available} of ${asset.token.count}`}</p>
                             </div>
                             <div className = "asset-description-container-price-container-btn-wrap">

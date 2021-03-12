@@ -44,7 +44,7 @@ function TokenCard({ asset }: CardProps){
                 <div className = "card-body-footer">
                     <div className = "card-body-footer-price-wrap">
                         <p>{cryptoPrice} WETH</p>
-                        <p>${price}</p>
+                        <p>${price.toFixed(2)}</p>
                     </div>
                 </div>        
             </div>
