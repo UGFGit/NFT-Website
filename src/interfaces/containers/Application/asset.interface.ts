@@ -9,6 +9,7 @@ export interface IAsset{
     tradingTokenAddress: string;
     owner: string;
     onAuction: boolean;
+    onSale: boolean;
     auctionEnd: string;
 }
 

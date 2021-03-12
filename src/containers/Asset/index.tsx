@@ -23,17 +23,11 @@ import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
 import Dialog from './Dialog';
 import Timer from './Timer';
+import Table from './Table';
 
 interface AssetPageProps{
     assetId: string;
     web3: IWeb3State;
-}
-
-interface IBids{
-    id: string;
-    account: string;
-    cryptoPrice: number;
-    price: number;
 }
 
 function AssetPage({ assetId, web3 }: AssetPageProps){
@@ -44,8 +38,6 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const [ dialogOpen, setDialogOpen ] = useState(false);
 
     const [assetSold, setAssetSold] = useState(false);
-
-    const [bids, setBids] = useState<IBids[]>([]);
 
     const socket = useSocket();
 
@@ -63,25 +55,9 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
         return history.push('/404');        
     }
 
-    const loadBids = async () => {
-        if(!asset.id){
-            return;
-        }
-
-        const response = await fetch.post(ASSET_BIDS, { assetId: asset.id });
-        if(response.ok){
-            const { bids } = await response.json();
-            setBids(bids);
-        }
-    }
-
     useEffect(() => {
         loadAsset();
     }, []);
-
-    useEffect(() => {
-        loadBids();
-    }, [asset])
 
     useEffect(() => {
         socket?.on(SocketEventsEnum.ASSET_SOLD, ({ id }: {id: string}) => {
@@ -198,12 +174,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
         }
     }
 
-    const removeBid = async (bidId: string) => {
-        const response = await fetch.post(ASSET_BID_REMOVE, { bidId });
-        if(response.ok){
-            setBids([...bids.filter(bid => bid.id !== bidId)]);
-        }
-    }
+    
 
     if(load){
         return <Progress/>
@@ -238,34 +209,12 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                                 timeEnd = {asset.auctionEnd}
                             />
                             <p className = "asset-description-container-auction-title">BIDS</p>
-                            <div className = "asset-description-container-auction-table">
-                                <div className = "asset-description-container-auction-table-header">
-                                    <p className = "from-colm">From</p>
-                                    <p className = 'price-colm'>Price</p>
-                                    <p className = "expiration-colm">Expiration</p>
-                                    <p className = "action-colm"></p>
-                                </div>
-                                <div className = "asset-description-container-auction-table-body">
-                                    {bids.map((bid) => (
-                                        <div className = "table-row" key = {bid.id}>
-                                            <p className = "from-colm">{`${bid.account.slice(0, 6)}...${bid.account.slice(38)}`}</p>
-                                            <div className = "price-colm table-prices-wrap">
-                                                <Tooltip arrow title = "WETH" placement = "top">
-                                                    <div className = "table-prices-wrap-img-wrap">
-                                                        <img alt = "" src = {WethImage}/>
-                                                    </div>
-                                                </Tooltip>
-                                                <p>{bid.cryptoPrice}</p>
-                                                <p className = "table-prices-wrap-price">${bid.price}</p>
-                                            </div>
-                                            <p className = "expiration-colm">In 5 Days</p>
-                                            {web3.account === bid.account && <button disabled = {new Date(asset.auctionEnd).getTime() - Date.now() < 0} onClick = {() => removeBid(bid.id)} className = "action-colm">Close</button>}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                            <Table
+                                web3={web3}
+                                asset={asset}
+                            />
                         </div>}
-                        <div className = "asset-description-container-price-container">
+                        {(asset.onAuction || asset.onSale) && <div className = "asset-description-container-price-container">
                             <div className = "asset-description-container-price-container-price-wrap">
                                 <Tooltip arrow title = "WETH" placement = "top">
                                     <div className = "asset-description-container-price-container-price-crypto-wrap">
@@ -281,7 +230,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                                 { !buttonLoading && <button disabled = {disableButton} onClick = {handleBuy} className = "asset-description-container-price-container-buy-btn" style = {{ opacity: disableButton? '0.2' : '1'}}> {asset.onAuction? "Place bid" : "Buy"} </button> }
                                 { buttonLoading && <div className = "asset-description-container-price-container-buy-loader"> <CircularProgress size={40} thickness={5} /></div> }
                             </div>
-                        </div>
+                        </div>}
                     </div>
                 </div>
                 <Dialog
