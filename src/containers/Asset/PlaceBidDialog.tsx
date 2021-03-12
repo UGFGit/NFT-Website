@@ -52,17 +52,20 @@ function PlaceBidDialog({ open, onClose, web3, paymentAddress, handleBuy, asset 
         }
     }
 
-    const loadMaxBid = async () => {
+    const loadMaxBid = async (firstload = false) => {
         const response = await fetch.post(ASSET_BID_MAX_BID, { assetId: asset.id });
         if(response.ok){
             const { value } = await response.json();
+            if(firstload){
+                setPice(value)
+            }
             setMaxBid(value);
         }
     }
 
     useEffect(() => {
         loadPrices();
-        loadMaxBid();
+        loadMaxBid(true);
     }, []);
 
     useEffect(() => {
