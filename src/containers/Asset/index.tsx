@@ -24,6 +24,7 @@ import Table from './Table';
 import { checkAllowance, createSignature } from './blockchain';
 import PlaceBidDialog from './PlaceBidDialog';
 import ReactPlayer from 'react-player';
+import AudioPlayer from '../../components/AudioPlayer';
 
 interface AssetPageProps{
     assetId: string;
@@ -35,7 +36,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const [asset, setAsset] = useState<IAsset>({} as IAsset);
     const [load, setLoad] = useState(true);
     const [ buttonLoading, setButtonLoading ] = useState(false);
-    const [ dialogOpen, setDialogOpen ] = useState(false);
+    //const [ dialogOpen, setDialogOpen ] = useState(false);
     const [ placeBidDialogOpen, setPlaceBidDialogOpen ] = useState(false);
 
     const [assetSold, setAssetSold] = useState(false);
@@ -139,6 +140,18 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
         if(asset.metadata.mimetype.split('/')[0] === 'video'){
             return <ReactPlayer width = '100%' url = {FILESTORE(asset.metadata.filename)} playing loop muted/>
         }
+        if(asset.metadata.mimetype.split('/')[0] === 'audio'){
+            return(
+                <div className = "asset-image-container-image-wrap">
+                    <img alt = "" src={FILESTORE(asset.metadata.filePlaceholder || asset.metadata.filename)}/>
+                    <div className = "asset-image-container-audio-player-wrap">
+                        <AudioPlayer
+                            src = {FILESTORE(asset.metadata.filename)}
+                        />
+                    </div>
+                </div>
+            )
+        }
         return (
             <div className = "asset-image-container-image-wrap">
                 <img alt = "" src={FILESTORE(asset.metadata.filePlaceholder || asset.metadata.filename)}/>
@@ -157,9 +170,9 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                 <div className = "asset-body">
                     <div className = "asset-image-container">
                         <div className = "asset-image-container-nav">
-                            <div onClick = {() => setDialogOpen(true)} className = "asset-image-container-nav-resize-wrap">
+                            {/* <div onClick = {() => setDialogOpen(true)} className = "asset-image-container-nav-resize-wrap">
                                 <img alt ="" src = {ResizeImage}/>
-                            </div>
+                            </div> */}
                         </div>
                         {renderLeftContent()}
                     </div>
@@ -199,11 +212,11 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                         </div>}
                     </div>
                 </div>
-                <Dialog
+                {/* <Dialog
                     asset = {asset}
                     open={dialogOpen}
                     onClose = {() => setDialogOpen(false)}
-                />
+                /> */}
                 {placeBidDialogOpen && <PlaceBidDialog
                     open={true}
                     onClose = {() => setPlaceBidDialogOpen(false)}

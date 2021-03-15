@@ -5,6 +5,7 @@
     min-height: 100vh;
     background: #FFFFFF;
     width: 100%;
+    display: flex;
 
     .asset-body{
         flex: 1;
@@ -35,12 +36,18 @@
             }
 
             .asset-image-container-image-wrap{
-                width: 522px;
-                height: 496px;
                 margin-top: 31px;
+                position: relative;
                 
                 img{
                     width: 100%;
+                }
+
+                .asset-image-container-audio-player-wrap{
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
                 }
             }
         }

@@ -4,8 +4,8 @@ import { useSnackbar } from 'notistack';
 
 const SocketContext = React.createContext<SocketIOClient.Socket|null|undefined>(null);
 
-const URL = 'http://13.48.56.189/';
-//const URL = 'http://localhost:50000/';
+//const URL = 'http://13.48.56.189/';
+const URL = 'http://localhost:50000/';
 
 const SOCKET_OPTIONS: SocketIOClient.ConnectOpts = {
     transports: ['websocket'],
