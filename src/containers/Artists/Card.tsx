@@ -11,7 +11,7 @@ import ImageLoader from 'react-load-image';
 function Card({ host, name, background, avatar }: IArtist){
     return(
         <div className = "artist-card-root" onClick = {() => {
-            alert(`redirect to http://${host}`)
+            window.location.assign(`https://${host}`);
         }}>
             <ImageLoader
                 className = "artist-card-image-wrap"
