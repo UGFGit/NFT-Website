@@ -26,7 +26,7 @@ const extendedFetch = (method:string, url: string, body?: any , headers?: any) =
             options.body = body instanceof FormData ? body : JSON.stringify(body);
         }
     }
-    console.log(method,url , body);
+    //console.log(method,url , body);
     return fetch(url, options);
 };
 

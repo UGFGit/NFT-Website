@@ -5,7 +5,7 @@ import classNames from 'classnames';
 interface InputProps{
     lable: string;
     value: number | string;
-    onChange: (value: string) => void;
+    onChange?: (value: string) => void;
     onBlur?: () => void;
     placeholder: string;
     type?: 'text' | 'number',
@@ -13,10 +13,11 @@ interface InputProps{
     helperText?: string;
     maxLength?: number;
     error?: string;
-    min?: number
+    min?: number;
+    disabled?: boolean;
 }
 
-function Input({ lable, value, onChange, placeholder, type, optional, helperText, maxLength, error, onBlur, min = 0 }: InputProps){
+function Input({ lable, value, onChange, placeholder, type, optional, helperText, maxLength, error, onBlur, min = 0, disabled= false }: InputProps){
     return(
         <div className='input-root'>
             <div className = "input-lable-wrap">
@@ -25,13 +26,14 @@ function Input({ lable, value, onChange, placeholder, type, optional, helperText
             </div>
             <input 
                 value = {value} 
-                onChange={(event) => onChange(event.target.value)} 
+                onChange={(event) => onChange && onChange(event.target.value)} 
                 onBlur = {onBlur}
-                className = {classNames("input", { error: Boolean(error)})}
+                className = "input"
                 placeholder = {placeholder}
                 type={type || 'text'}
                 maxLength = {maxLength}
                 min = {min}
+                disabled = {disabled}
             />
             <div className = "input-help-wrap">
                 { error && <p className = "error-text">{error}</p>}

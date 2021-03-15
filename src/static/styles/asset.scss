@@ -315,108 +315,94 @@
 }
 
 .place-bid-dialog-root{
-    .place-bid-dialog-title{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-    }
+    .place-bid-dialog-title-root{
+        padding: 0 20px;
 
-    .place-bid-dialog-content{
-        .place-bid-dialog-content-title{
-            font-family: Open Sans;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 20;
-            color: #252423;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .place-bid-dialog-content-balance-wrap{
+        .place-bid-dialog-title-wrap{
             display: flex;
             flex-direction: row;
-            margin-bottom: 5px;
+            border-bottom: 1px solid #F6F9FA;
+            padding: 22px 0 21px 0;
+            align-items: center;
 
-            .place-bid-dialog-content-balance-title{
+            p{
                 font-family: Open Sans;
                 font-style: normal;
-                font-size: 14px;
-                font-weight: 500;
+                font-weight: bold;
+                font-size: 20px;
+                line-height: 27px;
+
+                /* #252423 */
+
                 color: #252423;
             }
 
-            .place-bid-dialog-content-balance-balance{
-                font-family: Open Sans;
-                font-style: normal;
-                font-size: 14px;
-                font-weight: 500;
-                color: rgb(138, 147, 155);
+            .place-bid-dialog-title-wrap-btn{
                 margin-left: auto;
             }
         }
+    }
+
+    .place-bid-dialog-content-root{
+        padding: 30px 20px 70px 20px;
+
+        .place-bid-dialog-content-balance{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 19px;
+            color: #252423;
+            margin-bottom: 20px;
+        }
 
         .place-bid-dialog-content-prices-wrap{
-            height: 48px;
             display: flex;
             flex-direction: row;
-            border: 1px solid rgb(229, 232, 235);
-            border-radius: 5px;
+            min-width: 636px;
 
-            .place-bid-dialog-content-prices-crypto-price-wrap{
-                background-color: rgb(251, 253, 255);
-                border-right: 1px solid rgb(229, 232, 235);
-                padding: 0px 12px;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                color: rgb(138, 147, 155);
-                font-size: 14px;
-                font-weight: 500;
-                width: 126px;
-            }
-
-            .place-bid-dialog-content-prices-price-wrap{
-                background-color: rgb(251, 253, 255);
-                border-left: 1px solid rgb(229, 232, 235);
-                padding: 0px 12px;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                min-width: 126px;
-                p{
-                    color: rgb(138, 147, 155);
-                    font-size: 14px;
-                    font-weight: 500;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    white-space: nowrap;
-                }
+            .input-root:first-child{
+                margin-right: 20px;
             }
         }
+    }
 
-        .place-bid-dialog-content-big-btn{
-            margin-top: 32px;
+    .place-bid-dialog-actions-root{
+        padding: 0 14px;
 
-            background: #252423;
-            border: 1px solid #252423;
-            border-radius: 39px;
-            height: 44px;
+        .place-bid-dialog-actions-wrap{
+            padding: 18px 0;
+            
+            display: flex;
+            flex-direction: row;
             width: 100%;
-            outline: 0;
-            cursor: pointer;
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 16px;
-            line-height: 19px;
-            color: #FFFFFF;
-        }
+            border-top: 1px solid #F6F9FA;
 
-        .place-bid-dialog-content-big-btn-disable{
-            background-color: rgba(37, 36, 35, 0.25);
-            cursor: not-allowed;
+            .place-bid-dialog-actions-big-btn{
+                margin-left: auto;
+    
+                background: #252423;
+                border: 1px solid #252423;
+                border-radius: 39px;
+    
+    
+                height: 44px;
+                width: 181px;
+                outline: 0;
+    
+                cursor: pointer;
+    
+                font-family: Roboto;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 19px;
+                color: #FFFFFF;
+            }
+    
+            .place-bid-dialog-actions-big-btn-disable{
+                cursor: not-allowed;
+            }
         }
     }
 }
@@ -429,6 +415,27 @@
             .asset-description-container{
                 margin-left: 0px;
                 margin-top: 16px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 731px){
+    .place-bid-dialog-root{
+        .place-bid-dialog-content-root{
+            .place-bid-dialog-content-prices-wrap{
+                min-width: 400px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 512px){
+    .place-bid-dialog-root{
+        .place-bid-dialog-content-root{
+            .place-bid-dialog-content-prices-wrap{
+                flex-direction: column;
+                min-width: unset;
             }
         }
     }

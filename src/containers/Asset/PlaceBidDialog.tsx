@@ -6,12 +6,13 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { CRYPTO_COMPARE, ASSET_BID_MAX_BID } from '../../constants/endpoints';
 import { fetch } from '../../libs';
-import TextField from '@material-ui/core/TextField';
 import classNames from 'classnames'
 import { IWeb3State } from '../../interfaces/reducers/web3.interface';
 import { checkBalance } from './blockchain';
 import Web3 from 'web3';
 import { IAsset } from '../../interfaces/containers/Application/asset.interface';
+import DialogActions from '@material-ui/core/DialogActions';
+import Input from '../../components/Input';
 
 interface IPrices{
     [key: string]: {
@@ -76,46 +77,44 @@ function PlaceBidDialog({ open, onClose, web3, paymentAddress, handleBuy, asset 
 
     return(
         <MuiDialog maxWidth='md' open={open} className = "place-bid-dialog-root">
-            <DialogTitle className = "place-bid-dialog-title">
-                <IconButton onClick = {onClose}>
-                    <CloseIcon />
-                </IconButton>
+            <DialogTitle className = "place-bid-dialog-title-root">
+                <div className = "place-bid-dialog-title-wrap">
+                    <p>Place a bid</p>
+                    <IconButton className = "place-bid-dialog-title-wrap-btn" onClick = {onClose}>
+                        <CloseIcon style = {{fontSize: 16}} />
+                    </IconButton>
+                </div>                
             </DialogTitle>
-            <DialogContent className = "place-bid-dialog-content" dividers style = {{
-                padding: "16px 24px"
-            }}>
-                <p className = "place-bid-dialog-content-title">Place a bid</p> 
-                <div className = "place-bid-dialog-content-balance-wrap">
-                    <p className = "place-bid-dialog-content-balance-title">Price</p>
-                    <p className = "place-bid-dialog-content-balance-balance">Balance: {balance} WETH</p>
-                </div>
-                <div className = "place-bid-dialog-content-prices-wrap">
-                    <div className = "place-bid-dialog-content-prices-crypto-price-wrap">
-                        <p>WETH</p>
-                    </div>
-                    <TextField
+            <DialogContent className = "place-bid-dialog-content-root">
+                <p className = "place-bid-dialog-content-balance">Balance: {balance} WETH</p>
+                <div className = 'place-bid-dialog-content-prices-wrap'>
+                    <Input
+                        lable = "Price (WETH)"
                         value = {price}
-                        fullWidth
-                        style = {{
-                            margin: 'auto',
-                            padding: '0px 5px'
-                        }}
-                        InputProps={{
-                            disableUnderline: true
-                        }}
-                        onChange = {(event) => {
-                            setPice(event.target.value);
+                        onChange= {(value) => {
+                            setPice(value);
                             loadBalance();
                             loadMaxBid();
                         }}
+                        placeholder = "Amount"
+                        type = 'number'
+                        error = {Number(price) > balance ? "Not enough WETH to place bid": ''}
+                        min={0}
                     />
-                    <div className = "place-bid-dialog-content-prices-price-wrap">
-                        <p>${(Number(price) * prices.WETH.USD).toFixed(2)}</p>
-                    </div>
-                </div>   
-
-                <button onClick = {() => handleBuy(Number(price))} disabled={disableButton} className = {classNames("place-bid-dialog-content-big-btn", { 'place-bid-dialog-content-big-btn-disable': disableButton })}>Place bid</button>  
+                    <Input
+                        lable = "Price ($)"
+                        value = {(Number(price) * prices.WETH.USD).toFixed(2)}
+                        placeholder = "Amount"
+                        type = 'number'
+                        disabled
+                    />
+                </div>
             </DialogContent>
+            <DialogActions className = "place-bid-dialog-actions-root">
+                <div className = "place-bid-dialog-actions-wrap">
+                    <button onClick = {() => handleBuy(Number(price))} disabled={disableButton} className = {classNames("place-bid-dialog-actions-big-btn", { 'place-bid-dialog-actions-big-btn-disable': disableButton })}>Place bid</button>  
+                </div>
+            </DialogActions>
         </MuiDialog>
     )
 

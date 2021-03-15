@@ -44,24 +44,19 @@
         color: $black;
     }
 
-    .input.error{
-        border: 1px solid red;
-        color: red;
-    }
-
     .input-help-wrap{
         display: flex;
         flex-direction: column;
+        margin-top: 4px;
 
         .error-text{
             font-family: Open Sans;
             font-style: normal;
             font-weight: normal;
-            font-size: 14px;
-            line-height: 19px;
-            letter-spacing: -0.5px;
-            color: red;
-            margin-left: 10px;
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0.5px;
+            color: #CC123F;
         }
 
         .helper-text{
