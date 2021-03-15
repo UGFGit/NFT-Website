@@ -27,7 +27,7 @@ function Dropzone({ file, onChange, error, accept, type }: DropzoneProps){
         onChange(file)
     }, [onChange])
     
-    const {getRootProps, getInputProps} = useDropzone({onDrop, accept, multiple: false, maxSize: 31457280});
+    const {getRootProps, getInputProps} = useDropzone({onDrop, accept, multiple: false, maxSize: 104857600});
     
     return(
         <div className = 'dropzone-root'>

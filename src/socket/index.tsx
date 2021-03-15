@@ -4,11 +4,24 @@ import { useSnackbar } from 'notistack';
 
 const SocketContext = React.createContext<SocketIOClient.Socket|null|undefined>(null);
 
-//const URL = 'http://13.48.56.189/';
-const URL = 'http://localhost:50000/';
+let URL = '';
+const host = window.location.host;
+
+if(host.includes('localhost')){
+    URL = 'http://localhost:50000/';
+}
+
+if(host.includes('utopiagenesis')){
+    URL = `https://${host}/`;
+}
+
+if(!URL){
+    URL = `http://${host}/`;
+}
 
 const SOCKET_OPTIONS: SocketIOClient.ConnectOpts = {
     transports: ['websocket'],
+    secure: window.location.href.includes('https://')
 };
 
 interface SocketProviderProps{
