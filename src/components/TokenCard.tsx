@@ -8,6 +8,8 @@ import ImageLoader from 'react-load-image';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ImageNotFound from '../static/images/image-not-found.jpg';
 import { useHistory } from "react-router-dom";
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import moment from 'moment';
 
 interface CardProps{
     asset: IAsset
@@ -16,7 +18,29 @@ interface CardProps{
 function TokenCard({ asset }: CardProps){
     const history = useHistory();
 
-    const { artist, metadata, price, cryptoPrice, token, id } = asset;
+    const { artist, metadata, price, cryptoPrice, token, id, auctionEnd } = asset;
+
+    const renderTime = () => {
+        const diff = moment({hours: 0}).diff(auctionEnd, 'days') * -1;
+
+        if(diff === 0){
+            const diff_hours = moment().diff(auctionEnd, 'hours') * -1;
+
+            if(diff_hours === 0){
+                const diff_minnets = moment().diff(auctionEnd, 'minutes') * -1;
+
+                if(diff_minnets === 0 ){
+                    return(<p>less than 1 minute</p>);
+                }
+                
+                return(<p>{diff_minnets} minute{diff_minnets > 10? 's': ''} left</p>);
+            }
+            
+            return(<p>{diff_hours} hour{diff_hours > 2? 's': ''} left</p>) 
+        }
+
+        return(<p>{diff} day{diff !== 1? 's': ''} left</p>)
+    }
 
     return(
         <div>
@@ -46,6 +70,10 @@ function TokenCard({ asset }: CardProps){
                         <p>{cryptoPrice} WETH</p>
                         <p>${price.toFixed(2)}</p>
                     </div>
+                    {asset.onAuction && <div className = "card-body-footer-auction-time-wrap">
+                        <AccessTimeIcon color='inherit' style = {{fontSize: 10, marginTop: 3}}/>
+                        <p>{renderTime()}</p>
+                    </div>}
                 </div>        
             </div>
         </div>

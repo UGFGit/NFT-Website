@@ -68,6 +68,9 @@
         background-color: $black;
         padding: 11px 20px;
 
+        display: flex;
+        flex-direction: row;
+
         .card-body-footer-price-wrap{
             font-family: Open Sans;
             font-style: normal;
@@ -77,22 +80,20 @@
             color: $white;
         }
 
-        .card-body-buy-btn{
-            width: 107px;
-            height: 40px;
+        .card-body-footer-auction-time-wrap{
             margin-left: auto;
-            padding: 10px 40px;
-            background-color: $grey;
-            border: 1px solid $btn-black;
-            outline: 0;
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 16px;
-            line-height: 19px;
-            color: $black;
-            border-radius: 39px;
-            cursor: pointer;
+            display: flex;
+            flex-direction: row;
+            color: #FFFFFF;
+
+            p{
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 10px;
+                line-height: 14px;
+                margin-left: 4px;
+            }
         }
     }
 }
