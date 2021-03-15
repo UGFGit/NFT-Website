@@ -2,7 +2,7 @@ stages:
     - install
     - deploy
 
-Install:
+Install:dev:
     stage: install
     tags:
         - genesis-arts-dev
@@ -18,7 +18,23 @@ Install:
         - if: '$CI_COMMIT_BRANCH == "develop"'
           when: always
 
-Deploy:
+Install:prod:
+    stage: install
+    tags:
+        - genesis-arts-prod
+    script:
+        - npm install --unsafe-perm
+    cache:
+        untracked: true
+        key: "$CI_COMMIT_SHORT_SHA"
+        paths:
+            - node_modules/
+        policy: push
+    rules:
+        - if: '$CI_COMMIT_BRANCH == "master"'
+          when: always
+
+Deploy:dev:
     stage: deploy
     tags:
         - genesis-arts-dev
@@ -27,6 +43,23 @@ Deploy:
         - sudo cp -a -f ./build/. /home/ubuntu/front
     rules:
         - if: '$CI_COMMIT_BRANCH == "develop"'
+          when: always
+    cache:
+        untracked: true
+        key: "$CI_COMMIT_SHORT_SHA"
+        paths:
+            - node_modules/
+        policy: pull
+
+Deploy:prod:
+    stage: deploy
+    tags:
+        - genesis-arts-prod
+    script:
+        - npm run build
+        - sudo cp -a -f ./build/. /home/ubuntu/front
+    rules:
+        - if: '$CI_COMMIT_BRANCH == "master"'
           when: always
     cache:
         untracked: true
