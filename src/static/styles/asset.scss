@@ -5,14 +5,12 @@
     min-height: 100vh;
     background: #FFFFFF;
     width: 100%;
-    display: flex;
-    flex-direction: column;
 
     .asset-body{
         flex: 1;
         display: flex;
         flex-direction: row;
-        padding: 120px 212px;
+        padding: 120px 12%;
 
         .asset-image-container{
             flex: 1;
@@ -146,10 +144,11 @@
                     margin-bottom: 31px;
 
                     .asset-description-container-auction-table-header{
-                        display: flex;
-                        flex-direction: row;
                         height: 34px;
                         align-items: center;
+
+                        grid-template-columns: repeat(3, 1fr);
+                        display: grid;
 
                         p{
                             font-family: Open Sans;
@@ -165,12 +164,11 @@
                         overflow: auto;
 
                         .table-row{
+                            grid-template-columns: repeat(3, 1fr);
+                            display: grid;
                             height: 40px;
                             padding: 10px 0;
                             border-bottom: 1px solid #F6F9FA;
-
-                            display: flex;
-                            flex-direction: row;
 
                             .table-prices-wrap{
                                 display: flex;
@@ -221,22 +219,6 @@
                                 cursor: pointer;
                             }
                         }
-                    }
-
-                    .from-colm{
-                        width: 20%;
-                    }
-
-                    .price-colm{
-                        width: 50%;
-                    }
-
-                    .expiration-colm{
-                        width: 20%;
-                    }
-
-                    .action-colm{
-                        width: 10%;
                     }
                 }
             }
@@ -322,10 +304,6 @@
                 }
             }
         }
-    }
-
-    .asset-footer-wrap{
-        margin-top: auto;
     }
 }
 
@@ -432,6 +410,63 @@
         .place-bid-dialog-content-big-btn-disable{
             background-color: rgba(37, 36, 35, 0.25);
             cursor: not-allowed;
+        }
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .asset-root{
+        .asset-body{
+            flex-direction: column;
+
+            .asset-description-container{
+                margin-left: 0px;
+                margin-top: 16px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 894px){
+    .asset-root{
+        .asset-body{
+            padding: 95px 12%;
+
+            .asset-description-container{
+                .asset-description-container-auction-container{
+                    .asset-description-container-auction-table{
+                        margin-bottom: 130px;
+
+                        .asset-description-container-auction-table-body{
+                            overflow: unset;
+                        }
+                    }
+                }
+
+                .asset-description-container-price-container{
+                    margin-top: unset;
+                    position: fixed;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 450px){
+    .asset-root{
+        .asset-body{
+            padding: 95px 16px;
+        }
+    }
+}
+
+@media screen and (max-width: 370px){
+    .asset-root{
+        .asset-body{
+            padding: 95px 16px;
         }
     }
 }

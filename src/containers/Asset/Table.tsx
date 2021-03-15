@@ -68,14 +68,13 @@ function Table({ asset, web3 }: TableProps){
             <div className = "asset-description-container-auction-table-header">
                 <p className = "from-colm">From</p>
                 <p className = 'price-colm'>Price</p>
-                <p className = "expiration-colm">Expiration</p>
                 <p className = "action-colm"></p>
             </div>
             <div className = "asset-description-container-auction-table-body">
                 {bids.map((bid) => (
                     <div className = "table-row" key = {bid.id}>
-                        <p className = "from-colm">{`${bid.account.slice(0, 6)}...${bid.account.slice(38)}`}</p>
-                        <div className = "price-colm table-prices-wrap">
+                        <p>{`${bid.account.slice(0, 6)}...${bid.account.slice(38)}`}</p>
+                        <div className = "table-prices-wrap">
                             <Tooltip arrow title = "WETH" placement = "top">
                                 <div className = "table-prices-wrap-img-wrap">
                                     <img alt = "" src = {WethImage}/>
@@ -84,8 +83,7 @@ function Table({ asset, web3 }: TableProps){
                             <p>{bid.cryptoPrice}</p>
                             <p className = "table-prices-wrap-price">${bid.price.toFixed(2)}</p>
                         </div>
-                        <p className = "expiration-colm">In 5 Days</p>
-                        {web3.account === bid.account && <button disabled = {disableButton} onClick = {() => removeBid(bid.id)} className = "action-colm">Close</button>}
+                        {web3.account === bid.account && <button disabled = {disableButton} onClick = {() => removeBid(bid.id)}>Close</button>}
                      </div>
                 ))}
             </div>

@@ -10,7 +10,6 @@ import { IWeb3State } from '../../interfaces/reducers/web3.interface';
 import { IAsset } from '../../interfaces/containers/Application/asset.interface';
 import { useHistory } from "react-router-dom";
 import Navigation from '../../components/Navigation';
-import Footer from '../../components/Footer';
 import ResizeImage from '../../static/images/asset-resize-btn.png';
 import Progress from '../../components/Progress';
 import Avatar from '@material-ui/core/Avatar';
@@ -24,6 +23,7 @@ import Timer from './Timer';
 import Table from './Table';
 import { checkAllowance, createSignature } from './blockchain';
 import PlaceBidDialog from './PlaceBidDialog';
+import ReactPlayer from 'react-player';
 
 interface AssetPageProps{
     assetId: string;
@@ -135,6 +135,17 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
         return <Progress/>
     }
 
+    const renderLeftContent = () => {
+        if(asset.metadata.mimetype.split('/')[0] === 'video'){
+            return <ReactPlayer width = '100%' url = {FILESTORE(asset.metadata.filename)} playing loop muted/>
+        }
+        return (
+            <div className = "asset-image-container-image-wrap">
+                <img alt = "" src={FILESTORE(asset.metadata.filePlaceholder || asset.metadata.filename)}/>
+            </div>
+        )
+    }
+
     const timeEnd = new Date(asset.auctionEnd).getTime() - Date.now() < 0;
     const curentUser = web3.account ? web3.account.toLowerCase() === asset.owner.toLowerCase(): false;
     const disableButton = assetSold || curentUser || asset.onAuction && timeEnd;
@@ -150,9 +161,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                                 <img alt ="" src = {ResizeImage}/>
                             </div>
                         </div>
-                        <div className = "asset-image-container-image-wrap">
-                            <img alt = "" src={FILESTORE(asset.metadata.filePlaceholder || asset.metadata.filename)}/>
-                        </div>
+                        {renderLeftContent()}
                     </div>
                     <div className = "asset-description-container">
                         <div className = "asset-description-container-nav">
@@ -206,9 +215,6 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                     }}
                     asset = {asset}
                 />}
-                <div className = "asset-footer-wrap">
-                    <Footer/>
-                </div>
             </div>
         </DocumentTitle>
     )
