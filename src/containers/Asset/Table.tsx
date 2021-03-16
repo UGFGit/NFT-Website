@@ -7,12 +7,14 @@ import { fetch } from '../../libs';
 import { ASSET_BIDS, ASSET_BID_REMOVE } from '../../constants/endpoints';
 import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
+import moment from 'moment';
 
-interface IBids{
+interface IBid{
     id: string;
     account: string;
     cryptoPrice: number;
     price: number;
+    expiryDate: string;
 }
 
 interface TableProps{
@@ -23,14 +25,14 @@ interface TableProps{
 function Table({ asset, web3 }: TableProps){
     const socket = useSocket();
 
-    const [bids, setBids] = useState<IBids[]>([]);
+    const [bids, setBids] = useState<IBid[]>([]);
 
     useEffect(() => {
         loadBids();
     }, [asset])
 
     useEffect(() => {
-        socket?.on(SocketEventsEnum.BIDS_UPDATE, ({assetId, bids}: {assetId: string, bids: IBids[]}) => {
+        socket?.on(SocketEventsEnum.BIDS_UPDATE, ({assetId, bids}: {assetId: string, bids: IBid[]}) => {
             if(asset.id === assetId){
                 setBids(bids);
             }
@@ -62,13 +64,32 @@ function Table({ asset, web3 }: TableProps){
     }
 
     const disableButton = new Date(asset.auctionEnd).getTime() - Date.now() < 0;
-    
+
+    const renderExpire = (bid: IBid) => {
+        const diff = moment({hours: 0}).diff(bid.expiryDate, 'days') * -1;
+
+        if(diff >= 0){
+            if(diff === 0){
+                return (<p>Today</p>)
+            }
+
+            if(diff === 1){
+                return (<p>Tomorrow</p>)
+            }
+
+            return (<p>In {diff} days</p>)
+        }
+        
+        return (<p>Expired</p>)
+    }
+
     return(
         <div className = "asset-description-container-auction-table">
             <div className = "asset-description-container-auction-table-header">
-                <p className = "from-colm">From</p>
-                <p className = 'price-colm'>Price</p>
-                <p className = "action-colm"></p>
+                <p>From</p>
+                <p>Price</p>
+                <p>Expiration</p>
+                <p></p>
             </div>
             <div className = "asset-description-container-auction-table-body">
                 {bids.map((bid) => (
@@ -83,6 +104,7 @@ function Table({ asset, web3 }: TableProps){
                             <p>{bid.cryptoPrice}</p>
                             <p className = "table-prices-wrap-price">${bid.price.toFixed(2)}</p>
                         </div>
+                        {renderExpire(bid)}
                         {web3.account === bid.account && <button disabled = {disableButton} onClick = {() => removeBid(bid.id)}>Close</button>}
                      </div>
                 ))}

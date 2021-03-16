@@ -39,6 +39,10 @@ function TokenCard({ asset }: CardProps){
             return(<p>{diff_hours} hour{diff_hours > 2? 's': ''} left</p>) 
         }
 
+        if(diff < 0){
+            return (<p>Auction end</p>)
+        }
+
         return(<p>{diff} day{diff !== 1? 's': ''} left</p>)
     }
 

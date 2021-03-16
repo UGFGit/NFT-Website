@@ -155,7 +155,7 @@
                         height: 34px;
                         align-items: center;
 
-                        grid-template-columns: repeat(3, 1fr);
+                        grid-template-columns: repeat(4, 1fr);
                         display: grid;
 
                         p{
@@ -172,7 +172,7 @@
                         overflow: auto;
 
                         .table-row{
-                            grid-template-columns: repeat(3, 1fr);
+                            grid-template-columns: repeat(4, 1fr);
                             display: grid;
                             height: 40px;
                             padding: 10px 0;

@@ -13,6 +13,7 @@ export const TYPES = {
         {name:"amount",type:"uint256"},
         {name:"value",type:"uint256"},
         {name:"nonce",type:"uint256"},
+        {name:'deadline',type:"uint256"}
     ]
 }
 

@@ -84,7 +84,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                 setButtonLoading(true);
                 const client = new Web3(web3.provider);
                 await checkAllowance(web3.account ,client, asset.contract.contract, asset.tradingTokenAddress, enqueueSnackbar);
-                const {signature, value} = await createSignature(asset, client, web3, enqueueSnackbar);
+                const {signature, value, deadline} = await createSignature(asset, client, web3, enqueueSnackbar);
                 enqueueSnackbar(`Waiting for transaction complete`, { variant: 'info' });
                 await fetch.post(BLOCKCHAIN_BUY, { 
                     account: web3.account, 
@@ -93,7 +93,8 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                     price: value, 
                     tradingTokenAddress: asset.tradingTokenAddress, 
                     signature,
-                    assetId: asset.id
+                    assetId: asset.id,
+                    deadline
                 });
 
                 enqueueSnackbar(`The purchase was made`, { variant: 'success' });
@@ -112,13 +113,14 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                 setButtonLoading(true);
                 const client = new Web3(web3.provider);
                 await checkAllowance(web3.account ,client, asset.contract.contract, asset.tradingTokenAddress, enqueueSnackbar);
-                const {signature} = await createSignature(asset, client, web3, enqueueSnackbar, price);
+                const {signature, deadline} = await createSignature(asset, client, web3, enqueueSnackbar, price);
                 
                 await fetch.post(ASSET_BID_SET, { 
                     account: web3.account, 
                     signature,
                     assetId: asset.id,
-                    price
+                    price,
+                    deadline
                 }); 
 
                 enqueueSnackbar(`The rate is fixed`, { variant: 'success' });

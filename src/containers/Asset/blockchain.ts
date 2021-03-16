@@ -37,11 +37,12 @@ const getNonce = async (account: string, contract: string): Promise<number> => {
     return nonce;
 }
 
-export const createSignature = async (asset: IAsset, client:Web3, web3: IWeb3State ,enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject | undefined) => SnackbarKey, price?: number): Promise<{signature: string, value: string}> => {
+export const createSignature = async (asset: IAsset, client:Web3, web3: IWeb3State ,enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject | undefined) => SnackbarKey, price?: number): Promise<{signature: string, value: string, deadline: number}> => {
     //@ts-ignore
     const contract = new client.eth.Contract(ABI, asset.tradingTokenAddress);
     const decimal = await contract.methods.decimals().call();
     const value = `${(price || asset.cryptoPrice) * Math.pow(10, decimal)}`;
+    const deadline = Date.now() + 432000000;
 
     const data = {
         types: TYPES,
@@ -59,7 +60,8 @@ export const createSignature = async (asset: IAsset, client:Web3, web3: IWeb3Sta
             id: asset.token.tokenId,
             amount: 1,
             value,
-            nonce: await getNonce(web3.account, asset.contract.contract)
+            nonce: await getNonce(web3.account, asset.contract.contract),
+            deadline,
         }
     }
 
@@ -71,5 +73,5 @@ export const createSignature = async (asset: IAsset, client:Web3, web3: IWeb3Sta
         from: [web3.account]
     });
 
-    return { signature, value }
+    return { signature, value, deadline }
 }
