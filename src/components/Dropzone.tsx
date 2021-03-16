@@ -33,7 +33,7 @@ function Dropzone({ file, onChange, error, accept, type }: DropzoneProps){
         <div className = 'dropzone-root'>
             <div {...getRootProps({
                 onClick: (event: any) => {
-                    if(['rhap_volume-indicator', 'rhap_progress-indicator', 'rhap_progress-bar rhap_progress-bar-show-download', 'rhap_volume-bar-area'].includes(event.target.className) || event.target.localName === 'path' || event.target.localName === 'svg'){
+                    if(['audio-player-controllers-img-wrap'].includes(event.target.className) || event.target.localName === 'img'){
                         event.stopPropagation()
                     }
                 }

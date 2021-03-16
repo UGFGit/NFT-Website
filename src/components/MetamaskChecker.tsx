@@ -81,6 +81,10 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
             web3 = new Web3(window.web3.currentProvider);
         };
 
+        if(!web3){
+            return;
+        }
+
         const addr = await web3.eth.getAccounts();
 
         const chainId = await web3.eth.getChainId();
