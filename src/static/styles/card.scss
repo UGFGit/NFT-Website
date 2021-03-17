@@ -34,12 +34,22 @@
         background-color: $white;
         .card-body-name-wrap{
             .card-body-name{
-                font-family: Open Sans;
+                font-family: Open Sans SemiBold;
                 font-style: normal;
                 font-weight: normal;
                 font-size: 16px;
-                line-height: 22px;
+                line-height: 19px;
                 color: $black;
+                font-weight: 600;
+            }
+
+            .card-body-name-available{
+                font-family: Open Sans SemiBold;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 22px;
+                color: #868686;
                 font-weight: 600;
             }
         }

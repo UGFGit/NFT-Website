@@ -9,6 +9,21 @@
 }
 
 @font-face {
+    font-family: 'Open Sans Bold';
+    src: local("Open Sans Bold"), url("../fonts/OpenSans-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'Open Sans ExtraBold';
+    src: local("Open Sans ExtraBold"), url("../fonts/OpenSans-ExtraBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'Open Sans SemiBold';
+    src: local("Open Sans SemiBold"), url("../fonts/OpenSans-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
     font-family: 'Roboto';
     src: local("Roboto"), url("../fonts/Roboto-Regular.ttf") format("truetype");
 }

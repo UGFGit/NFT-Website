@@ -60,7 +60,7 @@ function TokenCard({ asset }: CardProps){
                 <div className = "card-body">
                     <div className = "card-body-name-wrap">
                         <p className = "card-body-name">{metadata.name}</p>
-                        <p className = "card-body-name">{token.available} of {token.count}</p>
+                        <p className = "card-body-name-available">{token.available} of {token.count}</p>
                     </div>
                     <div className = "card-body-user-wrap">
                         <Avatar alt="" src = {FILESTORE(artist.avatar)}/>
