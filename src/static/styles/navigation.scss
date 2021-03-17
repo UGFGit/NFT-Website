@@ -77,7 +77,7 @@
         transition: margin-top .4s;
 
         .navigation-item{
-            color: $white;
+            color: rgba($color: #FFFFFF, $alpha: 0.5);
             font-family: Open Sans;
             font-style: normal;
             font-weight: normal;
@@ -87,19 +87,19 @@
             cursor: pointer;
 
             &:hover{
-                color: $turquoise;
+                color: #FFFFFF;
             }
         }
 
         .navigation-item-active{
-            color: $turquoise;
+            color: #FFFFFF;
         }
 
         .connect-button{
             margin-left: 30px;
-            color: $turquoise;
+            color: #FFFFFF;
             background: $black;
-            border: 1px solid $turquoise;
+            border: 1px solid #FFFFFF;
             cursor: pointer;
             outline: 0;
             padding: 12px 20px;

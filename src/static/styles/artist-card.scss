@@ -11,6 +11,10 @@
     display: flex;
     flex-direction: column;
     position: relative;
+
+    &:hover{
+        transform: translateY(-4px);
+    }
     
     overflow: hidden;
 
