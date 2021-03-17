@@ -10,9 +10,8 @@
         background: $black;
         min-height: 100vh;
         display: flex;
-        position: relative;
-        overflow: hidden;
-        overflow-y: hidden;
+        position: fixed;
+        width: 100%;
 
         .artists-main-container{
             margin: auto;
@@ -106,6 +105,10 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+
+        position: relative;
+        background-color: #F5F5F5;
+        top: 100vh;
 
        .artists-explore-wrap{
             display: flex;

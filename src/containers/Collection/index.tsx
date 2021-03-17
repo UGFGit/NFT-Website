@@ -100,7 +100,7 @@ function Collection(){
                     <div className = "collection-main-container">
                         <p className = 'collection-main-container-title'>Genesis Arts</p>
                         <p className = "collection-main-container-text">A music-centric NFTs marketplace hosting rare and collectable digital assets</p>
-                        <p className = "collection-main-container-scroll">scroll</p>
+                        {/* <p className = "collection-main-container-scroll">scroll</p> */}
                     </div>
                     <div className = 'collection-main-bottom'>
                         <img className = "collection-main-bottom-dots" src = {DotsImage}/>
