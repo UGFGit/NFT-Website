@@ -5,9 +5,13 @@ import { useHistory } from "react-router-dom";
 function Footer(){
     const history = useHistory();
 
+    const handleLogoClick = () => {
+        window.location.assign(`https://nft.utopiagenesis.com/`);
+    }
+
     return(
         <div className='footer-root'>
-            <div className = 'footer-logo-wrap'>
+            <div onClick = {handleLogoClick} className = 'footer-logo-wrap'>
                 <p className='footer-logo-wrap-title'>Genesis arts</p>
                 <p className='footer-logo-wrap-by'>by utopia genesis foundation</p>
             </div>

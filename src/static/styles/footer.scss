@@ -10,6 +10,8 @@
     position: relative;
 
     .footer-logo-wrap{
+        cursor: pointer;
+
         .footer-logo-wrap-title{
             color: $black;
             font-style: normal;
@@ -17,7 +19,6 @@
             font-family: Poller One;
             font-size: 20px;
             line-height: 24px;
-            cursor: default;
         }
 
         .footer-logo-wrap-by{

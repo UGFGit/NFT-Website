@@ -9,8 +9,8 @@ import Card from './Card';
 import { fetch } from '../../libs';
 import { ARTISTS } from '../../constants/endpoints';
 import DotsImage from '../../static/images/dots.png';
-import ArtistsTopImage from '../../static/images/artists-top.png';
-import ArtistsBottomImage from '../../static/images/artists-bottom.png';
+// import ArtistsTopImage from '../../static/images/artists-top.png';
+// import ArtistsBottomImage from '../../static/images/artists-bottom.png';
 import NoAssets from '../../static/images/no-assets.png';
 import Lottie from "../../components/Lottie";
 
@@ -54,15 +54,15 @@ function Artists(){
                     </div>
                     <div className = 'artists-main-bottom'>
                         <img className = "artists-main-bottom-img" alt = "" src = {DotsImage}/>
-                        <div className = "artists-main-bottom-cards">
+                        {/* <div className = "artists-main-bottom-cards">
                             <img alt='' src={ArtistsBottomImage}/>
-                        </div>
+                        </div> */}
                     </div>
                     <div className = 'artists-main-top'>
                         <img className = "artists-main-top-img" alt = "" src = {DotsImage}/>
-                        <div className = "artists-main-top-cards">
+                        {/* <div className = "artists-main-top-cards">
                             <img alt='' src={ArtistsTopImage}/>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className = "artists-explore-root">
