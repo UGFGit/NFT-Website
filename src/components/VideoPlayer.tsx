@@ -16,7 +16,9 @@ function Player({ src, controls = false, muted = true, loop = true, playing = tr
     return(
         <div className = 'video-player-root'>
             <ReactPlayer 
-                width = '100%' url = {src} 
+                width = '100%' 
+                height = "100%"
+                url = {src} 
                 playing = { playing }
                 loop = { loop }
                 muted = { muted }
