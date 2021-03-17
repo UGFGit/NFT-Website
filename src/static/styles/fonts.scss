@@ -24,6 +24,11 @@
 }
 
 @font-face {
+    font-family: 'Open Sans Light';
+    src: local("Open Sans Light"), url("../fonts/OpenSans-Light.ttf") format("truetype");
+}
+
+@font-face {
     font-family: 'Roboto';
     src: local("Roboto"), url("../fonts/Roboto-Regular.ttf") format("truetype");
 }
