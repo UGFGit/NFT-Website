@@ -20,7 +20,7 @@ interface DropzoneProps{
     accept: string | string[]; //'image/*'
 }
 
-const FILE_TEXT = "PNG, GIF, WEBP, MP4 or MP3. Max 30mb.";
+const FILE_TEXT = "PNG, GIF, WEBP, MP4 or MP3. Max 100mb.";
 const ICON_TEXT = 'Choose an icon from the suggested ones or upload a new one. It should grab the attention of viewers and reflect the content of the file';
 
 function Dropzone({ file, onChange, error, accept, type }: DropzoneProps){

@@ -13,6 +13,25 @@ import CropDialog from './CropDialog';
 import { useSnackbar } from 'notistack';
 import MultipleGroup from '../../components/MultipleGroup';
 
+interface NtfsErrors{
+    price?: string;
+    cryptoPrice?: string;
+    number?: string;
+    filename?: string;
+    filePlaceholder?: string;
+    mimetype?: string;
+    name?: string;
+    description?: string;
+}
+interface Errors{
+    nickname?: string;
+    email?: string;
+    address?: string;
+    avatar?: string;
+    background?: string;
+    nfts?: NtfsErrors[];
+}
+
 interface IPrices{
     [key: string]: {
         [key: string]: number
@@ -55,6 +74,14 @@ function Application(){
 
     const [prices, setPices] = useState<IPrices>({});
 
+    const [errors, setErrors] = useState<Errors>({});
+
+    const buildErr = (err: { children: any[], property: string, constraints: {[key: string]: string}}) => {
+        const errs = {} as any;
+        errs[err.property] = Object.values(err.constraints)[0];
+        return errs;
+    }
+
     const handleSubmit = async () => {
         const data = { 
             avatar,
@@ -65,11 +92,11 @@ function Application(){
             nfts: nfts.map((nft) => ({
                 ...nft.file,
                 filePlaceholder: nft.filePlaceholder && nft.filePlaceholder.filename,
-                price: Number(nft.price),
-                cryptoPrice: Number(nft.cryptoPrice),
+                price: nft.price? Number(nft.price) : '',
+                cryptoPrice: nft.cryptoPrice? Number(nft.cryptoPrice): '',
                 name: nft.name,
                 description: nft.description,
-                number: Number(nft.number)
+                number: nft.number? Number(nft.number): ''
             }))
         };
         const response = await fetch.post(APPLICATION_CREATE, data);
@@ -78,6 +105,35 @@ function Application(){
             enqueueSnackbar('Your application is accepted', { variant: 'success' });
             window.scrollTo(0, 0);
             return history.push('/');
+        }
+
+        const res = await response.json();
+
+        if(res.code && res.code === 3){
+            let errs = {} as any;
+
+            for(let i=0; i < res.desc.length; i++){
+                const err = res.desc[i];
+                if(err.constraints){
+                    errs = Object.assign({}, errs, buildErr(err));
+                }     
+                
+                if(err.children && err.children.length > 0){
+                    let childrenErr: any[] = [];
+
+                    for(let i=0;i< err.children.length; i++){
+                        let ee = {};
+                        err.children[i].children.forEach((er: any) => {
+                            ee = Object.assign({}, ee, buildErr(er));
+                        });
+                        childrenErr[Number(err.children[i].property)] = ee;
+                    }
+
+                    errs[err.property] = childrenErr;
+                }
+            }
+
+            setErrors(errs);
         }
 
         enqueueSnackbar('Fill in all the fields of the application', { variant: 'error' });
@@ -156,22 +212,31 @@ function Application(){
                     <Input
                         lable = "Name"
                         value = {nickname}
-                        onChange= {(value) => setNickname(value)}
+                        onChange= {(value) => {
+                            setNickname(value);
+                        }}
                         placeholder = "Your name"
+                        error = {errors.nickname}
                     />
                     <div className = "divader"/>
                     <p className='application-body-block-title'>Contact information</p>
                     <Input
                         lable = "Email"
                         value = {email}
-                        onChange= {(value) => setEmail(value)}
+                        onChange= {(value) => {
+                            setEmail(value);
+                        }}
                         placeholder = "Email"
+                        error = {errors.email}
                     />
                     <Input
                         lable = "Wallet address"
                         value = {address}
-                        onChange= {(value) => setAddress(value)}
+                        onChange= {(value) => {
+                            setAddress(value);
+                        }}
                         placeholder = "Wallet address"
+                        error = {errors.address}
                     />
                     <MultipleGroup
                         values = {nfts}
@@ -192,6 +257,7 @@ function Application(){
                                             nfts[index] = nft;
                                             setNfts([...nfts]);
                                         }}
+                                        error={errors.nfts && errors.nfts[index] && errors.nfts[index].filename && errors.nfts[index].mimetype}
                                     />
                                 </div>
 
@@ -207,6 +273,7 @@ function Application(){
                                             nfts[index] = nft;
                                             setNfts([...nfts]);
                                         }}
+                                        error={errors.nfts && errors.nfts[index] && errors.nfts[index].filePlaceholder}
                                     />
                                 </div>}
                                 <div className = 'prices-wrap'>
@@ -225,6 +292,7 @@ function Application(){
                                         }}
                                         placeholder = "Amount"
                                         type = 'number'
+                                        error={errors.nfts && errors.nfts[index] && errors.nfts[index].cryptoPrice}
                                     />
                                     <Input
                                         lable = "Price ($)"
@@ -241,6 +309,7 @@ function Application(){
                                         }}
                                         placeholder = "Amount"
                                         type = 'number'
+                                        error={errors.nfts && errors.nfts[index] && errors.nfts[index].price}
                                     />
                                 </div>
                                 <Input
@@ -252,6 +321,7 @@ function Application(){
                                         setNfts([...nfts])
                                     }}
                                     placeholder = "Name of your artwork"
+                                    error={errors.nfts && errors.nfts[index] && errors.nfts[index].name}
                                 />
                                 <Input
                                     lable = "Description"
@@ -265,6 +335,7 @@ function Application(){
                                     }}
                                     placeholder = "Description of your artwork"
                                     helperText = 'max 100 words'
+                                    error={errors.nfts && errors.nfts[index] && errors.nfts[index].description}
                                 />
                                 <Input
                                     lable = "Number of copies"
@@ -277,6 +348,7 @@ function Application(){
                                     }}
                                     placeholder = "Number"
                                     type = 'number'
+                                    error={errors.nfts && errors.nfts[index] && errors.nfts[index].number}
                                 />
                             </div>
                         )}
