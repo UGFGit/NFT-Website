@@ -164,7 +164,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const timeEnd = new Date(asset.auctionEnd).getTime() - Date.now() < 0;
     const curentUser = web3.account ? web3.account.toLowerCase() === asset.owner.toLowerCase(): false;
     const disableButton = assetSold || curentUser || asset.onAuction && timeEnd;
-
+   
     return (
         <DocumentTitle title="Dashboard">
             <div className = "asset-root">
@@ -179,12 +179,13 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                         {renderLeftContent()}
                     </div>
                     <div className = "asset-description-container">
-                        <div className = "asset-description-container-nav">
+                        <div onClick = {() =>  window.location.assign(`https://${asset.artist.host}`)} className = "asset-description-container-nav">
                             <Avatar alt="" src = {FILESTORE(asset.artist.avatar)}/>
                             <p className = "asset-description-container-nav-artist-name">{asset.artist.name}</p>
                         </div>
                         <p className = "asset-description-container-title">{asset.metadata.name}</p>
-                        <p className = "asset-description-container-desc">{asset.metadata.description}</p>
+                        {asset.metadata.description && <p className = "asset-description-container-desc">{asset.metadata.description}</p>}
+                        {!asset.metadata.description && <p className = "asset-description-container-desc-empty">Oh, snap, we are missing the description for this collectible. It's beautiful isn't it?</p>}
                         { asset.onAuction && <div className = "asset-description-container-auction-container">
                             <Timer
                                 timeEnd = {asset.auctionEnd}

@@ -34,6 +34,7 @@ interface IArtist{
     id: string;
     name: string;
     background: string;
+    host?: string;
 }
 
 interface IContract{

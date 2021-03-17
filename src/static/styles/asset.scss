@@ -62,6 +62,7 @@
             .asset-description-container-nav{
                 display: flex;
                 flex-direction: row;
+                cursor: pointer;
 
                 .MuiAvatar-root{
                     width: 44px;
@@ -96,6 +97,16 @@
                 font-size: 14px;
                 line-height: 19px;
                 color: #252423;
+                margin-top: 10px;
+            }
+
+            .asset-description-container-desc-empty{
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 19px;
+                color: #868686;
                 margin-top: 10px;
             }
 
