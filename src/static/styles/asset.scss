@@ -436,6 +436,10 @@
             .asset-description-container{
                 margin-left: 0px;
                 margin-top: 16px;
+
+                .asset-description-container-price-container{
+                    margin-top: 100px;
+                }
             }
         }
     }
@@ -468,10 +472,10 @@
             padding: 95px 12%;
 
             .asset-description-container{
+                margin-bottom: 130px;
+                
                 .asset-description-container-auction-container{
                     .asset-description-container-auction-table{
-                        margin-bottom: 130px;
-
                         .asset-description-container-auction-table-body{
                             overflow: unset;
                         }
