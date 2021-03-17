@@ -11,6 +11,10 @@
     
     overflow: hidden;
 
+    &:hover{
+        transform: translateY(-4px);
+    }
+
     .card-image-wrap{
         display: flex;
         align-items: center;

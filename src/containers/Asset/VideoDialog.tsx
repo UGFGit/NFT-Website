@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { IAsset } from '../../interfaces/containers/Application/asset.interface';
 import { FILESTORE } from '../../constants/endpoints';
+import VideoPlayer from '../../components/VideoPlayer';
 
 interface DialogProps{
     open: boolean;
@@ -24,9 +25,13 @@ function Dialog({ open, onClose, asset}: DialogProps){
             <DialogContent dividers style = {{
                 padding: "16px 24px"
             }}>
-                <div style = {{ width: 489, height: 465 }}>
-                    <img style = {{width: '100%'}} alt ="" src ={FILESTORE(asset.metadata.filePlaceholder || asset.metadata.filename)}/>
-                </div>               
+                <VideoPlayer
+                    src = {FILESTORE(asset.metadata.filename)}
+                    muted = {false}
+                    controls = {true}
+                    loop = {false}
+                    playing = {true}
+                />           
             </DialogContent>
         </MuiDialog>
     )

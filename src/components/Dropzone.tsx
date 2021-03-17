@@ -5,6 +5,7 @@ import '../static/styles/dropzone.scss';
 import classNames from 'classnames';
 import AudioPlayer from '../components/AudioPlayer';
 import ReactPlayer from 'react-player';
+import VideoPlayer from './VideoPlayer';
 
 export interface IFile {
     filename: string;
@@ -62,9 +63,8 @@ function Dropzone({ file, onChange, error, accept, type }: DropzoneProps){
                     />
                 }
                 {file && file.mimetype.split('/')[0] === 'video' && 
-                    <ReactPlayer
-                        url = {FILESTORE(file.filename)}
-                        width = '100%'
+                    <VideoPlayer
+                        src = {FILESTORE(file.filename)}
                     />
                 }
             </div>

@@ -18,12 +18,12 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
-import Dialog from './Dialog';
+import VideoDialog from './VideoDialog';
 import Timer from './Timer';
 import Table from './Table';
 import { checkAllowance, createSignature } from './blockchain';
 import PlaceBidDialog from './PlaceBidDialog';
-import ReactPlayer from 'react-player';
+import ReactPlayer from '../../components/VideoPlayer';
 import AudioPlayer from '../../components/AudioPlayer';
 
 interface AssetPageProps{
@@ -36,7 +36,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const [asset, setAsset] = useState<IAsset>({} as IAsset);
     const [load, setLoad] = useState(true);
     const [ buttonLoading, setButtonLoading ] = useState(false);
-    //const [ dialogOpen, setDialogOpen ] = useState(false);
+    const [ videoDialogOpen, setVideoDialogOpen ] = useState(false);
     const [ placeBidDialogOpen, setPlaceBidDialogOpen ] = useState(false);
 
     const [assetSold, setAssetSold] = useState(false);
@@ -140,7 +140,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
 
     const renderLeftContent = () => {
         if(asset.metadata.mimetype.split('/')[0] === 'video'){
-            return <ReactPlayer width = '100%' url = {FILESTORE(asset.metadata.filename)} playing loop muted/>
+            return <ReactPlayer src = {FILESTORE(asset.metadata.filename)}/>
         }
         if(asset.metadata.mimetype.split('/')[0] === 'audio'){
             return(
@@ -172,9 +172,9 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                 <div className = "asset-body">
                     <div className = "asset-image-container">
                         <div className = "asset-image-container-nav">
-                            {/* <div onClick = {() => setDialogOpen(true)} className = "asset-image-container-nav-resize-wrap">
+                            {asset.metadata.mimetype.split('/')[0] === 'video' && <div onClick = {() => setVideoDialogOpen(true)} className = "asset-image-container-nav-resize-wrap">
                                 <img alt ="" src = {ResizeImage}/>
-                            </div> */}
+                            </div>}
                         </div>
                         {renderLeftContent()}
                     </div>
@@ -214,11 +214,11 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                         </div>}
                     </div>
                 </div>
-                {/* <Dialog
+                <VideoDialog
                     asset = {asset}
-                    open={dialogOpen}
-                    onClose = {() => setDialogOpen(false)}
-                /> */}
+                    open={videoDialogOpen}
+                    onClose = {() => setVideoDialogOpen(false)}
+                />
                 {placeBidDialogOpen && <PlaceBidDialog
                     open={true}
                     onClose = {() => setPlaceBidDialogOpen(false)}
