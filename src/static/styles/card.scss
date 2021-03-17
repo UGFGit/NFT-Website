@@ -92,6 +92,29 @@
             font-size: 14px;
             line-height: 19px;
             color: $white;
+
+            p{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+
+            span{
+                font-family: Open Sans Bold;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 14px;
+                line-height: 19px;
+                color: #959494;
+                margin-right: 4px;
+            }
+
+            img{
+                margin-right: 4px;
+                height: 14px;
+                width: 8.6px;
+                margin-top: 3px;
+            }
         }
 
         .card-body-footer-auction-time-wrap{

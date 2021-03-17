@@ -80,7 +80,7 @@
             }
 
             .asset-description-container-title{
-                font-family: Open Sans;
+                font-family: Open Sans Bold;
                 font-style: normal;
                 font-weight: bold;
                 font-size: 20px;
@@ -139,7 +139,7 @@
                 }
 
                 .asset-description-container-auction-title{
-                    font-family: Open Sans;
+                    font-family: Open Sans Bold;
                     font-style: normal;
                     font-weight: bold;
                     font-size: 20px;
@@ -181,10 +181,11 @@
                             .table-prices-wrap{
                                 display: flex;
                                 flex-direction: row;
+                                align-items: center;
 
                                 .table-prices-wrap-img-wrap{
-                                    width: 10px;
-                                    height: 8px;
+                                    width: 8.6px;
+                                    height: 14px;
                                     margin-right: 2px;
 
                                     img{
@@ -196,11 +197,21 @@
                                 .table-prices-wrap-price{
                                     font-family: Open Sans;
                                     font-style: normal;
-                                    font-weight: normal;
+                                    font-weight: 400;
                                     font-size: 14px;
                                     line-height: 19px;
                                     color: #868686;
                                     margin-left: 4px;
+
+                                    span{
+                                        font-family: Open Sans Bold;
+                                        font-style: normal;
+                                        font-weight: 700;
+                                        font-size: 14px;
+                                        line-height: 19px;
+                                        color: #868686;
+                                        margin-left: 4px;
+                                    }
                                 }
                             }
 
@@ -244,11 +255,11 @@
                     border-bottom: 1px solid #F6F9FA;
                     display: flex;
                     flex-direction: row;
+                    align-items: center;
 
                     .asset-description-container-price-container-price-crypto-wrap{
-                        width: 10px;
-                        height: 8px;
-                        margin-top: 1px;
+                        width: 9.83px;
+                        height: 16px;
                         margin-right: 3px;
 
                         img{
@@ -264,6 +275,15 @@
                         font-size: 16px;
                         line-height: 22px;
                         color: #252423;
+
+                        span{
+                            font-family: Open Sans;
+                            font-style: normal;
+                            font-weight: bold;
+                            font-size: 16px;
+                            line-height: 22px;
+                            color: #8F8F8E;
+                        }
                     }
 
                     .asset-description-container-price-devider{

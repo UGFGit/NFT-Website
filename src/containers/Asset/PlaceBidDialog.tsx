@@ -73,7 +73,7 @@ function PlaceBidDialog({ open, onClose, web3, paymentAddress, handleBuy, asset 
         loadBalance();
     }, [web3]);
 
-    const disableButton = !Boolean(price) || Number(price) > balance || Number(price) < maxBid || Number(price) === maxBid;
+    const disableButton = !Boolean(price) || Number(price) > balance || Number(price) < maxBid || Number(price) === maxBid || asset.owner === web3.account;
 
     return(
         <MuiDialog maxWidth='md' open={open} className = "place-bid-dialog-root">

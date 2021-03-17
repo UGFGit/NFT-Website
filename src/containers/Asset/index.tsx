@@ -13,7 +13,6 @@ import Navigation from '../../components/Navigation';
 import ResizeImage from '../../static/images/asset-resize-btn.png';
 import Progress from '../../components/Progress';
 import Avatar from '@material-ui/core/Avatar';
-import WethImage from '../../static/images/weth-img.png';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
@@ -25,6 +24,7 @@ import PlaceBidDialog from './PlaceBidDialog';
 import ReactPlayer from '../../components/VideoPlayer';
 import AudioPlayer from '../../components/AudioPlayer';
 import Lottie from "../../components/Lottie";
+import EthIcon from '../../static/images/Ethereum-grey.png';
 
 interface AssetPageProps{
     assetId: string;
@@ -199,12 +199,12 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                             <div className = "asset-description-container-price-container-price-wrap">
                                 <Tooltip arrow title = "WETH" placement = "top">
                                     <div className = "asset-description-container-price-container-price-crypto-wrap">
-                                        <img alt = "" src = {WethImage}/>
+                                        <img alt = "" src = {EthIcon}/>
                                     </div>
                                 </Tooltip>
                                 <p className = "asset-description-container-price-container-price">{asset.cryptoPrice}</p>
                                 <div className = "asset-description-container-price-devider"/>
-                                <p className = "asset-description-container-price-container-price">${asset.price.toFixed(2)}</p>
+                                <p className = "asset-description-container-price-container-price"><span>$</span>{asset.price.toFixed(2)}</p>
                                 <p className = "asset-description-container-price-container-counts">{assetSold? 'Sold out' : `${asset.token.available} of ${asset.token.count}`}</p>
                             </div>
                             <div className = "asset-description-container-price-container-btn-wrap">

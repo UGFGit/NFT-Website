@@ -8,6 +8,7 @@ import { ASSET_BIDS, ASSET_BID_REMOVE } from '../../constants/endpoints';
 import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
 import moment from 'moment';
+import EthIcon from '../../static/images/Ethereum-grey.png';
 
 interface IBid{
     id: string;
@@ -98,11 +99,11 @@ function Table({ asset, web3 }: TableProps){
                         <div className = "table-prices-wrap">
                             <Tooltip arrow title = "WETH" placement = "top">
                                 <div className = "table-prices-wrap-img-wrap">
-                                    <img alt = "" src = {WethImage}/>
+                                    <img alt = "" src = {EthIcon}/>
                                 </div>
                             </Tooltip>
                             <p>{bid.cryptoPrice}</p>
-                            <p className = "table-prices-wrap-price">${bid.price.toFixed(2)}</p>
+                            <p className = "table-prices-wrap-price"><span>$</span>{bid.price.toFixed(2)}</p>
                         </div>
                         {renderExpire(bid)}
                         {web3.account === bid.account && <button disabled = {disableButton} onClick = {() => removeBid(bid.id)}>Close</button>}

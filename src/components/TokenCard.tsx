@@ -9,7 +9,8 @@ import ImageNotFound from '../static/images/image-not-found.jpg';
 import { useHistory } from "react-router-dom";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import moment from 'moment';
-import Lottie from "../components/Lottie";;
+import Lottie from "../components/Lottie";
+import EthIcon from '../static/images/Ethereum.png';
 
 interface CardProps{
     asset: IAsset
@@ -69,8 +70,8 @@ function TokenCard({ asset }: CardProps){
                 </div>
                 <div className = "card-body-footer">
                     <div className = "card-body-footer-price-wrap">
-                        <p>{cryptoPrice} WETH</p>
-                        <p>${price.toFixed(2)}</p>
+                        <p><img alt = "" src = {EthIcon}/>{cryptoPrice}</p>
+                        <p><span>$</span>{price.toFixed(2)}</p>
                     </div>
                     {asset.onAuction && <div className = "card-body-footer-auction-time-wrap">
                         <AccessTimeIcon color='inherit' style = {{fontSize: 10, marginTop: 3}}/>
