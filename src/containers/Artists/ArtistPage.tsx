@@ -6,7 +6,6 @@ import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
 import InfiniteScroll from 'react-infinite-scroller';
 import Card from '../../components/TokenCard';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { ASSETS, FILESTORE } from '../../constants/endpoints';
 import { fetch } from '../../libs';
 import { IAsset } from '../../interfaces/containers/Application/asset.interface';
@@ -15,6 +14,7 @@ import Navigation from '../../components/Navigation';
 import Avatar from '@material-ui/core/Avatar';
 import classNames from 'classnames';
 import NoAssets from '../../static/images/no-assets.png';
+import Lottie from "../../components/Lottie";
 
 interface IArtistProps{
     artist: IArtist
@@ -114,7 +114,7 @@ function ArtistPage({ artist }: IArtistProps){
                                 pageStart={-1}
                                 loadMore={loadApplication}
                                 hasMore={state.load}
-                                loader={<div className="artist-page-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
+                                loader={<div className="artist-page-explore-scroll-loader" key={0}><Lottie width={100} height={100}/></div>}
                                 useWindow={true}
                             >
                                 {(state.list.length > 0 || state.load) && <div className = "artist-page-explore-cards-wrap">

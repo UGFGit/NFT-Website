@@ -6,13 +6,13 @@ import Footer from '../../components/Footer';
 import { IArtist } from '../../interfaces/containers/Artists/artist.interface';
 import InfiniteScroll from 'react-infinite-scroller';
 import Card from './Card';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetch } from '../../libs';
 import { ARTISTS } from '../../constants/endpoints';
 import DotsImage from '../../static/images/dots.png';
 import ArtistsTopImage from '../../static/images/artists-top.png';
 import ArtistsBottomImage from '../../static/images/artists-bottom.png';
 import NoAssets from '../../static/images/no-assets.png';
+import Lottie from "../../components/Lottie";
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -73,7 +73,7 @@ function Artists(){
                                 pageStart={-1}
                                 loadMore={loadApplication}
                                 hasMore={state.load}
-                                loader={<div className="artists-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
+                                loader={<div className="artists-explore-scroll-loader" key={0}><Lottie width={100} height={100}/></div>}
                                 useWindow={true}
                             >
                                 {(state.list.length > 0 || state.load) && <div className = "artists-explore-cards-wrap">

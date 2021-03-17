@@ -3,10 +3,10 @@ import { FILESTORE } from '../../constants/endpoints';
 import { IArtist } from '../../interfaces/containers/Artists/artist.interface';
 import '../../static/styles/artist-card.scss';
 import Avatar from '@material-ui/core/Avatar';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import ImageNotFound from '../../static/images/image-not-found.jpg';
 //@ts-ignore
 import ImageLoader from 'react-load-image';
+import Lottie from "../../components/Lottie";
 
 function Card({ host, name, background, avatar }: IArtist){
     return(
@@ -19,9 +19,7 @@ function Card({ host, name, background, avatar }: IArtist){
             >
                 <img alt = "" />
                 <img alt = "" src = {ImageNotFound} />
-                <div>
-                    <CircularProgress size={80} thickness={5} />
-                </div>
+                <Lottie width= {80} height={80}/>
             </ImageLoader>
             <div className = "artists-card-avatar-wrap">
                 <Avatar alt="" src = {FILESTORE(avatar)}/>

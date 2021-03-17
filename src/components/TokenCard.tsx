@@ -5,11 +5,11 @@ import Avatar from '@material-ui/core/Avatar';
 import { FILESTORE } from '../constants/endpoints';
 //@ts-ignore
 import ImageLoader from 'react-load-image';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import ImageNotFound from '../static/images/image-not-found.jpg';
 import { useHistory } from "react-router-dom";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import moment from 'moment';
+import Lottie from "../components/Lottie";;
 
 interface CardProps{
     asset: IAsset
@@ -55,9 +55,7 @@ function TokenCard({ asset }: CardProps){
                 >
                     <img className = "card-img" alt = "" />
                     <img className = "card-img" alt = "" src = {ImageNotFound} />
-                    <div>
-                        <CircularProgress size={80} thickness={5} />
-                    </div>
+                    <Lottie width={80} height={80}/>
                 </ImageLoader>
                 <div className = "card-body">
                     <div className = "card-body-name-wrap">

@@ -15,7 +15,6 @@ import Progress from '../../components/Progress';
 import Avatar from '@material-ui/core/Avatar';
 import WethImage from '../../static/images/weth-img.png';
 import Tooltip from '@material-ui/core/Tooltip';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
 import VideoDialog from './VideoDialog';
@@ -25,6 +24,7 @@ import { checkAllowance, createSignature } from './blockchain';
 import PlaceBidDialog from './PlaceBidDialog';
 import ReactPlayer from '../../components/VideoPlayer';
 import AudioPlayer from '../../components/AudioPlayer';
+import Lottie from "../../components/Lottie";
 
 interface AssetPageProps{
     assetId: string;
@@ -209,7 +209,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                             </div>
                             <div className = "asset-description-container-price-container-btn-wrap">
                                 { !buttonLoading && <button disabled = {disableButton} onClick = {() => asset.onAuction? setPlaceBidDialogOpen(true) : handleBuy()} className = "asset-description-container-price-container-buy-btn" style = {{ opacity: disableButton? '0.2' : '1'}}> {asset.onAuction? "Place bid" : "Buy"} </button> }
-                                { buttonLoading && <div className = "asset-description-container-price-container-buy-loader"> <CircularProgress size={40} thickness={5} /></div> }
+                                { buttonLoading && <div className = "asset-description-container-price-container-buy-loader"> <Lottie width={40} height={40}/></div> }
                             </div>
                         </div>}
                     </div>

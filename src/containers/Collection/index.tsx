@@ -8,7 +8,6 @@ import { fetch } from '../../libs';
 import { IAsset } from '../../interfaces/containers/Application/asset.interface';
 import InfiniteScroll from 'react-infinite-scroller';
 import Card from '../../components/TokenCard';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import classNames from 'classnames';
 import { useSocket } from '../../socket';
 import { SocketEventsEnum } from '../../constants/socket/events';
@@ -18,6 +17,7 @@ import DotsImage from '../../static/images/dots.png';
 import NoAssets from '../../static/images/no-assets.png';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Lottie from "../../components/Lottie";
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -175,7 +175,7 @@ function Collection(){
                                 pageStart={-1}
                                 loadMore={loadApplication}
                                 hasMore={state.load}
-                                loader={<div className="collection-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
+                                loader={<div className="collection-explore-scroll-loader" key={0}><Lottie width={100} height={100}/></div>}
                                 useWindow={true}
                             >
                                 {(state.list.length > 0 || state.load) && <div className = "collection-explore-cards-wrap">

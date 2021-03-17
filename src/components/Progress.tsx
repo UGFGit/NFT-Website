@@ -1,5 +1,5 @@
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Lottie from './Lottie';
 
 function Progress(){
     const style = {
@@ -12,7 +12,7 @@ function Progress(){
 
     return (
         <div style={style}>
-            <CircularProgress size={80} thickness={5} />
+            <Lottie width = {150} height = {150}/>
         </div>
     )
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import MuiDialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Lottie from "../components/Lottie";
 
 interface DialogProps{
     open: boolean;
@@ -24,7 +24,7 @@ function WrongNatworkDialog({ open, network}: DialogProps){
                     alignItems: "center",
                     display: "flex"
                 }}>
-                    <CircularProgress size={60} thickness={5} />
+                    <Lottie width={60} height={60}/>
                 </div>
                 <p style = {{
                    fontFamily: "Open Sans",

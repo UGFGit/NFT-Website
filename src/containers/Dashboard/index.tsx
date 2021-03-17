@@ -7,7 +7,6 @@ import DocumentTitle from 'react-document-title';
 import { useSocket } from '../../socket';
 import InfiniteScroll from 'react-infinite-scroller';
 import Card from '../../components/TokenCard';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Navigation from '../../components/Navigation';
 import Avatar from '@material-ui/core/Avatar';
 import classNames from 'classnames';
@@ -19,6 +18,7 @@ import { IWeb3State } from '../../interfaces/reducers/web3.interface';
 import {connect} from 'react-redux';
 import NoAssets from '../../static/images/no-assets.png';
 import { useHistory } from "react-router-dom";
+import Lottie from "../../components/Lottie";
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -120,7 +120,7 @@ function Dashboard({ web3 }: DashboardProps){
                                 pageStart={-1}
                                 loadMore={loadApplication}
                                 hasMore={state.load}
-                                loader={<div className="dashboard-explore-scroll-loader" key={0}><CircularProgress size={100} thickness={5} /></div>}
+                                loader={<div className="dashboard-explore-scroll-loader" key={0}><Lottie width={100} height={100}/></div>}
                                 useWindow={true}
                             >
                                 {(state.list.length > 0 || state.load) &&<div className = "dashboard-explore-cards-wrap">
