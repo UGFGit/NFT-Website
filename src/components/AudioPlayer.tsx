@@ -15,11 +15,24 @@ interface BarProps{
     currentTimePos: string;
 }
 
+interface DownloadProgress {
+    left: string
+    width: string
+}
+
+interface DownloadProgressState{
+    downloadProgressArr?: DownloadProgress[];
+    hasDownloadProgressAnimation?: boolean;
+}
+
 function Player({ src }: PlayerProps){
     const audio = useRef<HTMLAudioElement>(null);
 
     const [play, setPlay] = useState(false);
     const [mute, setMute] = useState(false);
+    const [downloadProgress, setDownloadProgress] = useState<DownloadProgressState>({});
+
+    let downloadProgressAnimationTimer: NodeJS.Timeout;
 
     const [barProps, setBarProps] = useState<BarProps>({ currentTime: '0:0', currentTimePos: '0%'});
 
@@ -81,6 +94,28 @@ function Player({ src }: PlayerProps){
         return num > 9 ? num.toString() : `0${num}`
     }
 
+    const handelDownloadProgress = (e: Event) => {
+        const audioEvent = e.target as HTMLAudioElement;
+        const duration = getDuration();
+
+        const downloadProgressArr: DownloadProgress[] = [];
+
+        for (let i = 0; i < audioEvent.buffered.length; i++) {
+            const bufferedStart: number = audioEvent.buffered.start(i)
+            const bufferedEnd: number = audioEvent.buffered.end(i)
+            downloadProgressArr.push({
+                left: `${Math.round((100 / duration) * bufferedStart) || 0}%`,
+                width: `${Math.round((100 / duration) * (bufferedEnd - bufferedStart)) || 0}%`,
+            })
+        }
+
+        clearTimeout(downloadProgressAnimationTimer);
+        setDownloadProgress({ downloadProgressArr, hasDownloadProgressAnimation: true });
+        downloadProgressAnimationTimer = setTimeout(() => {
+            setDownloadProgress({ downloadProgressArr, hasDownloadProgressAnimation: false });
+        }, 200)
+    }
+
     const getDisplayTimeBySeconds = (seconds: number, totalSeconds: number): string => {
         const min = Math.floor(seconds / 60)
         const minStr = addHeadingZero(min)
@@ -100,6 +135,10 @@ function Player({ src }: PlayerProps){
 
     useEffect(() => {
         getProgress();
+
+        audio.current?.addEventListener('progress', handelDownloadProgress)
+
+        return () => audio.current?.removeEventListener('progress', handelDownloadProgress)
     }, [audio]);
 
     useInterval(() => {
@@ -115,6 +154,15 @@ function Player({ src }: PlayerProps){
                 </div>
                 <div className = "audio-player-controllers-bar-wrap">
                     <div style = {{width: barProps.currentTimePos}} className = "audio-player-controllers-bar"/>
+                    <div className = "audio-player-controllers-download-wrap">
+                        {downloadProgress.downloadProgressArr && downloadProgress.downloadProgressArr.map(({ left, width }, i) => (
+                            <div 
+                                key={i}
+                                className = 'audio-player-controllers-download-bar'
+                                style={{ left, width, transitionDuration: downloadProgress.hasDownloadProgressAnimation ? '.2s' : '0s' }}
+                            />
+                        ))}
+                    </div>
                 </div>
                 <div className = "audio-player-controllers-duration-wrap">
                     <p>{barProps.currentTime}</p>

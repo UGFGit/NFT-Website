@@ -31,11 +31,27 @@
             overflow: hidden;
             margin: auto 20px;
             width: 100%;
+            position: relative;
 
             .audio-player-controllers-bar{
                 background: #2BD2F7;
+                position: absolute;
+                z-index: 2;
                 height: 7px;
                 border-radius: 38px;
+            }
+
+            .audio-player-controllers-download-wrap{
+                position: absolute;
+                z-index: 1;
+                height: 7px;
+                width: 100%;
+
+                .audio-player-controllers-download-bar{
+                    height: 100%;
+                    background-color: #dddddd;
+                    border-radius: 2px;
+                }
             }
         }
 
