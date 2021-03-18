@@ -15,6 +15,7 @@ import Dashboard from './Dashboard';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import NotFoundPage from './NotFoundPage';
+import HowItWorkPage from './HowTo';
 import AssetPage from './Asset';
 import Progress from '../components/Progress';
 
@@ -61,6 +62,7 @@ function App({ setConfig }: AppProps) {
                 <Route component={Dashboard} path="/dashboard"/>
                 <Route component={PrivacyPolicy} path="/privacy-policy"/>
                 <Route component={TermsOfService} path="/terms-of-service"/>
+                <Route component={HowItWorkPage} path="/how-to"/>
                 <Route path="/assets/:id" render={({match}) => (
                     <AssetPage
                         assetId = {match.params.id}
