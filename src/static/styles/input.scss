@@ -40,8 +40,14 @@
         background: $white;
         border: 1px solid $input-border;
         border-radius: 8px;
-        padding: 10px 14px;
-        color: $black;
+        padding: 14px 10px;
+
+        font-family: Open Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 20px;
+        color: #868686;
     }
 
     .input-help-wrap{

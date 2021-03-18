@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import '../static/styles/multiple-group.scss';
-import DeleteIcon from '../static/images/delete-btn.png';
+import DeleteIcon from '../static/images/delete-black-btn.png';
 
 interface MultipleGroupProps{
     values: any[];

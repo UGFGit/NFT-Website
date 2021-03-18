@@ -11,9 +11,9 @@
     .dropzone-body-wrap{
         max-height: 152px;
         width: 100%;
-        background: $white;
-        border: 1px solid $input-border;
-        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.6);
+        box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.02);
+        border-radius: 10px;
         padding: 26px 0px 29px;
         display: flex;
         flex-direction: column;
@@ -27,8 +27,8 @@
                 font-family: Open Sans;
                 font-style: normal;
                 font-weight: normal;
-                font-size: 14px;
-                line-height: 19px;
+                font-size: 16px;
+                line-height: 22px;
                 color: #868686;
                 max-width: 377px;
 
@@ -40,20 +40,20 @@
         }
 
         .dropzone-btn{
-            background: $btn-white;
-            border: 1px solid $btn-border;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid #252423;
             border-radius: 39px;
             margin-top: 16px;
             padding: 8px 25px;
             cursor: pointer;
 
             .dropzone-btn-title{
-                font-family: Roboto;
+                font-family: Open Sans;
                 font-style: normal;
                 font-weight: normal;
                 font-size: 14px;
-                line-height: 16px;
-                color: $turquoise;
+                line-height: 19px;
+                color: #252423;
             }
         }
     }
