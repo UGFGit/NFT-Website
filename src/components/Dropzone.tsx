@@ -34,7 +34,7 @@ function Dropzone({ file, onChange, error, accept, type }: DropzoneProps){
         <div className = 'dropzone-root'>
             <div {...getRootProps({
                 onClick: (event: any) => {
-                    if(['audio-player-controllers-img-wrap'].includes(event.target.className) || event.target.localName === 'img'){
+                    if(['audio-player-controllers-img-wrap', 'audio-player-controllers-bar-wrap', 'audio-player-controllers-download-bar', 'audio-player-controllers-download-wrap'].includes(event.target.className) || event.target.localName === 'img'){
                         event.stopPropagation()
                     }
                 }

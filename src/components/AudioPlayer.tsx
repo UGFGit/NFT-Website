@@ -27,6 +27,7 @@ interface DownloadProgressState{
 
 function Player({ src }: PlayerProps){
     const audio = useRef<HTMLAudioElement>(null);
+    const progressBarRef = useRef<any>();
 
     const [play, setPlay] = useState(false);
     const [mute, setMute] = useState(false);
@@ -116,6 +117,38 @@ function Player({ src }: PlayerProps){
         }, 200)
     }
 
+    const getPosX = (event: any): number => {
+        if (typeof event.clientX === 'number') {
+          return event.clientX
+        } else {
+          return event.touches[0].clientX
+        }
+    }
+
+    const handleMouseDownOrTouchStartProgressBar = (event: React.MouseEvent | React.TouchEvent) => {
+        const progressBarRect = progressBarRef.current.getBoundingClientRect();
+        const maxRelativePos = progressBarRect.width;
+        
+        let relativePos = getPosX(event) - progressBarRect.left;
+        
+        if (relativePos < 0) {
+            relativePos = 0;
+        } else if (relativePos > maxRelativePos) {
+            relativePos = maxRelativePos;
+        }
+
+        const duration = getDuration()
+        const currentTime = (duration * relativePos) / maxRelativePos;
+        const currentTimePos = `${((relativePos / maxRelativePos) * 100).toFixed(2)}%`;
+
+        setBarProps({ currentTime: getDisplayTimeBySeconds(currentTime, duration), currentTimePos });
+        
+        if(audio){
+            //@ts-ignore
+            audio.current.currentTime = currentTime;
+        }
+    }
+
     const getDisplayTimeBySeconds = (seconds: number, totalSeconds: number): string => {
         const min = Math.floor(seconds / 60)
         const minStr = addHeadingZero(min)
@@ -136,9 +169,13 @@ function Player({ src }: PlayerProps){
     useEffect(() => {
         getProgress();
 
-        audio.current?.addEventListener('progress', handelDownloadProgress)
+        audio.current?.addEventListener('progress', handelDownloadProgress);
+        audio.current?.addEventListener('ended', () => setPlay(false));
 
-        return () => audio.current?.removeEventListener('progress', handelDownloadProgress)
+        return () => {
+            audio.current?.removeEventListener('progress', handelDownloadProgress);
+            audio.current?.removeEventListener('ended', () => setPlay(false));
+        }
     }, [audio]);
 
     useInterval(() => {
@@ -152,7 +189,7 @@ function Player({ src }: PlayerProps){
                 <div onClick = {handlePlay} className = "audio-player-controllers-img-wrap">
                     <img alt = "" src = {play? PauseIcon: PlayIcon}/>
                 </div>
-                <div className = "audio-player-controllers-bar-wrap">
+                <div ref={progressBarRef} onMouseDown={handleMouseDownOrTouchStartProgressBar} onTouchStart={handleMouseDownOrTouchStartProgressBar} className = "audio-player-controllers-bar-wrap">
                     <div style = {{width: barProps.currentTimePos}} className = "audio-player-controllers-bar"/>
                     <div className = "audio-player-controllers-download-wrap">
                         {downloadProgress.downloadProgressArr && downloadProgress.downloadProgressArr.map(({ left, width }, i) => (
