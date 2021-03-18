@@ -9,6 +9,9 @@ import { setProvider, removeProvider } from '../actions/web3';
 import { ChainNames } from '../constants/blockchain/chain-names';
 import WrongNatworkDialog from './WrongNatworkDialog';
 import { useHistory } from "react-router-dom";
+import Tooltip from '@material-ui/core/Tooltip';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import TooltipImg from '../static/images/tooltip-img.png';
 
 const CURRENT_CHAIN_ID = 4;
 const CURRENT_CHAIN_NAME = ChainNames[CURRENT_CHAIN_ID];
@@ -29,6 +32,8 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
 
     const [state, setState] = useState<MetamaskCheckerState>({});
     const [chainDialogOpen, setChainDialogOpen] = useState(false);
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+    const [ethNotAvaible, setEthNotAvaible] = useState(false);
 
     const addProviderListeners = (provider: any) => {
         provider
@@ -82,8 +87,11 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
         };
 
         if(!web3){
+            setEthNotAvaible(true);
             return;
         }
+
+        setEthNotAvaible(false);
 
         const addr = await web3.eth.getAccounts();
 
@@ -110,19 +118,45 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
     
     return(
         <div>
-            <button 
-                className = "connect-button" 
-                onClick={() => {
-                    if(!state.account){
-                        return check();
+            <ClickAwayListener onClickAway = {() => setTooltipOpen(false)}>
+                <Tooltip
+                    PopperProps={{
+                        disablePortal: true,
+                    }}
+                    title = {
+                        <div className = "tooltip-root">
+                            <div className = "tooltip-img-wrap">
+                                <img alt = "" src = {TooltipImg}/>
+                            </div>
+                            <p className = "tooltip-title">Select a wallet provider</p>
+                            <p className = "tooltip-desc">Such as Google Chrome or Brave browser</p>
+                        </div>
                     }
-                    
-                    history.push('/dashboard');
-                }}
-            >{!state.account? 
-                    'Connect wallet': 
-                    'Dashboard'
-            }</button>
+                    onClose={() => setTooltipOpen(false)}
+                    open={tooltipOpen}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                >
+                    <button 
+                        className = "connect-button" 
+                        onClick={() => {
+                            if(ethNotAvaible){
+                                return setTooltipOpen(true);
+                            }
+
+                            if(!state.account){
+                                return check();
+                            }
+                            
+                            history.push('/dashboard');
+                        }}
+                    >{!state.account? 
+                            'Connect wallet': 
+                            'Dashboard'
+                    }</button>
+                </Tooltip>
+            </ClickAwayListener>
             <WrongNatworkDialog
                 open = {chainDialogOpen}
                 network = {CURRENT_CHAIN_NAME}
