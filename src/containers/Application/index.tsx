@@ -12,6 +12,7 @@ import { serialize } from 'object-to-formdata';
 import CropDialog from './CropDialog';
 import { useSnackbar } from 'notistack';
 import MultipleGroup from '../../components/MultipleGroup';
+import classNames from 'classnames';
 
 interface NtfsErrors{
     price?: string;
@@ -193,18 +194,22 @@ function Application(){
                     <p className='title'>Application</p>
                     <p className='application-body-block-title'>Profile information</p>
                     <div 
-                        className = "application-body-background-wrap"
+                        className = {classNames("application-body-background-wrap", { error: Boolean(errors.background)})}
                         onClick = {(event: any) => {
-                            if(!['application-body-avatar-wrap', "application-body-avatar"].includes(event.target.className)){
+                            if(!['application-body-avatar-wrap', "application-body-avatar", 'application-body-avatar-wrap error'].includes(event.target.className)){
                                 setBannerDialogOpen(true);
+                                setErrors({...errors, background: undefined});
                             }
                         }}
                     >
                         {!background && <p className = "application-body-background-title">Your banner photo</p>}
                         {background && <img className = "application-body-background" alt ="" src = {FILESTORE(background)}/>}
                         <div 
-                            className = "application-body-avatar-wrap"
-                            onClick = {() => setAvatarDialogOpen(true)}
+                            className = {classNames("application-body-avatar-wrap", { error: Boolean(errors.avatar)})}
+                            onClick = {() => {
+                                setAvatarDialogOpen(true);
+                                setErrors({...errors, avatar: undefined});
+                            }}
                         >
                             {avatar && <img className = "application-body-avatar" alt = "" src = {FILESTORE(avatar)}/>}
                         </div>
@@ -214,6 +219,7 @@ function Application(){
                         value = {nickname}
                         onChange= {(value) => {
                             setNickname(value);
+                            setErrors({...errors, nickname: undefined});
                         }}
                         placeholder = "Your name"
                         error = {errors.nickname}
@@ -225,6 +231,7 @@ function Application(){
                         value = {email}
                         onChange= {(value) => {
                             setEmail(value);
+                            setErrors({...errors, email: undefined});
                         }}
                         placeholder = "Email"
                         error = {errors.email}
@@ -234,6 +241,7 @@ function Application(){
                         value = {address}
                         onChange= {(value) => {
                             setAddress(value);
+                            setErrors({...errors, address: undefined});
                         }}
                         placeholder = "Wallet address"
                         error = {errors.address}
@@ -256,6 +264,12 @@ function Application(){
                                             nft.file = data;
                                             nfts[index] = nft;
                                             setNfts([...nfts]);
+
+                                            if(errors.nfts && errors.nfts[index]){
+                                                const e = [...errors.nfts];
+                                                e[index] = {...e[index], filename: undefined, mimetype: undefined};
+                                                setErrors({...errors, nfts: e});
+                                            }
                                         }}
                                         error={errors.nfts && errors.nfts[index] && errors.nfts[index].filename && errors.nfts[index].mimetype}
                                     />
@@ -283,12 +297,24 @@ function Application(){
                                         onChange= {(value) => {
                                             nft.cryptoPrice = value;
                                             nfts[index] = nft;
-                                            setNfts([...nfts])
+                                            setNfts([...nfts]);
+
+                                            if(errors.nfts && errors.nfts[index]){
+                                                const e = [...errors.nfts];
+                                                e[index] = {...e[index], cryptoPrice: undefined};
+                                                setErrors({...errors, nfts: e});
+                                            }
                                         }}
                                         onBlur = {() => {
                                             nft.price = `${Number(nft.cryptoPrice) * prices.WETH.USD}`;
                                             nfts[index] = nft;
-                                            setNfts([...nfts])
+                                            setNfts([...nfts]);
+
+                                            if(errors.nfts && errors.nfts[index]){
+                                                const e = [...errors.nfts];
+                                                e[index] = {...e[index], price: undefined};
+                                                setErrors({...errors, nfts: e});
+                                            }
                                         }}
                                         placeholder = "Amount"
                                         type = 'number'
@@ -300,12 +326,24 @@ function Application(){
                                         onChange= {(value) => {
                                             nft.price = value;
                                             nfts[index] = nft;
-                                            setNfts([...nfts])
+                                            setNfts([...nfts]);
+
+                                            if(errors.nfts && errors.nfts[index]){
+                                                const e = [...errors.nfts];
+                                                e[index] = {...e[index], price: undefined};
+                                                setErrors({...errors, nfts: e});
+                                            }
                                         }}
                                         onBlur = {() => {
                                             nft.cryptoPrice = `${Number(nft.price) * prices.USD.WETH}`;
                                             nfts[index] = nft;
-                                            setNfts([...nfts])
+                                            setNfts([...nfts]);
+
+                                            if(errors.nfts && errors.nfts[index]){
+                                                const e = [...errors.nfts];
+                                                e[index] = {...e[index], cryptoPrice: undefined};
+                                                setErrors({...errors, nfts: e});
+                                            }
                                         }}
                                         placeholder = "Amount"
                                         type = 'number'
@@ -318,7 +356,13 @@ function Application(){
                                     onChange= {(value) => {
                                         nft.name = value;
                                         nfts[index] = nft;
-                                        setNfts([...nfts])
+                                        setNfts([...nfts]);
+
+                                        if(errors.nfts && errors.nfts[index]){
+                                            const e = [...errors.nfts];
+                                            e[index] = {...e[index], name: undefined};
+                                            setErrors({...errors, nfts: e});
+                                        }
                                     }}
                                     placeholder = "Name of your artwork"
                                     error={errors.nfts && errors.nfts[index] && errors.nfts[index].name}
@@ -331,7 +375,13 @@ function Application(){
                                     onChange= {(value) => {
                                         nft.description = value;
                                         nfts[index] = nft;
-                                        setNfts([...nfts])
+                                        setNfts([...nfts]);
+
+                                        if(errors.nfts && errors.nfts[index]){
+                                            const e = [...errors.nfts];
+                                            e[index] = {...e[index], description: undefined};
+                                            setErrors({...errors, nfts: e});
+                                        }
                                     }}
                                     placeholder = "Description of your artwork"
                                     helperText = 'max 100 words'
@@ -344,7 +394,13 @@ function Application(){
                                     onChange= {(value) => {
                                         nft.number = value;
                                         nfts[index] = nft;
-                                        setNfts([...nfts])
+                                        setNfts([...nfts]);
+
+                                        if(errors.nfts && errors.nfts[index]){
+                                            const e = [...errors.nfts];
+                                            e[index] = {...e[index], number: undefined};
+                                            setErrors({...errors, nfts: e});
+                                        }
                                     }}
                                     placeholder = "Number"
                                     type = 'number'
