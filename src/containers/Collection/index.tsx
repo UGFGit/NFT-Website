@@ -98,8 +98,9 @@ function Collection(){
                 <Navigation location={LocationEnum.COLLECTION}/>
                 <div className = 'collection-main'>
                     <div className = "collection-main-container">
-                        <p className = 'collection-main-container-title'>Genesis Arts</p>
-                        <p className = "collection-main-container-text">A music-centric NFTs marketplace hosting rare and collectable digital assets</p>
+                        <p className = 'collection-main-container-title'>Digital Collectibles</p>
+                        <p className = 'collection-main-container-title'>From The Music World</p>
+                        {/* <p className = "collection-main-container-text">A music-centric NFTs marketplace hosting rare and collectable digital assets</p> */}
                         {/* <p className = "collection-main-container-scroll">scroll</p> */}
                     </div>
                     <div className = 'collection-main-bottom'>
