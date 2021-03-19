@@ -286,6 +286,12 @@ function Application(){
                                             nft.filePlaceholder = data;
                                             nfts[index] = nft;
                                             setNfts([...nfts]);
+
+                                            if(errors.nfts && errors.nfts[index]){
+                                                const e = [...errors.nfts];
+                                                e[index] = {...e[index], filePlaceholder: undefined};
+                                                setErrors({...errors, nfts: e});
+                                            }
                                         }}
                                         error={errors.nfts && errors.nfts[index] && errors.nfts[index].filePlaceholder}
                                     />
