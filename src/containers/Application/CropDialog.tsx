@@ -77,7 +77,7 @@ function CropDialog({ open, onClose, type, onSave }: ICropDialogProps){
                             />
                         </div>
                     }
-                    <p className = "crop-dialog-image-info">{`Your ${type === 'avatar'? 'user': 'banner'} photo (600*600) png, gpeg`}</p>
+                    <p className = "crop-dialog-image-info">{`Your ${type === 'avatar'? 'user': 'banner'} photo (${type === 'avatar'? '200*200' : '500*150'}) png, gpeg`}</p>
                 </div>                    
             </DialogContent>
             <DialogActions className = 'crop-dialog-actions'>
