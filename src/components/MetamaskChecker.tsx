@@ -49,10 +49,23 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
     const check = async () => {
         let result = {} as any;
         let resultError = null;
-        let provider = null;        
+        let provider = null;  
+        
+        //@ts-ignore
+        if (window.ethereum) {
+            //@ts-ignore
+            provider = window.ethereum;
+            console.info('Ethereum was found')
+            //@ts-ignore
+        } else if (window.web3) {
+            //@ts-ignore
+            provider = window.web3.currentProvider;
+            console.log('Web3 was found')
+        };
+
         try{
             //@ts-ignore
-            result = await checkMetamask(window.ethereum);
+            result = await checkMetamask(provider);
         } catch(err){
             console.log(err);
             resultError = err;
@@ -61,8 +74,6 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
         }
 
         if (! (resultError instanceof MetamaskNotFoundError)) {
-            //@ts-ignore
-            provider = window.ethereum;
             removeListeners(provider);
             addProviderListeners(provider);
         }
