@@ -188,8 +188,8 @@ function Collection(){
                                         <img alt="" src={NoAssets}/>
                                     </div>
                                     <div className = "collection-explore-list-empty-text-wrap">
-                                        <p className = "collection-explore-list-empty-text-title">Items not available</p>
-                                        <p className = "collection-explore-list-empty-text-desc">Come back soon!</p>
+                                        <p className = "collection-explore-list-empty-text-title">This collection will be updated soon.</p>
+                                        <p className = "collection-explore-list-empty-text-desc">Subscribe to our mailing list for updates.</p>
                                     </div>
                                 </div>}
                             </InfiniteScroll>
