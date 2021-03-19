@@ -179,7 +179,11 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                         {renderLeftContent()}
                     </div>
                     <div className = "asset-description-container">
-                        <div onClick = {() =>  window.location.assign(`https://${asset.artist.host}`)} className = "asset-description-container-nav">
+                        <div onClick = {() =>  {
+                            if(asset.artist.host){
+                                window.location.assign(`https://${asset.artist.host}`)
+                            }                            
+                        }} style = {{cursor: asset.artist.host? 'pointer': 'default'}} className = "asset-description-container-nav">
                             <Avatar alt="" src = {FILESTORE(asset.artist.avatar)}/>
                             <p className = "asset-description-container-nav-artist-name">{asset.artist.name}</p>
                         </div>
