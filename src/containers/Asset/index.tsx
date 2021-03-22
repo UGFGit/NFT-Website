@@ -19,7 +19,7 @@ import { SocketEventsEnum } from '../../constants/socket/events';
 import VideoDialog from './VideoDialog';
 import Timer from './Timer';
 import Table from './Table';
-import { checkAllowance, createSignature } from './blockchain';
+import { checkAllowance, createSignature, checkBalance } from './blockchain';
 import PlaceBidDialog from './PlaceBidDialog';
 import ReactPlayer from '../../components/VideoPlayer';
 import AudioPlayer from '../../components/AudioPlayer';
@@ -84,6 +84,14 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                 setButtonLoading(true);
                 const client = new Web3(web3.provider);
                 await checkAllowance(web3.account ,client, asset.contract.contract, asset.tradingTokenAddress, enqueueSnackbar);
+
+                const balance = await checkBalance(client, asset.tradingTokenAddress, web3.account);
+                
+                if(Number(asset.cryptoPrice) > Number(balance)){
+                    setButtonLoading(false);
+                    return enqueueSnackbar(`Insufficient funds`, { variant: 'error' });
+                }
+
                 const {signature, value, deadline} = await createSignature(asset, client, web3, enqueueSnackbar);
                 enqueueSnackbar(`Waiting for transaction complete`, { variant: 'info' });
                 await fetch.post(BLOCKCHAIN_BUY, { 
