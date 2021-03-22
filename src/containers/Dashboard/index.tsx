@@ -19,11 +19,13 @@ import {connect} from 'react-redux';
 import NoAssets from '../../static/images/no-assets.png';
 import { useHistory } from "react-router-dom";
 import Lottie from "../../components/Lottie";
+import { IConfigState } from '../../interfaces/reducers/config.interface';
 
 const DEFAULT_PAGE_SIZE = 20;
 
 interface DashboardProps{
-    web3: IWeb3State
+    web3: IWeb3State;
+    config: IConfigState;
 }
 
 interface IState{
@@ -32,7 +34,7 @@ interface IState{
     mimetype: string | null;
 }
 
-function Dashboard({ web3 }: DashboardProps){
+function Dashboard({ web3, config }: DashboardProps){
     const [state, setState] = useState<IState>({ list: [], load: true, mimetype: 'image' });
 
     const history = useHistory();
@@ -46,7 +48,7 @@ function Dashboard({ web3 }: DashboardProps){
             setState({list: [], load: false, mimetype: state.mimetype});
             return;
         }
-        const response = await fetch.post(ASSETS, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, address: web3.account } });
+        const response = await fetch.post(ASSETS, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, address: web3.account, artist: config.main? undefined : config.artist?.id } });
         if(response.ok){
             const { assets, pagination} = await response.json();
             const list = [...state.list, ...assets];
@@ -150,9 +152,10 @@ function Dashboard({ web3 }: DashboardProps){
     )
 }
 
-function mapStateToProps(state: { web3: IWeb3State}) {
+function mapStateToProps(state: { web3: IWeb3State, config: IConfigState}) {
     return {
         web3 : state.web3,
+        config : state.config,
     }
 }
 
