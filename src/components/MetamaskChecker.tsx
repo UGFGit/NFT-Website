@@ -13,7 +13,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import TooltipImg from '../static/images/tooltip-img.png';
 
-const CURRENT_CHAIN_ID = 4;
+const CURRENT_CHAIN_ID = 1;
 const CURRENT_CHAIN_NAME = ChainNames[CURRENT_CHAIN_ID];
 
 interface MetamaskCheckerState{
