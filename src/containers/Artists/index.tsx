@@ -13,6 +13,7 @@ import DotsImage from '../../static/images/dots.png';
 // import ArtistsBottomImage from '../../static/images/artists-bottom.png';
 import NoAssets from '../../static/images/no-assets.png';
 import Lottie from "../../components/Lottie";
+import MailForm from '../../components/MainForm';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -86,8 +87,8 @@ function Artists(){
                                         <img alt="" src={NoAssets}/>
                                     </div>
                                     <div className = "artists-explore-list-empty-text-wrap">
-                                        <p className = "artists-explore-list-empty-text-title">This collection will be updated soon.</p>
-                                        <p className = "artists-explore-list-empty-text-desc">Subscribe to our mailing list for updates.</p>
+                                        <p className = "artists-explore-list-empty-text-title">Artists list will be updated soon.</p>
+                                        <MailForm/>
                                     </div>
                                 </div>}
                             </InfiniteScroll>
