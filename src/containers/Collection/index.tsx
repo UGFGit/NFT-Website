@@ -101,7 +101,7 @@ function Collection(){
                     <div className = "collection-main-container">
                         <p className = 'collection-main-container-title'>Digital Collectibles</p>
                         <p className = 'collection-main-container-title'>From The Music World</p>
-                        <p className = "collection-main-container-text">An NFT platform of rare and collectable music-centric digital assets.</p>
+                        {/* <p className = "collection-main-container-text">An NFT platform of rare and collectable music-centric digital assets.</p> */}
                         {/* <p className = "collection-main-container-scroll">scroll</p> */}
                     </div>
                     <div className = 'collection-main-bottom'>
