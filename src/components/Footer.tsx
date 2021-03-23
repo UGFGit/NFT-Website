@@ -17,8 +17,10 @@ function Footer(){
             </div>
             <p className='footer-title'>© All rights reserved</p>
             <div className='footer-items-wrap-rigth'>
+                <p onClick = {() => history.push('/faq')}>FAQ</p>
                 <p onClick = {() => history.push('/terms-of-service')}>Terms of Service</p>
                 <p onClick = {() => history.push('/privacy-policy')}>Privacy Policy</p>
+                <p><a href="mailto:legal@utopiagenesis.com">Email</a></p>
             </div>
         </div>
     )
