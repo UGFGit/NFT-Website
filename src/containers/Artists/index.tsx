@@ -13,6 +13,7 @@ import DotsImage from '../../static/images/dots.png';
 // import ArtistsBottomImage from '../../static/images/artists-bottom.png';
 import NoAssets from '../../static/images/no-assets.png';
 import Lottie from "../../components/Lottie";
+import MailForm from '../../components/MainForm';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -91,6 +92,7 @@ function Artists(){
                                     </div>
                                 </div>}
                             </InfiniteScroll>
+                            <MailForm/>
                             <div className = "artists-explore-footer-wrap">
                                 <Footer/>
                             </div>
