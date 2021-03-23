@@ -2,58 +2,59 @@
 @import "./fonts.scss";
 
 .mail-form-root{
+    margin-top: 150px;
     background: #FFFFFF;
-    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.06);
-    border-radius: 10px; 
-    padding: 20px;
-    margin-top: 10px;
+    padding: 43px 0px 40px 0px;
 
     .mail-form-wrap{
         .mail-form-title{
-            font-family: Open Sans;
+            font-family: Open Sans Bold;
             font-style: normal;
-            font-weight: 300;
-            font-size: 19px;
-            line-height: 27px;
-            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 33px;
             color: #252423;
+            text-align: center;
+            margin-bottom: 30px;
         } 
 
         .mail-form-body-wrap{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            margin-top: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            background: #FFFFFF;
+            border: 1px solid #E4ECEE;
+            box-sizing: border-box;
+            border-radius: 8px;
+            padding: 14px 10px;
 
             .mail-form-input{
-                width: 100%;
+                width: calc(100% - 54px);
                 outline: 0;
-                background: $white;
-                border: 1px solid $input-border;
-                border-radius: 8px;
-                padding: 14px 10px;
-
+                border: 0;
                 font-family: Open Sans;
                 font-style: normal;
                 font-weight: normal;
                 font-size: 16px;
-                line-height: 20px;
+                line-height: 22px;
                 color: #868686 !important;
             }
 
             .mail-form-btn{
-                margin-left: 20px;
+                position: absolute;
+                right: -1px;
+                top: -1px;
                 outline: 0;
-                padding: 10px 20px;
-                border: 1px solid $btn-black;
-                border-radius: 39px;
+                width: 54px;
+                height: 54px;
+                border: 0;
+                border-radius: 8px;
                 cursor: pointer;
-                background: #fff;
-                color: $black;
+                background: $black;
 
-                &:hover{
-                    background: $btn-black;
-                    color: $white;
+                img{
+                    width: 20px;
+                    height: 18px;
                 }
             }
         }
