@@ -13,7 +13,6 @@ import DotsImage from '../../static/images/dots.png';
 // import ArtistsBottomImage from '../../static/images/artists-bottom.png';
 import NoAssets from '../../static/images/no-assets.png';
 import Lottie from "../../components/Lottie";
-import MailForm from '../../components/MainForm';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -50,8 +49,9 @@ function Artists(){
                 <Navigation location={LocationEnum.ARTISTS}/>
                 <div className = 'artists-main'>
                     <div className = "artists-main-container">
-                        <p className = 'artists-main-container-title'>Digital items from the music world</p>
-                        <p className = "artists-main-container-text">NFT stands for non-fungible tokens like ERC-721 (a smart contract standard) tokens which are hosted on Ethereum’s own blockchain.</p>
+                        <p className = 'artists-main-container-title'>Digital Collectibles</p>
+                        <p className = 'artists-main-container-title'>From The Music World</p>
+                        {/* <p className = "artists-main-container-text">NFT stands for non-fungible tokens like ERC-721 (a smart contract standard) tokens which are hosted on Ethereum’s own blockchain.</p> */}
                     </div>
                     <div className = 'artists-main-bottom'>
                         <img className = "artists-main-bottom-img" alt = "" src = {DotsImage}/>
@@ -88,7 +88,6 @@ function Artists(){
                                     </div>
                                     <div className = "artists-explore-list-empty-text-wrap">
                                         <p className = "artists-explore-list-empty-text-title">Artists list will be updated soon.</p>
-                                        <MailForm/>
                                     </div>
                                 </div>}
                             </InfiniteScroll>

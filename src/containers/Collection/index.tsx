@@ -18,7 +18,6 @@ import NoAssets from '../../static/images/no-assets.png';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Lottie from "../../components/Lottie";
-import MailForm from '../../components/MainForm';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -191,7 +190,6 @@ function Collection(){
                                     </div>
                                     <div className = "collection-explore-list-empty-text-wrap">
                                         <p className = "collection-explore-list-empty-text-title">This collection will be updated soon.</p>
-                                        <MailForm/>
                                     </div>                                    
                                 </div>}
                             </InfiniteScroll>
