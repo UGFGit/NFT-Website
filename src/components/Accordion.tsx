@@ -15,9 +15,9 @@ function Accordion({ title, text }: AccordionProps){
 
     return(
         <div className = "accordion-root">
-            <div className = 'accordion-header'>
+            <div onClick = {() => setOpen(!open)} className = 'accordion-header'>
                 <p className='accordion-header-title'>{ title }</p>
-                <div onClick = {() => setOpen(!open)} className = {classNames("accordion-btf", { 'accordion-btf-active':  open})}>
+                <div className = {classNames("accordion-btf", { 'accordion-btf-active':  open})}>
                     { open? <RemoveIcon style = {{fontSize: 20, color: "#FFFFFF"}}/> : <AddIcon style = {{fontSize: 20}}/> }
                 </div>
             </div>
