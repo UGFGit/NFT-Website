@@ -1,14 +1,14 @@
 import React from 'react';
 import '../../static/styles/terms-of-service.scss';
 import DocumentTitle from 'react-document-title';
-import Navigation from '../../components/Navigation';
+import Navigation, { LocationEnum } from '../../components/Navigation';
 import Footer from '../../components/Footer';
 
 function HowTo(){
     return(
         <DocumentTitle title="How it work">
             <div className = "terms-of-service-root">
-            <Navigation/>
+            <Navigation location = {LocationEnum.HOW_TO}/>
             <div className = "terms-of-service-body">
                 <p className ="terms-of-service-body-title">How it works for the NFT customer and provider</p>
                 <p className = "terms-of-service-body-text-wrap" style = {{marginTop: 10}}><b>Set-up an E-wallet</b>{` - This wallet is where you store your cryptocurrencies or digital assets. It can be either an application or a hardware wallet. Depending on the cryptocurrency or digital asset that you want to store, popular choices include MetaMask, Coinbase Wallet, and TrustWallet. For the storing of NFTs minted on the Ethereum blockchain, we recommend MetaMask. Think of it as like a Google Chrome extension. You need to get it from the Metamask.io website directly and nowhere else. 
