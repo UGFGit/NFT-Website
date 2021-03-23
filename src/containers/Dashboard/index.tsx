@@ -20,6 +20,7 @@ import NoAssets from '../../static/images/no-assets.png';
 import { useHistory } from "react-router-dom";
 import Lottie from "../../components/Lottie";
 import { IConfigState } from '../../interfaces/reducers/config.interface';
+import MailForm from '../../components/MainForm';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -141,6 +142,7 @@ function Dashboard({ web3, config }: DashboardProps){
                                     <button onClick = {() => history.push('/')} className = "dashboard-list-empty-btn">Collection</button>
                                 </div>}
                             </InfiniteScroll>
+                            <MailForm/>
                             <div className = "dashboard-explore-footer-wrap">
                                 <Footer/>
                             </div>
