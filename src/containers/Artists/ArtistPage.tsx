@@ -15,7 +15,6 @@ import Avatar from '@material-ui/core/Avatar';
 import classNames from 'classnames';
 import NoAssets from '../../static/images/no-assets.png';
 import Lottie from "../../components/Lottie";
-import MailForm from '../../components/MainForm';
 
 interface IArtistProps{
     artist: IArtist
@@ -129,7 +128,6 @@ function ArtistPage({ artist }: IArtistProps){
                                     </div>
                                     <div className = "artist-page-explore-list-empty-text-wrap">
                                         <p className = "artist-page-explore-list-empty-text-title">This collection will be updated soon.</p>
-                                        <MailForm/>
                                     </div>
                                 </div>}
                             </InfiniteScroll>
