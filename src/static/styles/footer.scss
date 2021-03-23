@@ -51,24 +51,24 @@
         margin-left: auto;
         cursor: pointer;
 
-        p{
+        p,a{
             font-family: Open Sans;
             font-style: normal;
             font-weight: normal;
             font-size: 14px;
             line-height: 19px;
             text-align: center;
-            text-decoration-line: underline;
             color: #868686;
+            text-decoration: none;
         }
 
-        p:first-child{
-            margin-right: 40px;
+        p{
+            margin-left: 30px;
         }
     }
 }
 
-@media screen and (max-width: 850px){
+@media screen and (max-width: 910px){
     .footer-root{
         flex-direction: column;
         padding: 17px 24px 16px 17px;
@@ -85,6 +85,16 @@
         .footer-items-wrap-rigth{
             order: -1;
             margin-left: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 1070px){
+    .footer-root{
+        .footer-items-wrap-rigth{
+            p{
+                margin-left: 10px;
+            }
         }
     }
 }
