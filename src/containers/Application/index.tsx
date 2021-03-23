@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DocumentTitle from 'react-document-title';
-import Navigation, { LocationEnum } from '../../components/Navigation';
+import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
 import '../../static/styles/application.scss';
 import Input from  '../../components/Input';
@@ -189,7 +189,7 @@ function Application(){
     return(
         <DocumentTitle title="Application">
             <div className = 'application-root'>
-                <Navigation location={LocationEnum.APPLICATION}/>
+                <Navigation/>
                 <div className = 'application-body'>
                     <p className='title'>Application</p>
                     <p className='application-body-block-title'>Profile information</p>

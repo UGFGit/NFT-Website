@@ -15,9 +15,6 @@ function Footer(){
                 <p className='footer-logo-wrap-title'>Genesis arts</p>
                 <p className='footer-logo-wrap-by'>by utopia genesis foundation</p>
             </div>
-            <div className='footer-items-wrap'>
-                <p onClick = {() => history.push('/how-to')}>How to</p>
-            </div>
             <p className='footer-title'>© All rights reserved</p>
             <div className='footer-items-wrap-rigth'>
                 <p onClick = {() => history.push('/terms-of-service')}>Terms of Service</p>
