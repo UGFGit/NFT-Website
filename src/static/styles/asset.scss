@@ -261,6 +261,75 @@
                 box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.06);
                 border-radius: 10px;
 
+                .asset-description-container-price-container-select-wrap{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    padding: 10px 20px 10px 12px;
+
+                    .asset-description-radio-wrap{
+                        background: #FFFFFF;
+                        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                        border-radius: 10px;
+
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+
+                        .asset-description-radio-item.active{
+                            background: #252423;
+                            border-radius: 10px;
+
+                            p{
+                                color: #FFFFFF;
+                            }
+                        }
+
+                        .asset-description-radio-item{
+                            padding: 8px 10px;
+                            cursor: pointer;
+
+                            display: flex;
+                            flex-direction: row;
+
+                            img{
+                                margin-right: 2px;
+                            }
+
+                            .uop{
+                                margin-top: 3px;
+                                width: 14px;
+                                height: 9.85px;
+                            }
+
+                            .weth{
+                                width: 9.83px;
+                                height: 16px;
+                            }
+
+
+                            p{
+                                font-family: Open Sans;
+                                font-style: normal;
+                                font-weight: 600;
+                                font-size: 10px;
+                                line-height: 14px;
+                                color: #868686;
+                            }
+                        }
+                    }
+
+                    .asset-description-container-price-container-counts{
+                        margin-left: auto;
+                        font-family: Open Sans;
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 19px;
+                        color: #868686;
+                    }
+                }
+
                 .asset-description-container-price-container-price-wrap{
                     padding: 10px 20px 18px 11px;
                     border-bottom: 1px solid #F6F9FA;
@@ -269,14 +338,23 @@
                     align-items: center;
 
                     .asset-description-container-price-container-price-crypto-wrap{
-                        width: 9.83px;
-                        height: 16px;
                         margin-right: 3px;
 
                         img{
                             width: 100%;
                             height: 100%;
                         }
+                    }
+
+                    .asset-description-container-price-container-price-crypto-wrap.uop{
+                        width: 14px;
+                        height: 9.85px;
+                        margin-bottom: 7px;
+                    }
+
+                    .asset-description-container-price-container-price-crypto-wrap.weth{
+                        width: 9.83px;
+                        height: 16px;
                     }
 
                     .asset-description-container-price-container-price{
@@ -302,16 +380,6 @@
                         width: 1px;
                         height: 10px;
                         margin: 5px 10px;
-                    }
-
-                    .asset-description-container-price-container-counts{
-                        margin-left: auto;
-                        font-family: Open Sans;
-                        font-style: normal;
-                        font-weight: 600;
-                        font-size: 14px;
-                        line-height: 19px;
-                        color: #868686;
                     }
                 }
 

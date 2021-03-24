@@ -11,7 +11,7 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import moment from 'moment';
 import Lottie from "../components/Lottie";
 import EthIcon from '../static/images/Ethereum.png';
-import UopIcon from '../static/images/uop.png';
+import UopIcon from '../static/images/uop-grey.png';
 import { CurrencyEnum } from '../constants/blockchain/currency';
 import classNames from 'classnames';
 
