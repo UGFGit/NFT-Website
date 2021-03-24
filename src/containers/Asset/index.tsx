@@ -19,7 +19,7 @@ import { SocketEventsEnum } from '../../constants/socket/events';
 import VideoDialog from './VideoDialog';
 import Timer from './Timer';
 import Table from './Table';
-import { checkAllowance, createSignature, checkBalance } from './blockchain';
+import { checkAllowance, createSignature, checkBalance, UOP_ADDRESS, WETH_ADDRESS } from './blockchain';
 import PlaceBidDialog from './PlaceBidDialog';
 import ReactPlayer from '../../components/VideoPlayer';
 import AudioPlayer from '../../components/AudioPlayer';
@@ -113,25 +113,27 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const handleBuy = async () => {
         if(web3.available){
             try{
+                const tradingTokenAddress = asset.currency === CurrencyEnum.UOP? UOP_ADDRESS : WETH_ADDRESS;
+
                 setButtonLoading(true);
                 const client = new Web3(web3.provider);
-                await checkAllowance(web3.account ,client, asset.contract.contract, asset.tradingTokenAddress, enqueueSnackbar);
+                await checkAllowance(web3.account ,client, asset.contract.contract, tradingTokenAddress, enqueueSnackbar);
 
-                const balance = await checkBalance(client, asset.tradingTokenAddress, web3.account);
+                const balance = await checkBalance(client, tradingTokenAddress, web3.account);
                 
                 if(Number(asset.cryptoPrice) > Number(balance)){
                     setButtonLoading(false);
                     return enqueueSnackbar(`Insufficient funds`, { variant: 'error' });
                 }
 
-                const {signature, value, deadline} = await createSignature(asset, client, web3, enqueueSnackbar);
+                const {signature, value, deadline} = await createSignature(asset, tradingTokenAddress, client, web3, enqueueSnackbar);
                 enqueueSnackbar(`Waiting for transaction complete`, { variant: 'info' });
                 await fetch.post(BLOCKCHAIN_BUY, { 
                     account: web3.account, 
                     contractAddress: asset.contract.contract, 
                     tokenId: asset.token.tokenId, 
                     price: value, 
-                    tradingTokenAddress: asset.tradingTokenAddress, 
+                    tradingTokenAddress, 
                     signature,
                     assetId: asset.id,
                     deadline
@@ -153,7 +155,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                 setButtonLoading(true);
                 const client = new Web3(web3.provider);
                 await checkAllowance(web3.account ,client, asset.contract.contract, asset.tradingTokenAddress, enqueueSnackbar);
-                const {signature, deadline} = await createSignature(asset, client, web3, enqueueSnackbar, price);
+                const {signature, deadline} = await createSignature(asset, asset.tradingTokenAddress , client, web3, enqueueSnackbar, price);
                 
                 await fetch.post(ASSET_BID_SET, { 
                     account: web3.account, 

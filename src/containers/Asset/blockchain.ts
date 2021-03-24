@@ -7,6 +7,9 @@ import { PRIMARY_TYPE, REQUEST_METHOD, TYPES } from '../../constants/blockchain/
 import { IAsset } from '../../interfaces/containers/Application/asset.interface';
 import { IWeb3State } from '../../interfaces/reducers/web3.interface';
 
+export const UOP_ADDRESS = '0xE4AE84448DB5CFE1DaF1e6fb172b469c161CB85F';
+export const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
+
 export const checkAllowance = async (account: string, client:Web3, contractAddress: string, paymentAddress: string, enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject | undefined) => SnackbarKey): Promise<void> => {
     //@ts-ignore
     const contract = new client.eth.Contract(ABI, paymentAddress);
@@ -37,9 +40,9 @@ const getNonce = async (account: string, contract: string): Promise<number> => {
     return nonce;
 }
 
-export const createSignature = async (asset: IAsset, client:Web3, web3: IWeb3State ,enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject | undefined) => SnackbarKey, price?: number): Promise<{signature: string, value: string, deadline: number}> => {
+export const createSignature = async (asset: IAsset, tradingTokenAddress: string, client:Web3, web3: IWeb3State ,enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject | undefined) => SnackbarKey, price?: number): Promise<{signature: string, value: string, deadline: number}> => {
     //@ts-ignore
-    const contract = new client.eth.Contract(ABI, asset.tradingTokenAddress);
+    const contract = new client.eth.Contract(ABI, tradingTokenAddress);
     const decimal = await contract.methods.decimals().call();
     const value = `${(price || asset.cryptoPrice) * Math.pow(10, decimal)}`;
     const deadline = Date.now() + 432000000;
@@ -56,7 +59,7 @@ export const createSignature = async (asset: IAsset, client:Web3, web3: IWeb3Sta
         message: {
             from: web3.account,
             to: asset.owner,
-            tradingTokenAddr: asset.tradingTokenAddress,
+            tradingTokenAddr: tradingTokenAddress,
             id: asset.token.tokenId,
             amount: 1,
             value,
