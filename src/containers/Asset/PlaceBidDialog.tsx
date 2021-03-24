@@ -13,6 +13,7 @@ import Web3 from 'web3';
 import { IAsset } from '../../interfaces/containers/Application/asset.interface';
 import DialogActions from '@material-ui/core/DialogActions';
 import Input from '../../components/Input';
+import { CurrencyEnum } from '../../constants/blockchain/currency';
 
 interface IPrices{
     [key: string]: {
@@ -86,10 +87,10 @@ function PlaceBidDialog({ open, onClose, web3, paymentAddress, handleBuy, asset 
                 </div>                
             </DialogTitle>
             <DialogContent className = "place-bid-dialog-content-root">
-                <p className = "place-bid-dialog-content-balance">Balance: {balance} WETH</p>
+                <p className = "place-bid-dialog-content-balance">Balance: {balance} {asset.currency === CurrencyEnum.UOP? 'UOP' : 'WETH'}</p>
                 <div className = 'place-bid-dialog-content-prices-wrap'>
                     <Input
-                        lable = "Price (WETH)"
+                        lable = "Price"
                         value = {price}
                         onChange= {(value) => {
                             setPice(value);
@@ -98,7 +99,7 @@ function PlaceBidDialog({ open, onClose, web3, paymentAddress, handleBuy, asset 
                         }}
                         placeholder = "Amount"
                         type = 'number'
-                        error = {Number(price) > balance ? "Not enough WETH to place bid": ''}
+                        error = {Number(price) > balance ? `Not enough ${asset.currency === CurrencyEnum.UOP? 'UOP' : 'WETH'} to place bid`: ''}
                         min={0}
                     />
                     <Input

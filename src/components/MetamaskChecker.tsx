@@ -55,7 +55,7 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
         if (window.ethereum) {
             //@ts-ignore
             provider = window.ethereum;
-            console.info('Ethereum was found')
+            console.log('Ethereum was found')
             //@ts-ignore
         } else if (window.web3) {
             //@ts-ignore

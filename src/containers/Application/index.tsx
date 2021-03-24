@@ -13,9 +13,11 @@ import CropDialog from './CropDialog';
 import { useSnackbar } from 'notistack';
 import MultipleGroup from '../../components/MultipleGroup';
 import classNames from 'classnames';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import { CurrencyEnum } from '../../constants/blockchain/currency';
 
 interface NtfsErrors{
-    price?: string;
     cryptoPrice?: string;
     number?: string;
     filename?: string;
@@ -23,6 +25,7 @@ interface NtfsErrors{
     mimetype?: string;
     name?: string;
     description?: string;
+    currency?: string
 }
 interface Errors{
     nickname?: string;
@@ -46,7 +49,8 @@ interface Nft{
     cryptoPrice: string,
     name: string;
     description: string;
-    number: string
+    number: string;
+    currency: CurrencyEnum
 }
 
 const DEFAULT_NFT: Nft = {
@@ -54,7 +58,8 @@ const DEFAULT_NFT: Nft = {
     cryptoPrice : "",
     description : "",
     number: "1",
-    name: ""
+    name: "",
+    currency: CurrencyEnum.WETH
 }
 
 function Application(){
@@ -93,11 +98,11 @@ function Application(){
             nfts: nfts.map((nft) => ({
                 ...nft.file,
                 filePlaceholder: nft.filePlaceholder && nft.filePlaceholder.filename,
-                price: nft.price? Number(nft.price) : '',
                 cryptoPrice: nft.cryptoPrice? Number(nft.cryptoPrice): '',
                 name: nft.name,
                 description: nft.description,
-                number: nft.number? Number(nft.number): ''
+                number: nft.number? Number(nft.number): '',
+                currency: nft.currency
             }))
         };
         const response = await fetch.post(APPLICATION_CREATE, data);
@@ -297,35 +302,61 @@ function Application(){
                                     />
                                 </div>}
                                 <div className = 'prices-wrap'>
-                                    <Input
-                                        lable = "Price (WETH)"
-                                        value = {nft.cryptoPrice}
-                                        onChange= {(value) => {
-                                            nft.cryptoPrice = value;
+                                    <Select
+                                        className = "prices-cyrrency-select"
+                                        value={nft.currency}
+                                        onChange={(event) => {
+                                            //@ts-ignore
+                                            nft.currency = event.target.value;
+
+                                            if(nft.price){
+                                                const crypto = event.target.value === CurrencyEnum.UOP? prices.USD.UOP : prices.USD.WETH;
+
+                                                nft.cryptoPrice = `${Number(nft.price) * crypto}`;
+                                            }
+
                                             nfts[index] = nft;
                                             setNfts([...nfts]);
-
-                                            if(errors.nfts && errors.nfts[index]){
-                                                const e = [...errors.nfts];
-                                                e[index] = {...e[index], cryptoPrice: undefined};
-                                                setErrors({...errors, nfts: e});
-                                            }
                                         }}
-                                        onBlur = {() => {
-                                            nft.price = `${Number(nft.cryptoPrice) * prices.WETH.USD}`;
-                                            nfts[index] = nft;
-                                            setNfts([...nfts]);
-
-                                            if(errors.nfts && errors.nfts[index]){
-                                                const e = [...errors.nfts];
-                                                e[index] = {...e[index], price: undefined};
-                                                setErrors({...errors, nfts: e});
+                                        disableUnderline = {true}    
+                                        MenuProps={{
+                                            getContentAnchorEl: null,
+                                            anchorOrigin: {
+                                                vertical: "bottom",
+                                                horizontal: "left",
                                             }
-                                        }}
-                                        placeholder = "Amount"
-                                        type = 'number'
-                                        error={errors.nfts && errors.nfts[index] && errors.nfts[index].cryptoPrice}
-                                    />
+                                        }}                            
+                                    >
+                                        <MenuItem value={CurrencyEnum.WETH}>WETH</MenuItem>
+                                        <MenuItem value={CurrencyEnum.UOP}>UOP</MenuItem>
+                                    </Select>
+                                    <div className = "prices-input-wrap">
+                                        <Input
+                                            lable = "Price"
+                                            value = {nft.cryptoPrice}
+                                            onChange= {(value) => {
+                                                nft.cryptoPrice = value;
+                                                nfts[index] = nft;
+                                                setNfts([...nfts]);
+
+                                                if(errors.nfts && errors.nfts[index]){
+                                                    const e = [...errors.nfts];
+                                                    e[index] = {...e[index], cryptoPrice: undefined};
+                                                    setErrors({...errors, nfts: e});
+                                                }
+                                            }}
+                                            onBlur = {() => {
+                                                const crypto = nft.currency === CurrencyEnum.UOP? prices.UOP.USD : prices.WETH.USD;
+
+                                                nft.price = `${Number(nft.cryptoPrice) * crypto}`;
+                                                nfts[index] = nft;
+                                                setNfts([...nfts]);
+                                            }}
+                                            placeholder = "Amount"
+                                            type = 'number'
+                                            error={errors.nfts && errors.nfts[index] && errors.nfts[index].cryptoPrice}
+                                        />
+                                    </div>
                                     <Input
                                         lable = "Price ($)"
                                         value = {nft.price}
@@ -333,15 +364,11 @@ function Application(){
                                             nft.price = value;
                                             nfts[index] = nft;
                                             setNfts([...nfts]);
-
-                                            if(errors.nfts && errors.nfts[index]){
-                                                const e = [...errors.nfts];
-                                                e[index] = {...e[index], price: undefined};
-                                                setErrors({...errors, nfts: e});
-                                            }
                                         }}
                                         onBlur = {() => {
-                                            nft.cryptoPrice = `${Number(nft.price) * prices.USD.WETH}`;
+                                            const crypto = nft.currency === CurrencyEnum.UOP? prices.USD.UOP : prices.USD.WETH;
+
+                                            nft.cryptoPrice = `${Number(nft.price) * crypto}`;
                                             nfts[index] = nft;
                                             setNfts([...nfts]);
 
@@ -353,7 +380,6 @@ function Application(){
                                         }}
                                         placeholder = "Amount"
                                         type = 'number'
-                                        error={errors.nfts && errors.nfts[index] && errors.nfts[index].price}
                                     />
                                 </div>
                                 <Input
