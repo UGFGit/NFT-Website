@@ -83,7 +83,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
         
         asset.currency = currency;
 
-        asset.cryptoPrice = asset.price * (currency === CurrencyEnum.UOP? prices.USD.UOP : prices.USD.WETH);
+        asset.cryptoPrice = +(asset.price * (currency === CurrencyEnum.UOP? prices.USD.UOP : prices.USD.WETH)).toFixed(18);
 
         setAsset(Object.assign({}, asset));
     }
