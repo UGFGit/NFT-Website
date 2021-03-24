@@ -18,47 +18,53 @@
             margin-bottom: 30px;
         } 
 
-        .mail-form-body-wrap{
-            max-width: 500px;
+        .mail-form-body-root{
             margin: 0 auto;
-            position: relative;
-            background: #FFFFFF;
-            border: 1px solid #E4ECEE;
-            box-sizing: border-box;
-            border-radius: 8px;
-            padding: 14px 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
 
-            .mail-form-input{
-                width: calc(100% - 54px);
-                outline: 0;
-                border: 0;
-                font-family: Open Sans;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 16px;
-                line-height: 22px;
-                color: $black !important;
-
-                &::placeholder{
-                    color: #868686 !important;
-                }
-            }
-
-            .mail-form-btn{
-                position: absolute;
-                right: -1px;
-                top: -1px;
-                outline: 0;
-                width: 54px;
-                height: 54px;
-                border: 0;
+            .mail-form-body-wrap{
+                max-width: 500px;
+                margin: 0 20px;
+                width: 100%;
+                position: relative;
+                background: #FFFFFF;
+                border: 1px solid #E4ECEE;
+                box-sizing: border-box;
                 border-radius: 8px;
-                cursor: pointer;
-                background: $black;
-
-                img{
-                    width: 20px;
-                    height: 18px;
+                padding: 14px 10px;
+    
+                .mail-form-input{
+                    width: calc(100% - 54px);
+                    outline: 0;
+                    border: 0;
+                    font-family: Open Sans;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 16px;
+                    line-height: 22px;
+                    color: $black !important;
+    
+                    &::placeholder{
+                        color: #868686 !important;
+                    }
+                }
+    
+                .mail-form-btn{
+                    position: absolute;
+                    right: -1px;
+                    top: -1px;
+                    outline: 0;
+                    border: 0;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    background: $black;
+    
+                    img{
+                        width: 20px;
+                        height: 18px;
+                    }
                 }
             }
         }
