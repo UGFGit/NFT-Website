@@ -11,6 +11,9 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import moment from 'moment';
 import Lottie from "../components/Lottie";
 import EthIcon from '../static/images/Ethereum.png';
+import UopIcon from '../static/images/uop.png';
+import { CurrencyEnum } from '../constants/blockchain/currency';
+import classNames from 'classnames';
 
 interface CardProps{
     asset: IAsset
@@ -70,7 +73,7 @@ function TokenCard({ asset }: CardProps){
                 </div>
                 <div className = "card-body-footer">
                     <div className = "card-body-footer-price-wrap">
-                        <p><img alt = "" src = {EthIcon}/>{cryptoPrice}</p>
+                        <p><img className = {classNames("card-body-footer-price-img", { 'uop': asset.currency === CurrencyEnum.UOP, 'weth': asset.currency === CurrencyEnum.WETH})} alt = "" src = {asset.currency === CurrencyEnum.UOP? UopIcon : EthIcon}/>{cryptoPrice}</p>
                         <p><span>$</span>{price.toFixed(2)}</p>
                     </div>
                     {asset.onAuction && <div className = "card-body-footer-auction-time-wrap">

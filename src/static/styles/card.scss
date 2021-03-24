@@ -109,11 +109,17 @@
                 margin-right: 4px;
             }
 
-            img{
+            .card-body-footer-price-img{
                 margin-right: 4px;
+                margin-top: 3px;
+            }
+            .card-body-footer-price-img.uop{
+                height: 9.85px;
+                width: 14px;
+            }
+            .card-body-footer-price-img.weth{
                 height: 14px;
                 width: 8.6px;
-                margin-top: 3px;
             }
         }
 

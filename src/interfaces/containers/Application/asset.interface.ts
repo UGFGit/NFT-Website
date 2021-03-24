@@ -1,3 +1,5 @@
+import { CurrencyEnum } from '../../../constants/blockchain/currency';
+
 export interface IAsset{
     id: string;
     price: number;
@@ -11,6 +13,7 @@ export interface IAsset{
     onAuction: boolean;
     onSale: boolean;
     auctionEnd: string;
+    currency: CurrencyEnum
 }
 
 interface IToken{
