@@ -1,0 +1,177 @@
+@import "./colors.scss";
+@import "./fonts.scss";
+
+.how-it-work-root{
+    min-height: 100vh;
+    background-color: $grey;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .how-it-work-body{
+        flex: 1;
+        padding: 190px 0px 200px 0px;
+        margin: auto;
+        max-width: 720px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .how-it-work-title{
+            font-family: Open Sans ExtraBold;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 44px;
+            line-height: 60px;
+            color: #252423;
+        }
+
+        .how-it-work-sub-title{
+            font-family: Open Sans ExtraBold;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 24px;
+            line-height: 33px;
+            letter-spacing: 0.035em;
+            color: #252423;
+        }
+
+        .how-it-work-text{
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 22px;
+            color: #252423;
+        }
+
+        .how-to-ins-img-wrap{
+            max-height: 439px;
+            max-width: 461px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 36px;
+
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .how-to-step-root{
+            width: 100%;
+            padding: 15px 28px 15px 20px;
+            background: #FFFFFF;
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.02);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 5px 0px;
+
+            .how-to-step-number{
+                width: 30px;
+                height: 30px;
+                min-width: 30px;
+                border-radius: 15px;
+                background: #252423;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 10px;
+
+                p{
+                    font-family: Open Sans Bold;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 16px;
+                    line-height: 22px;
+                    color: #FFFFFF;
+                }
+            }
+        }
+
+        .how-it-auction-wrap{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            column-gap: 20px;
+            row-gap: 20px;
+        }
+
+        .how-to-vector-block-root{
+            padding: 20px;
+            background: #FFFFFF;
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.02);
+            border-radius: 10px;
+            min-height: 240px;
+            overflow: hidden;
+            position: relative;
+
+            .how-to-vector-block-title{
+                font-family: Open Sans Bold;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 22px;
+                color: #252423;
+            }
+
+            .how-to-vector-block-text{
+                font-family: Open Sans Light;
+                font-style: normal;
+                font-weight: 300;
+                font-size: 16px;
+                line-height: 22px;
+                color: #252423;
+            }
+
+            .how-to-vector-img-wrap{
+                position: absolute;
+
+                width: 676px;
+                height: 419px;
+
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+
+        .how-it-work-term-root{
+            padding: 20px 28px 21px 20px;
+            background: #FFFFFF;
+            border-radius: 10px;
+            background-image: url('../images/how-to-back.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 100%;
+            margin: 10px 0;
+        }
+    }
+
+    .how-it-work-footer-wrap{
+        margin-top: auto;
+    }
+}
+
+@media screen and (max-width: 584px){
+    .how-it-work-root{
+        .how-it-work-body{
+            padding: 100px 20px;
+        }
+    }
+}
+
+@media screen and (max-width: 712px){
+    .how-it-work-root{
+        .how-it-work-body{
+           .how-to-vector-block-root{
+                .how-to-vector-img-wrap{
+                    display: none;
+                }
+            }
+        }
+    }
+}
