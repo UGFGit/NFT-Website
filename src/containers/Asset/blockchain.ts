@@ -3,7 +3,7 @@ import Web3 from 'web3';
 import { ABI } from '../../constants/blockchain/abi';
 import { fetch } from '../../libs';
 import { BLOCKCHAIN_NONCE} from '../../constants/endpoints';
-import { PRIMARY_TYPE, REQUEST_METHOD, TYPES } from '../../constants/blockchain/erc1155';
+import { PRIMARY_TYPE, REQUEST_METHOD, TYPES, ERC1155_ABI } from '../../constants/blockchain/erc1155';
 import { IAsset } from '../../interfaces/containers/Application/asset.interface';
 import { IWeb3State } from '../../interfaces/reducers/web3.interface';
 
@@ -77,4 +77,23 @@ export const createSignature = async (asset: IAsset, tradingTokenAddress: string
     });
 
     return { signature, value, deadline }
+}
+
+interface ITokenSaleOptions{
+    amount: number;
+    deadline: number;
+    from: string;
+    id: number;
+    nonce: number;
+    to: string;
+    tradingTokenAddr: string;
+    value: string;
+}
+
+export const tokenSale = async (signature: string, options: ITokenSaleOptions, contractAddress: string, client:Web3, web3: IWeb3State, asset: IAsset) => {
+    //@ts-ignore
+    const contract = new client.eth.Contract(ERC1155_ABI, contractAddress);
+    const tx = contract.methods.tokenSale(asset.owner, web3.account, Number(options.id), options.amount, options.value, options.nonce, options.tradingTokenAddr, options.deadline, signature);
+    const abi = tx.encodeABI();
+    return await client.eth.sendTransaction({ from: web3.account, to: contractAddress, data: abi });
 }
