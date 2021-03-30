@@ -222,7 +222,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                     <div className = "asset-description-container">
                         <div onClick = {() =>  {
                             if(asset.artist.host){
-                                window.location.assign(asset.artist.host)
+                                window.location.assign(`https://${asset.artist.host}`)
                             }                            
                         }} style = {{cursor: asset.artist.host? 'pointer': 'default'}} className = "asset-description-container-nav">
                             <Avatar alt="" src = {FILESTORE(asset.artist.avatar)}/>
