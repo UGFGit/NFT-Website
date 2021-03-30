@@ -3,6 +3,10 @@ import { IConfigState } from '../interfaces/reducers/config.interface';
 
 const initialState = {
     main: true,
+    multiple: false,
+    name: null,
+    banner: null,
+    avatar: null,
     artist: null
 };
 

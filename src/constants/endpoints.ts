@@ -22,6 +22,7 @@ export const ARTISTS = '/api/artists';
 
 //Host
 export const HOST_CONFIG = '/api/host/config';
+export const HOSTS = '/api/host';
 
 //CryptoCompare
 export const CRYPTO_COMPARE = '/api/cryptocompare';
