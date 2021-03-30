@@ -11,7 +11,7 @@ import Lottie from "../../components/Lottie";
 function Card({ host, name, banner, avatar, artist, multiple }: IConfigState){
     return(
         <div className = "artist-card-root" onClick = {() => {
-            window.location.assign(`https://${host}`);
+            window.location.assign(host);
         }}>
             <ImageLoader
                 className = "artist-card-image-wrap"
