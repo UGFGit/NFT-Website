@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { IArtist } from '../../interfaces/containers/Artists/artist.interface';
+import { IConfigState } from '../../interfaces/reducers/config.interface';
 import '../../static/styles/artist-page.scss';
 import DocumentTitle from 'react-document-title';
 import { useSocket } from '../../socket';
@@ -15,9 +15,11 @@ import Avatar from '@material-ui/core/Avatar';
 import classNames from 'classnames';
 import NoAssets from '../../static/images/no-assets.png';
 import Lottie from "../../components/Lottie";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 interface IArtistProps{
-    artist: IArtist
+    config: IConfigState
 }
 
 const DEFAULT_PAGE_SIZE = 20;
@@ -26,17 +28,32 @@ interface IState{
     list: IAsset[];
     load: boolean;
     mimetype: string | null;
+    artist: string | null;
 }
 
-function ArtistPage({ artist }: IArtistProps){
-    const [state, setState] = useState<IState>({ list: [], load: true, mimetype: 'image' });
+function ArtistPage({ config }: IArtistProps){
+    //@ts-ignore
+    const [state, setState] = useState<IState>({ list: [], load: true, mimetype: 'image', artist: config.multiple? null : config.artist?.id });
 
     const socket = useSocket();
 
     const scrollRef = useRef(null);
 
     const loadApplication = async (pageNumber = 0) => {
-        const response = await fetch.post(ASSETS, { pagination: { pageSize: DEFAULT_PAGE_SIZE, pageNumber }, filters: { mimetype: state.mimetype, artist: artist.id, onSale: true } });
+        const data = { 
+            pagination: { 
+                pageSize: DEFAULT_PAGE_SIZE, 
+                pageNumber 
+            }, 
+            filters: { 
+                mimetype: state.mimetype, 
+                artist: state.artist, 
+                artists: config.artistsFilter ? config.artistsFilter.map(({id}) => id): null, 
+                onSale: true 
+            } 
+        };
+
+        const response = await fetch.post(ASSETS, data);
         if(response.ok){
             const { assets, pagination} = await response.json();
             const list = [...state.list, ...assets];
@@ -55,7 +72,7 @@ function ArtistPage({ artist }: IArtistProps){
 
     useEffect(() => {
         socket?.on(SocketEventsEnum.ASSET_SOLD, ({ id }: {id: string}) => {
-            setState({ load: state.load, mimetype: state.mimetype, list: state.list.filter((app) => app.id !== id)});
+            setState({ load: state.load, mimetype: state.mimetype, list: state.list.filter((app) => app.id !== id), artist: state.artist});
         })
 
         socket?.on(SocketEventsEnum.ASSET_UPDATE, (newAsset: IAsset) => {
@@ -63,7 +80,7 @@ function ArtistPage({ artist }: IArtistProps){
             if(assetIndex !== -1){
                 const list = [...state.list];
                 list[assetIndex] = newAsset;
-                setState({ load: state.load, mimetype: state.mimetype, list});
+                setState({ load: state.load, mimetype: state.mimetype, list, artist: state.artist});
             }
         })
 
@@ -76,19 +93,23 @@ function ArtistPage({ artist }: IArtistProps){
     const setFilter = (filter: string | null) => () => {
         //@ts-ignore
         scrollRef.current.pageLoaded = -1;
-        setState({ mimetype: filter, list: [], load: true});
+        setState({ mimetype: filter, list: [], load: true, artist: state.artist});
     }
     
     return(
-        <DocumentTitle title={artist.name}>
+        // @ts-ignore
+        <DocumentTitle title={config.multiple? config.name : config.artist?.name}>
             <div className = "artist-page-root">
                 <Navigation/>
                 <div className = "artist-page-background">
-                    <img alt = "" src = {FILESTORE(artist.background)}/>
+                    {/* @ts-ignore */}
+                    <img alt = "" src = {FILESTORE(config.multiple? config.banner : config.artist?.background)}/>
                 </div>
                 <div className = "artist-page-name-wrap">
-                    <Avatar alt="" src = {FILESTORE(artist.avatar)}/>
-                    <p className = "artist-page-name">{artist.name}</p>
+                    {/* @ts-ignore */}
+                    <Avatar alt="" src = {FILESTORE(config.multiple? config.avatar : config.artist?.avatar)}/>
+                    {/* @ts-ignore */}
+                    <p className = "artist-page-name">{config.multiple? config.name : config.artist?.name}</p>
                 </div>
                 <div className = "artist-page-explore-root">
                     <div className = 'artist-page-explore-wrap'>
@@ -106,6 +127,33 @@ function ArtistPage({ artist }: IArtistProps){
                                 className = {classNames("artist-page-explore-filter-btn", { "artist-page-explore-filter-btn-active": state.mimetype === 'video' })} 
                                 onClick = {setFilter('video')}
                             >Video</button>
+
+                            {config.artistsFilter && <Select
+                                className = "artist-page-explore-filter-select"
+                                value={state.artist || "placeholder"}
+                                //@ts-ignore
+                                onChange={(event) => {
+                                    //@ts-ignore
+                                    scrollRef.current.pageLoaded = -1;
+                                    //@ts-ignore
+                                    setState({ mimetype: state.mimetype, list: [], load: true, artist: event.target.value !== "placeholder"? event.target.value: null });
+                                }}
+                                disableUnderline = {true}    
+                                MenuProps={{
+                                    getContentAnchorEl: null,
+                                    anchorOrigin: {
+                                        vertical: "bottom",
+                                        horizontal: "left",
+                                    }
+                                }}                            
+                            >
+                                <MenuItem value="placeholder">
+                                    Choose artist
+                                </MenuItem>
+                                {config.artistsFilter.map(({id, name}) => (
+                                    <MenuItem key = {id} value={id}>{name}</MenuItem>
+                                ))}
+                            </Select>}
                         </div>
 
                         <div className = "artist-page-explore-scroll-wrap">

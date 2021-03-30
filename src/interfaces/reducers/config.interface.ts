@@ -9,4 +9,5 @@ export interface IConfigState{
     banner?: string;
     avatar?: string;
     artist?: IArtist;
+    artistsFilter? : { id: string, name: string }[];
 }

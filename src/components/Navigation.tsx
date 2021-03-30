@@ -44,7 +44,7 @@ function Navigation({ location, config }: NavigationProps){
                 { !config.main && 
                     <div className = "navigation-artist-logo-wrap" onClick = {() => history.push('/')}>
                         <div className = "navigation-artist-logo-cross"/>
-                        <p className = "navigation-artist-logo-title">{config.artist?.name}</p>
+                        <p className = "navigation-artist-logo-title">{config.multiple? config.name : config.artist?.name}</p>
                     </div>
                 }
                 <div onClick = {() => setOpen(!open)} className = "navigation-menu-wrap">
