@@ -6,6 +6,8 @@ import { BLOCKCHAIN_NONCE} from '../../constants/endpoints';
 import { PRIMARY_TYPE, REQUEST_METHOD, TYPES, ERC1155_ABI } from '../../constants/blockchain/erc1155';
 import { IAsset } from '../../interfaces/containers/Application/asset.interface';
 import { IWeb3State } from '../../interfaces/reducers/web3.interface';
+//@ts-ignore
+import fromExponential from 'from-exponential';
 
 export const UOP_ADDRESS = '0xE4AE84448DB5CFE1DaF1e6fb172b469c161CB85F';
 export const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
@@ -44,7 +46,7 @@ export const createSignature = async (asset: IAsset, tradingTokenAddress: string
     //@ts-ignore
     const contract = new client.eth.Contract(ABI, tradingTokenAddress);
     const decimal = await contract.methods.decimals().call();
-    const value = `${(price || asset.cryptoPrice) * Math.pow(10, decimal)}`;
+    const value = fromExponential((price || asset.cryptoPrice) * Math.pow(10, decimal));
     const deadline = Date.now() + 432000000;
 
     const data = {
