@@ -207,7 +207,6 @@ function Application(){
             <div className = 'application-root'>
                 <Navigation/>
                 <div className = 'application-body'>
-                    <p className='title'>Application</p>
                     <p className='application-body-block-title'>Profile information</p>
                     <div 
                         className = {classNames("application-body-background-wrap", { error: Boolean(errors.background)})}
