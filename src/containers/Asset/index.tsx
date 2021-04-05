@@ -113,7 +113,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const handleBuy = async () => {
         if(web3.available){
             try{
-                const tradingTokenAddress = '0xd8fAb6FaF352936d8F658E69C4ba531f2F0A92c4'//asset.currency === CurrencyEnum.UOP? UOP_ADDRESS : WETH_ADDRESS;
+                const tradingTokenAddress = asset.currency === CurrencyEnum.UOP? UOP_ADDRESS : WETH_ADDRESS;
 
                 setButtonLoading(true);
                 const client = new Web3(web3.provider);
