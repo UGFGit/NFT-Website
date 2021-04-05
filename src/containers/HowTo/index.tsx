@@ -62,11 +62,11 @@ const AUCTION_TEXT = [
 function HowTo(){
 
     return(
-        <DocumentTitle title="How it work">
+        <DocumentTitle title="How it works">
             <div className = "how-it-work-root">
             <Navigation location = {LocationEnum.HOW_TO}/>
             <div className = "how-it-work-body">
-                <p className = "how-it-work-title">How it work</p>
+                <p className = "how-it-work-title">How it works</p>
                 <p className = "how-it-work-sub-title" style = {{ marginTop: 80 }}>How it works for the NFT customer and provider</p>
                 <p className = "how-it-work-text" style = {{ marginTop: 21 }}><b style = {{fontWeight: 700}}>Set-up an E-wallet</b> <b style = {{fontWeight: 300, fontFamily: "Open Sans Light"}}>- This wallet is where you store your cryptocurrencies or digital assets. It can be either an application or a hardware wallet. Depending on the cryptocurrency or digital asset that you want to store, popular choices include MetaMask, Coinbase Wallet, and TrustWallet. For the storing of NFTs minted on the Ethereum blockchain, we recommend MetaMask. Think of it as like a Google Chrome extension. You need to get it from the Metamask.io website directly and nowhere else.  Once downloaded you can fund your wallet directly with the “buy” button.</b></p>
                 <div className = "how-to-ins-img-wrap">
