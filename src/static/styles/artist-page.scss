@@ -117,6 +117,29 @@
                         left: 50%;
                     }
                 }
+
+                .artist-page-explore-filter-select{
+                    border: 1px solid #868686;
+                    border-radius: 39px;
+                    width: 160px;
+                    height: 40px;
+                    background-color: #F5F5F5;
+
+                    .MuiSelect-select{
+                        padding: 10px 20px;
+                        
+                        font-family: Roboto;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 16px;
+                        line-height: 19px;
+                        color: #252423;
+
+                        &:focus{
+                            background: rgba(0, 0, 0, 0)
+                        }
+                    }
+                }
             }
 
             .artist-page-explore-scroll-wrap{

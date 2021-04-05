@@ -16,6 +16,10 @@ import classNames from 'classnames';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { CurrencyEnum } from '../../constants/blockchain/currency';
+import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 interface NtfsErrors{
     cryptoPrice?: string;
@@ -25,7 +29,8 @@ interface NtfsErrors{
     mimetype?: string;
     name?: string;
     description?: string;
-    currency?: string
+    currency?: string;
+    auctionEnd?: string;
 }
 interface Errors{
     nickname?: string;
@@ -50,7 +55,9 @@ interface Nft{
     name: string;
     description: string;
     number: string;
-    currency: CurrencyEnum
+    currency: CurrencyEnum;
+    auction: string;
+    auctionEnd: Date;
 }
 
 const DEFAULT_NFT: Nft = {
@@ -59,7 +66,9 @@ const DEFAULT_NFT: Nft = {
     description : "",
     number: "1",
     name: "",
-    currency: CurrencyEnum.WETH
+    currency: CurrencyEnum.WETH,
+    auction: "false",
+    auctionEnd: new Date()
 }
 
 function Application(){
@@ -102,7 +111,9 @@ function Application(){
                 name: nft.name,
                 description: nft.description,
                 number: nft.number? Number(nft.number): '',
-                currency: nft.currency
+                currency: nft.currency,
+                auction: nft.auction,
+                auctionEnd: nft.auctionEnd
             }))
         };
         const response = await fetch.post(APPLICATION_CREATE, data);
@@ -196,7 +207,6 @@ function Application(){
             <div className = 'application-root'>
                 <Navigation/>
                 <div className = 'application-body'>
-                    <p className='title'>Application</p>
                     <p className='application-body-block-title'>Profile information</p>
                     <div 
                         className = {classNames("application-body-background-wrap", { error: Boolean(errors.background)})}
@@ -423,6 +433,7 @@ function Application(){
                                     lable = "Number of copies"
                                     value = {nft.number}
                                     min = {1}
+                                    disabled = {nft.auction === 'true'}
                                     onChange= {(value) => {
                                         nft.number = value;
                                         nfts[index] = nft;
@@ -438,6 +449,48 @@ function Application(){
                                     type = 'number'
                                     error={errors.nfts && errors.nfts[index] && errors.nfts[index].number}
                                 />
+                                <div className = 'prices-auction-wrap'>
+                                    <p className = "prices-auction-title">On auction</p>
+                                    <Select
+                                        className = "prices-auction-select"
+                                        value={nft.auction}
+                                        onChange={(event) => {
+                                            //@ts-ignore
+                                            nft.auction = event.target.value;
+                                            if(event.target.value === 'true'){
+                                                nft.number = '1';
+                                            }
+                                           
+                                            nfts[index] = nft;
+                                            setNfts([...nfts]);
+                                        }}
+                                        disableUnderline = {true}    
+                                        MenuProps={{
+                                            getContentAnchorEl: null,
+                                            anchorOrigin: {
+                                                vertical: "bottom",
+                                                horizontal: "left",
+                                            }
+                                        }}                            
+                                        >
+                                            <MenuItem value='true'>Yes</MenuItem>
+                                            <MenuItem value='false'>No</MenuItem>
+                                    </Select>
+                                </div>
+                                {nft.auction === 'true' && <div className = "prices-date-picker-wrap">
+                                    <p className = "prices-date-picker-title">Auction end</p>
+                                    <DatePicker
+                                        selected = {nft.auctionEnd}
+                                        minDate = {new Date()}
+                                        onChange = {(date) => {
+                                            //@ts-ignore
+                                            nft.auctionEnd = date;
+                                            nfts[index] = nft;
+                                            setNfts([...nfts]);
+                                        }}
+                                        closeOnScroll
+                                    />
+                                </div>}
                             </div>
                         )}
                     />

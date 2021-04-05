@@ -3,9 +3,11 @@ import Web3 from 'web3';
 import { ABI } from '../../constants/blockchain/abi';
 import { fetch } from '../../libs';
 import { BLOCKCHAIN_NONCE} from '../../constants/endpoints';
-import { PRIMARY_TYPE, REQUEST_METHOD, TYPES } from '../../constants/blockchain/erc1155';
+import { PRIMARY_TYPE, REQUEST_METHOD, TYPES, ERC1155_ABI } from '../../constants/blockchain/erc1155';
 import { IAsset } from '../../interfaces/containers/Application/asset.interface';
 import { IWeb3State } from '../../interfaces/reducers/web3.interface';
+//@ts-ignore
+import fromExponential from 'from-exponential';
 
 export const UOP_ADDRESS = '0xE4AE84448DB5CFE1DaF1e6fb172b469c161CB85F';
 export const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
@@ -44,7 +46,7 @@ export const createSignature = async (asset: IAsset, tradingTokenAddress: string
     //@ts-ignore
     const contract = new client.eth.Contract(ABI, tradingTokenAddress);
     const decimal = await contract.methods.decimals().call();
-    const value = `${(price || asset.cryptoPrice) * Math.pow(10, decimal)}`;
+    const value = fromExponential((price || asset.cryptoPrice) * Math.pow(10, decimal));
     const deadline = Date.now() + 432000000;
 
     const data = {
@@ -77,4 +79,23 @@ export const createSignature = async (asset: IAsset, tradingTokenAddress: string
     });
 
     return { signature, value, deadline }
+}
+
+interface ITokenSaleOptions{
+    amount: number;
+    deadline: number;
+    from: string;
+    id: number;
+    nonce: number;
+    to: string;
+    tradingTokenAddr: string;
+    value: string;
+}
+
+export const tokenSale = async (signature: string, options: ITokenSaleOptions, contractAddress: string, client:Web3, web3: IWeb3State, asset: IAsset) => {
+    //@ts-ignore
+    const contract = new client.eth.Contract(ERC1155_ABI, contractAddress);
+    const tx = contract.methods.tokenSale(asset.owner, web3.account, Number(options.id), options.amount, options.value, options.nonce, options.tradingTokenAddr, options.deadline, signature);
+    const abi = tx.encodeABI();
+    return await client.eth.sendTransaction({ from: web3.account, to: contractAddress, data: abi });
 }

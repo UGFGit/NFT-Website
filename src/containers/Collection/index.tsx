@@ -106,15 +106,15 @@ function Collection(){
                     </div>
                     <div className = 'collection-main-bottom'>
                         <img className = "collection-main-bottom-dots" src = {DotsImage}/>
-                        <div className = "collection-main-bottom-cards">
+                        {/* <div className = "collection-main-bottom-cards">
                             <img alt ="" src={CardsBottomImage}/>
-                        </div>
+                        </div> */}
                     </div>
                     <div className = 'collection-main-top'>
                         <img className = "collection-main-top-dots" src = {DotsImage}/>
-                        <div className = "collection-main-top-cards">
+                        {/* <div className = "collection-main-top-cards">
                             <img alt = "" src = {CardsTopImage}/>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className = "collection-explore-root">

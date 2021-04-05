@@ -19,7 +19,7 @@ import { SocketEventsEnum } from '../../constants/socket/events';
 import VideoDialog from './VideoDialog';
 import Timer from './Timer';
 import Table from './Table';
-import { checkAllowance, createSignature, checkBalance, UOP_ADDRESS, WETH_ADDRESS } from './blockchain';
+import { checkAllowance, createSignature, checkBalance, UOP_ADDRESS, WETH_ADDRESS, tokenSale } from './blockchain';
 import PlaceBidDialog from './PlaceBidDialog';
 import ReactPlayer from '../../components/VideoPlayer';
 import AudioPlayer from '../../components/AudioPlayer';
@@ -113,7 +113,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const handleBuy = async () => {
         if(web3.available){
             try{
-                const tradingTokenAddress = asset.currency === CurrencyEnum.UOP? UOP_ADDRESS : WETH_ADDRESS;
+                const tradingTokenAddress = '0xd8fAb6FaF352936d8F658E69C4ba531f2F0A92c4'//asset.currency === CurrencyEnum.UOP? UOP_ADDRESS : WETH_ADDRESS;
 
                 setButtonLoading(true);
                 const client = new Web3(web3.provider);
@@ -126,19 +126,18 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                     return enqueueSnackbar(`Insufficient funds`, { variant: 'error' });
                 }
 
-                const {signature, value, deadline} = await createSignature(asset, tradingTokenAddress, client, web3, enqueueSnackbar);
-                enqueueSnackbar(`Waiting for transaction complete`, { variant: 'info' });
-                await fetch.post(BLOCKCHAIN_BUY, { 
+                const response = await fetch.post(BLOCKCHAIN_BUY, { 
                     account: web3.account, 
                     contractAddress: asset.contract.contract, 
-                    tokenId: asset.token.tokenId, 
-                    price: value, 
                     tradingTokenAddress, 
-                    signature,
                     assetId: asset.id,
-                    deadline
+                    currency: asset.currency
                 });
 
+                const { signature, options } = await response.json()
+
+                await tokenSale(signature, options, asset.contract.contract, client, web3, asset);
+                
                 enqueueSnackbar(`The purchase was made`, { variant: 'success' });
                 setButtonLoading(false);
             } catch(err){

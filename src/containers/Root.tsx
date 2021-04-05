@@ -51,7 +51,7 @@ function App({ setConfig }: AppProps) {
             <Switch>
                 <Route exact path="/" render={() => {
                     if(!config.main && config.artist){
-                        return <ArtistPage artist={config.artist}/>
+                        return <ArtistPage config={config}/>
                     }
 
                     return <Collection/>
