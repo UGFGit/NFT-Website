@@ -8,6 +8,7 @@ import useInterval from '../libs/use-interval';
 
 interface PlayerProps{
     src: string;
+    triam?: boolean;
 }
 
 interface BarProps{
@@ -25,7 +26,7 @@ interface DownloadProgressState{
     hasDownloadProgressAnimation?: boolean;
 }
 
-function Player({ src }: PlayerProps){
+function Player({ src, triam }: PlayerProps){
     const audio = useRef<HTMLAudioElement>(null);
     const progressBarRef = useRef<any>();
 
@@ -42,6 +43,13 @@ function Player({ src }: PlayerProps){
         const current = audio.current;
 
         if(!current){
+            return;
+        }
+
+        const currentTime = getCurrentTime();
+        const triamDuration = calcDuration();
+
+        if(triam && currentTime > triamDuration){
             return;
         }
 
@@ -76,7 +84,13 @@ function Player({ src }: PlayerProps){
 
     const getDuration = (): number => {
         const current = audio.current;
-        return current? current.duration : 0;
+        return current? calcDuration() : 0;
+    }
+
+    const calcDuration = (): number => {
+        //@ts-ignore
+        const duration = audio.current.duration;
+        return triam? (duration / 100) * 10 : duration;
     }
 
     const getCurrentTime = (): number => {
@@ -169,14 +183,26 @@ function Player({ src }: PlayerProps){
     useEffect(() => {
         getProgress();
 
+        const timeUpdateHandler = () => {
+            const currentTime = getCurrentTime();
+            const triamDuration = calcDuration();
+
+            if(triam && currentTime > triamDuration){
+                audio.current?.pause();
+                setPlay(false);
+            }
+        }
+
         audio.current?.addEventListener('progress', handelDownloadProgress);
         audio.current?.addEventListener('ended', () => setPlay(false));
+        audio.current?.addEventListener('timeupdate', timeUpdateHandler)
 
         return () => {
             audio.current?.removeEventListener('progress', handelDownloadProgress);
             audio.current?.removeEventListener('ended', () => setPlay(false));
+            audio.current?.removeEventListener('timeupdate', timeUpdateHandler);
         }
-    }, [audio]);
+    }, [audio, triam]);
 
     useInterval(() => {
         getProgress();
