@@ -74,7 +74,7 @@ function HowTo(){
                 </div>
                 <p className = "how-it-work-sub-title" style = {{ marginTop: 120, marginBottom: 35 }}>The buyer (Customer) Journey</p>
                 {BUYER_STEPS.map((text, index) => (<Step key = {index} index = {index + 1} text = {text} />))}
-                <p className = "how-it-work-sub-title" style = {{ marginTop: 100, marginBottom: 35 }}>The buyer (Customer) Journey</p>
+                <p className = "how-it-work-sub-title" style = {{ marginTop: 100, marginBottom: 35 }}>The seller Journey</p>
                 {SELLER_STEPS.map((text, index) => (<Step key = {index} index = {index + 1} text = {text} />))}
                 <p className = "how-it-work-sub-title" style = {{ marginTop: 100, marginBottom: 40 }}>Auctions</p>
                 <div className = "how-it-auction-wrap">

@@ -33,7 +33,7 @@ interface IState{
 
 function ArtistPage({ config }: IArtistProps){
     //@ts-ignore
-    const [state, setState] = useState<IState>({ list: [], load: true, mimetype: 'image', artist: config.multiple? null : config.artist?.id });
+    const [state, setState] = useState<IState>({ list: [], load: true, mimetype: null, artist: config.multiple? null : config.artist?.id });
 
     const socket = useSocket();
 
@@ -115,19 +115,28 @@ function ArtistPage({ config }: IArtistProps){
                     <div className = 'artist-page-explore-wrap'>
                         <p className = "artist-page-explore-title">Explore</p>
                         <div className = 'artist-page-explore-filters-wrap'>
-                            <button 
-                                className = {classNames("artist-page-explore-filter-btn", { "artist-page-explore-filter-btn-active": state.mimetype === 'image' })} 
-                                onClick = {setFilter('image')}
-                            >Art</button>
-                            <button 
-                                className = {classNames("artist-page-explore-filter-btn", { "artist-page-explore-filter-btn-active": state.mimetype === 'audio' })} 
-                                onClick = {setFilter('audio')}
-                            >Music</button>
-                            <button 
-                                className = {classNames("artist-page-explore-filter-btn", { "artist-page-explore-filter-btn-active": state.mimetype === 'video' })} 
-                                onClick = {setFilter('video')}
-                            >Video</button>
-
+                            <div className = 'artist-page-explore-filters-btn-wrap'>
+                                <div className = 'artist-page-explore-filters-btn-group'>
+                                    <button 
+                                        className = {classNames("artist-page-explore-filter-btn", { "artist-page-explore-filter-btn-active": state.mimetype === null })} 
+                                        onClick = {setFilter(null)}
+                                    >All</button>
+                                    <button 
+                                        className = {classNames("artist-page-explore-filter-btn", { "artist-page-explore-filter-btn-active": state.mimetype === 'image' })} 
+                                        onClick = {setFilter('image')}
+                                    >Art</button>
+                                </div>
+                                <div className = "artist-page-explore-filters-btn-group">
+                                    <button 
+                                        className = {classNames("artist-page-explore-filter-btn", { "artist-page-explore-filter-btn-active": state.mimetype === 'audio' })} 
+                                        onClick = {setFilter('audio')}
+                                    >Music</button>
+                                    <button 
+                                        className = {classNames("artist-page-explore-filter-btn", { "artist-page-explore-filter-btn-active": state.mimetype === 'video' })} 
+                                        onClick = {setFilter('video')}
+                                    >Video</button>
+                                </div>
+                            </div>
                             {config.artistsFilter && <Select
                                 className = "artist-page-explore-filter-select"
                                 value={state.artist || "placeholder"}

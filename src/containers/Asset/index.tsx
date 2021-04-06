@@ -49,6 +49,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const [ buttonLoading, setButtonLoading ] = useState(false);
     const [ videoDialogOpen, setVideoDialogOpen ] = useState(false);
     const [ placeBidDialogOpen, setPlaceBidDialogOpen ] = useState(false);
+    const [ audioTriam, setAudioTriam ] = useState(true);
 
     const [assetSold, setAssetSold] = useState(false);
 
@@ -108,7 +109,12 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
             socket?.removeListener(SocketEventsEnum.ASSET_SOLD);
             socket?.removeListener(SocketEventsEnum.ASSET_UPDATE);
         }
-    }, [socket, asset])
+    }, [socket, asset]);
+
+    useEffect(() => {
+        const triam = web3.account && asset.owner? web3.account.toLowerCase() !== asset.owner.toLowerCase() : true;
+        setAudioTriam(triam);
+    }, [web3]);
     
     const handleBuy = async () => {
         if(web3.available){
@@ -189,7 +195,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                     <img alt = "" src={FILESTORE(asset.metadata.filePlaceholder || asset.metadata.filename)}/>
                     <div className = "asset-image-container-audio-player-wrap">
                         <AudioPlayer
-                            src = {FILESTORE(asset.metadata.filename)}
+                            src = {FILESTORE(asset.metadata.filename, audioTriam)}
                         />
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 //Filestore
-export const FILESTORE = (name: string) => `/api/filestore/${name}`;
+export const FILESTORE = (name: string, triam = false) => `/api/filestore/${name}${triam ? '?triam=true': ''}`;
 export const FILESTORE_UPLOAD = '/api/filestore/';
 
 //Application

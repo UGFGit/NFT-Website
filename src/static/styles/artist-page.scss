@@ -71,52 +71,64 @@
                 flex-direction: row;
                 align-items: center;
 
-                .artist-page-explore-filter-btn{
-                    position: relative;
-                    font-family: Open Sans Bold;
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 18px;
-                    line-height: 25px;
-                    color: $optional-lable;
-                    border: 0;
-                    outline: 0;
-                    cursor: pointer;
-                    margin: 0px 10px;
-                    background-color: $grey;
+                .artist-page-explore-filters-btn-wrap{
+                    display: flex;
+                    flex-direction: row;
 
-                    &:hover{
-                        color: $black;
+                    .artist-page-explore-filters-btn-group{
+                        display: flex;
+                        flex-direction: row;
 
-                        &::before{
-                            transform: translateX(-50%);
-                            border-radius: 100%;
-                            position: absolute;
-                            background: $black;
-                            bottom: -5px;
-                            height: 4px;
-                            content: '';
-                            width: 4px;
-                            left: 50%;
+                        .artist-page-explore-filter-btn{
+                            position: relative;
+                            font-family: Open Sans Bold;
+                            font-style: normal;
+                            font-weight: bold;
+                            font-size: 18px;
+                            line-height: 25px;
+                            color: $optional-lable;
+                            border: 0;
+                            outline: 0;
+                            cursor: pointer;
+                            margin: 0px 10px;
+                            background-color: $grey;
+        
+                            &:hover{
+                                color: $black;
+        
+                                &::before{
+                                    transform: translateX(-50%);
+                                    border-radius: 100%;
+                                    position: absolute;
+                                    background: $black;
+                                    bottom: -5px;
+                                    height: 4px;
+                                    content: '';
+                                    width: 4px;
+                                    left: 50%;
+                                }
+                            }
+                        }
+        
+                        .artist-page-explore-filter-btn-active{
+                            color: $black;
+        
+                            &::before{
+                                transform: translateX(-50%);
+                                border-radius: 100%;
+                                position: absolute;
+                                background: $black;
+                                bottom: -5px;
+                                height: 4px;
+                                content: '';
+                                width: 4px;
+                                left: 50%;
+                            }
                         }
                     }
                 }
 
-                .artist-page-explore-filter-btn-active{
-                    color: $black;
-
-                    &::before{
-                        transform: translateX(-50%);
-                        border-radius: 100%;
-                        position: absolute;
-                        background: $black;
-                        bottom: -5px;
-                        height: 4px;
-                        content: '';
-                        width: 4px;
-                        left: 50%;
-                    }
-                }
+                
 
                 .artist-page-explore-filter-select{
                     border: 1px solid #868686;
@@ -212,6 +224,23 @@
     }
 }
 
+@media screen and (max-width: 448px){
+    .artist-page-root{
+        .artist-page-explore-root{
+            .artist-page-explore-wrap{
+                .artist-page-explore-filters-wrap{
+                    flex-direction: column;
+                    align-items: flex-start;
+
+                    .artist-page-explore-filter-select{
+                        margin-top: 20px;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
 
 @media screen and (max-width: 680px){
     .artist-page-root{
