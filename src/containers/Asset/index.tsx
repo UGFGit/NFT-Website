@@ -195,7 +195,8 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                     <img alt = "" src={FILESTORE(asset.metadata.filePlaceholder || asset.metadata.filename)}/>
                     <div className = "asset-image-container-audio-player-wrap">
                         <AudioPlayer
-                            src = {FILESTORE(asset.metadata.filename, audioTriam)}
+                            src = {FILESTORE(asset.metadata.filename)}
+                            triam = {audioTriam}
                         />
                     </div>
                 </div>
