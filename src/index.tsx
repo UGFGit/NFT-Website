@@ -11,6 +11,9 @@ import allReducers from './reducers';
 import { SocketProvider } from './socket';
 import { SnackbarProvider } from 'notistack';
 
+import initGlobals from './globals';
+initGlobals(window);
+
 const store = createStore(
   allReducers,
   applyMiddleware(thunk, promise, /*logger*/)
