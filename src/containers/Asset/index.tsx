@@ -37,7 +37,6 @@ import LinkIcon from '../../static/images/link-icon.png';
 import FacebookIcon from '../../static/images/facebook-icon.png';
 import TelegramIcon from '../../static/images/telegram-icon.png';
 import TwitterIcon from '../../static/images/twitter-icon.png';
-import {Helmet} from "react-helmet";
 
 interface AssetPageProps{
     assetId: string;
@@ -226,13 +225,6 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     return (
         <DocumentTitle title="Dashboard">
             <div className = "asset-root">
-                <Helmet>
-                    <meta property="og:title" content={asset.metadata.name} />
-                    {asset.metadata.mimetype.split('/')[0] !== 'video' && <meta
-                        property="og:image"
-                        content={FILESTORE(asset.metadata.filePlaceholder || asset.metadata.filename)}
-                    />}
-                </Helmet>
                 <Navigation/>
                 <div className = "asset-body">
                     <div className = "asset-image-container">
