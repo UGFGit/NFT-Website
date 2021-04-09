@@ -411,7 +411,7 @@ function Application(){
                                     lable = "Description"
                                     optional = {true}
                                     value = {nft.description}
-                                    maxLength = {100}
+                                    maxLength = {300}
                                     onChange= {(value) => {
                                         nft.description = value;
                                         nfts[index] = nft;
@@ -424,7 +424,7 @@ function Application(){
                                         }
                                     }}
                                     placeholder = "Description of your artwork"
-                                    helperText = 'max 100 words'
+                                    helperText = 'max 300 words'
                                     error={errors.nfts && errors.nfts[index] && errors.nfts[index].description}
                                 />
                                 <Input
