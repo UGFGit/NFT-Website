@@ -68,7 +68,7 @@ function CropDialog({ open, onClose, type, onSave }: ICropDialogProps){
                                 cropShape={type === 'avatar'? 'round': 'rect'}
                                 crop={crop}
                                 zoom={zoom}
-                                cropSize = {type === 'avatar'? {width: 200, height: 200}: {width: 500, height: 160}}
+                                cropSize = {type === 'avatar'? {width: 200, height: 200}: {width: 500, height: 300}}
                                 onCropChange={setCrop}
                                 onCropComplete={(croppedArea, croppedAreaPixels) => {
                                     setCroppedAreaPixels(croppedAreaPixels)
@@ -77,7 +77,7 @@ function CropDialog({ open, onClose, type, onSave }: ICropDialogProps){
                             />
                         </div>
                     }
-                    <p className = "crop-dialog-image-info">{`Your ${type === 'avatar'? 'user': 'banner'} photo (${type === 'avatar'? '200*200' : '500*150'}) png, gpeg`}</p>
+                    <p className = "crop-dialog-image-info">{`Your ${type === 'avatar'? 'user': 'banner'} photo (${type === 'avatar'? '200*200' : '500*300'}) png, gpeg`}</p>
                 </div>                    
             </DialogContent>
             <DialogActions className = 'crop-dialog-actions'>
