@@ -37,6 +37,11 @@ import LinkIcon from '../../static/images/link-icon.png';
 import FacebookIcon from '../../static/images/facebook-icon.png';
 import TelegramIcon from '../../static/images/telegram-icon.png';
 import TwitterIcon from '../../static/images/twitter-icon.png';
+import ArtistSocialOpen from '../../static/images/artist-socials-active.png';
+import ArtistSocialDisabel from '../../static/images/artict-socials-disable.png';
+import InstagramIcon from '../../static/images/instagram-link.png';
+import SpotifyIcon from '../../static/images/spotify-link.png';
+import SoundcloudIcon from '../../static/images/soundcloud-link.png';
 
 interface AssetPageProps{
     assetId: string;
@@ -59,6 +64,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const [ placeBidDialogOpen, setPlaceBidDialogOpen ] = useState(false);
     const [ audioTriam, setAudioTriam ] = useState(true);
     const [ shareOpen, setShareOpen ] = useState(false);
+    const [ artistSocialsOpen, setArtistSocialsOpen ] = useState(false);
 
     const [assetSold, setAssetSold] = useState(false);
 
@@ -253,6 +259,52 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                                 title = {
                                     <div className = "asset-tooltip-root">
                                         <div className = "asset-tooltip-item">
+                                            <div className = "asset-tooltip-item-img-wrap">
+                                                <img alt = "" src = {InstagramIcon}/>
+                                            </div>
+                                            <p>Instagram</p>
+                                        </div>
+                                        <div className = "asset-tooltip-item">
+                                            <div className = "asset-tooltip-item-img-wrap">
+                                                <img alt = "" src = {TwitterIcon}/>
+                                            </div>
+                                            <p>Twitter</p>
+                                        </div>
+                                        <div className = "asset-tooltip-item">
+                                            <div className = "asset-tooltip-item-img-wrap">
+                                                <img alt = "" src = {SpotifyIcon}/>
+                                            </div>
+                                            <p>Spotify</p>
+                                        </div>
+                                        <div className = "asset-tooltip-item">
+                                            <div className = "asset-tooltip-item-img-wrap">
+                                                <img alt = "" src = {SoundcloudIcon}/>
+                                            </div>
+                                            <p>Soundcloud</p>
+                                        </div>
+                                    </div>
+                                }
+                                onClose={() => setArtistSocialsOpen(false)}
+                                open={artistSocialsOpen}
+                                disableFocusListener
+                                disableHoverListener
+                                disableTouchListener
+                            >
+                                <div onClick = {() => {
+                                    setShareOpen(false);
+                                    setArtistSocialsOpen(!artistSocialsOpen)
+                                }} className = "asset-description-container-nav-share-wrap">
+                                    <img alt ="" src = {artistSocialsOpen? ArtistSocialOpen : ArtistSocialDisabel}/>
+                                </div>
+                            </Tooltip>
+                            <Tooltip
+                                PopperProps={{
+                                    disablePortal: true,
+                                }}
+                                placement = 'bottom-end'
+                                title = {
+                                    <div className = "asset-tooltip-root">
+                                        <div className = "asset-tooltip-item">
                                             <FacebookShareButton
                                                 url = {window.location.href}
                                                 quote = {asset.metadata.name}
@@ -315,7 +367,10 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                                 disableHoverListener
                                 disableTouchListener
                             >
-                                <div onClick = {() => setShareOpen(!shareOpen)} className = "asset-description-container-nav-share-wrap">
+                                <div onClick = {() => {
+                                    setArtistSocialsOpen(false);
+                                    setShareOpen(!shareOpen)
+                                }} className = "asset-description-container-nav-share-wrap">
                                     <img alt ="" src = {shareOpen? ShareActiveIcon : ShareDisableIcon}/>
                                 </div>
                             </Tooltip>
