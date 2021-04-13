@@ -84,6 +84,11 @@ function Application(){
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
 
+    const [instagram, setInstagram] = useState("");
+    const [twitter, setTwitter] = useState("");
+    const [spotify, setSpotify] = useState("");
+    const [soundcloud, setSoundcloud] = useState("");
+
     const [nfts, setNfts] = useState<Nft[]>([Object.assign({}, DEFAULT_NFT)]);
 
     const [prices, setPices] = useState<IPrices>({});
@@ -103,6 +108,10 @@ function Application(){
             nickname, 
             email, 
             address, 
+            instagram,
+            twitter,
+            spotify,
+            soundcloud,
             nfts: nfts.map((nft) => ({
                 ...nft.file,
                 filePlaceholder: nft.filePlaceholder && nft.filePlaceholder.filename,
@@ -258,6 +267,42 @@ function Application(){
                         }}
                         placeholder = "Wallet address"
                         error = {errors.address}
+                    />
+                    <Input
+                        lable = "Instagram link"
+                        value = {instagram}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setInstagram(value);
+                        }}
+                        placeholder = "Instagram link"
+                    />
+                    <Input
+                        lable = "Twitter link"
+                        value = {twitter}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setTwitter(value);
+                        }}
+                        placeholder = "Twitter link"
+                    />
+                    <Input
+                        lable = "Spotify link"
+                        value = {spotify}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setSpotify(value);
+                        }}
+                        placeholder = "Spotify link"
+                    />
+                    <Input
+                        lable = "Soundcloud link"
+                        value = {soundcloud}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setSoundcloud(value);
+                        }}
+                        placeholder = "Soundcloud link"
                     />
                     <MultipleGroup
                         values = {nfts}
