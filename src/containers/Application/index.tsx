@@ -84,6 +84,11 @@ function Application(){
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
 
+    const [instagram, setInstagram] = useState("");
+    const [twitter, setTwitter] = useState("");
+    const [spotify, setSpotify] = useState("");
+    const [soundcloud, setSoundcloud] = useState("");
+
     const [nfts, setNfts] = useState<Nft[]>([Object.assign({}, DEFAULT_NFT)]);
 
     const [prices, setPices] = useState<IPrices>({});
@@ -103,6 +108,10 @@ function Application(){
             nickname, 
             email, 
             address, 
+            instagram,
+            twitter,
+            spotify,
+            soundcloud,
             nfts: nfts.map((nft) => ({
                 ...nft.file,
                 filePlaceholder: nft.filePlaceholder && nft.filePlaceholder.filename,
@@ -236,6 +245,43 @@ function Application(){
                         }}
                         placeholder = "Your name"
                         error = {errors.nickname}
+                    />
+                    <p className='application-body-block-subtitle'>Social media</p>
+                    <Input
+                        lable = "Instagram"
+                        value = {instagram}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setInstagram(value);
+                        }}
+                        placeholder = "Link"
+                    />
+                    <Input
+                        lable = "Twitter"
+                        value = {twitter}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setTwitter(value);
+                        }}
+                        placeholder = "Link"
+                    />
+                    <Input
+                        lable = "Spotify"
+                        value = {spotify}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setSpotify(value);
+                        }}
+                        placeholder = "Link"
+                    />
+                    <Input
+                        lable = "Soundcloud"
+                        value = {soundcloud}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setSoundcloud(value);
+                        }}
+                        placeholder = "Link"
                     />
                     <div className = "divader"/>
                     <p className='application-body-block-title'>Contact information</p>
