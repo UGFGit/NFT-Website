@@ -17,7 +17,7 @@ const BUYER_STEPS = [
 
 const SELLER_STEPS = [
     'Install MetaMask',
-    'Fill in our on-site application form. (attached for example)',
+    'Fill in our on-site application form.',
     'Connect your Metamask E-wallet address to your application form.',
     'When a sale is collected the WETH gets deposited automatically into your wallet.',
     'You can either hold it or swap it within Metamask for ETH, Bitcoin etc',
