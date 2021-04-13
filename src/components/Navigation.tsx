@@ -55,7 +55,7 @@ function Navigation({ location, config }: NavigationProps){
                 { config.main && <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.COLLECTION})} onClick={() => history.push('/')}>Collection</p> }
                 { config.main && <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.ARTISTS})} onClick={() => history.push('/artists')}>Artists</p> }
                 <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.FAQ})} onClick={() => history.push('/faq')}>Faq</p>
-                { config.main && <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.HOW_TO})} onClick={() => history.push('/how-to')}>How it works</p> }
+                <p className={classNames('navigation-item', { 'navigation-item-active': location === LocationEnum.HOW_TO})} onClick={() => history.push('/how-to')}>How it works</p>
 
                 <MetamaskChecker/>
             </div>
