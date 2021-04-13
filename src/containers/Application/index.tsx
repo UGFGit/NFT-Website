@@ -246,6 +246,43 @@ function Application(){
                         placeholder = "Your name"
                         error = {errors.nickname}
                     />
+                    <p className='application-body-block-subtitle'>Social media</p>
+                    <Input
+                        lable = "Instagram"
+                        value = {instagram}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setInstagram(value);
+                        }}
+                        placeholder = "Link"
+                    />
+                    <Input
+                        lable = "Twitter"
+                        value = {twitter}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setTwitter(value);
+                        }}
+                        placeholder = "Link"
+                    />
+                    <Input
+                        lable = "Spotify"
+                        value = {spotify}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setSpotify(value);
+                        }}
+                        placeholder = "Link"
+                    />
+                    <Input
+                        lable = "Soundcloud"
+                        value = {soundcloud}
+                        optional = {true}
+                        onChange= {(value) => {
+                            setSoundcloud(value);
+                        }}
+                        placeholder = "Link"
+                    />
                     <div className = "divader"/>
                     <p className='application-body-block-title'>Contact information</p>
                     <Input
@@ -267,42 +304,6 @@ function Application(){
                         }}
                         placeholder = "Wallet address"
                         error = {errors.address}
-                    />
-                    <Input
-                        lable = "Instagram link"
-                        value = {instagram}
-                        optional = {true}
-                        onChange= {(value) => {
-                            setInstagram(value);
-                        }}
-                        placeholder = "Instagram link"
-                    />
-                    <Input
-                        lable = "Twitter link"
-                        value = {twitter}
-                        optional = {true}
-                        onChange= {(value) => {
-                            setTwitter(value);
-                        }}
-                        placeholder = "Twitter link"
-                    />
-                    <Input
-                        lable = "Spotify link"
-                        value = {spotify}
-                        optional = {true}
-                        onChange= {(value) => {
-                            setSpotify(value);
-                        }}
-                        placeholder = "Spotify link"
-                    />
-                    <Input
-                        lable = "Soundcloud link"
-                        value = {soundcloud}
-                        optional = {true}
-                        onChange= {(value) => {
-                            setSoundcloud(value);
-                        }}
-                        placeholder = "Soundcloud link"
                     />
                     <MultipleGroup
                         values = {nfts}
