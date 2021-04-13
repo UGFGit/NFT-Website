@@ -3,6 +3,7 @@ import ReactPlayer from 'react-player';
 import '../static/styles/video-player.scss';
 import VideoIcon from '../static/images/video-icon.png';
 import VideoMutedIcon from '../static/images/video-muted.png';
+import { isMobile } from 'react-device-detect';
 
 interface PlayerProps{
     src: string;
@@ -19,7 +20,7 @@ function Player({ src, controls = false, muted = true, loop = true, playing = tr
                 width = '100%' 
                 height = "100%"
                 url = {src} 
-                playing = { playing }
+                playing = { isMobile ? false : playing }
                 loop = { loop }
                 muted = { muted }
                 controls = {controls} 
