@@ -38,6 +38,10 @@ interface IArtist{
     name: string;
     background: string;
     host?: string;
+    instagram?: string;
+    twitter?: string;
+    spotify?: string;
+    soundcloud?: string;
 }
 
 interface IContract{

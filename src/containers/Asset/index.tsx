@@ -29,14 +29,8 @@ import EthWhiteIcon from '../../static/images/Ethereum.png';
 import UopIcon from '../../static/images/uop-grey.png';
 import { CurrencyEnum } from '../../constants/blockchain/currency';
 import classNames from 'classnames';
-import ShareDisableIcon from '../../static/images/share-disable.png';
-import ShareActiveIcon from '../../static/images/share-active.png';
-import { FacebookShareButton, TelegramShareButton, TwitterShareButton, EmailShareButton } from 'react-share';
-import EmailIcon from '../../static/images/email-icon.png';
-import LinkIcon from '../../static/images/link-icon.png';
-import FacebookIcon from '../../static/images/facebook-icon.png';
-import TelegramIcon from '../../static/images/telegram-icon.png';
-import TwitterIcon from '../../static/images/twitter-icon.png';
+import ShareBtn from '../../components/ShareBtn';
+import SocialLinks from '../../components/SocialLinks';
 
 interface AssetPageProps{
     assetId: string;
@@ -59,6 +53,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const [ placeBidDialogOpen, setPlaceBidDialogOpen ] = useState(false);
     const [ audioTriam, setAudioTriam ] = useState(true);
     const [ shareOpen, setShareOpen ] = useState(false);
+    const [ artistSocialsOpen, setArtistSocialsOpen ] = useState(false);
 
     const [assetSold, setAssetSold] = useState(false);
 
@@ -222,6 +217,8 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
     const curentUser = web3.account ? web3.account.toLowerCase() === asset.owner.toLowerCase(): false;
     const disableButton = assetSold || curentUser || asset.onAuction && timeEnd;
 
+    const showArtistSocials = asset.artist.instagram || asset.artist.twitter || asset.artist.spotify || asset.artist.soundcloud;
+
     return (
         <DocumentTitle title="Dashboard">
             <div className = "asset-root">
@@ -245,80 +242,35 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
                                 <Avatar alt="" src = {FILESTORE(asset.artist.avatar)}/>
                                 <p className = "asset-description-container-nav-artist-name">{asset.artist.name}</p>
                             </div>
-                            <Tooltip
-                                PopperProps={{
-                                    disablePortal: true,
+                            <div
+                                style = {{
+                                    marginLeft: 'auto',
+                                    display: 'flex'
                                 }}
-                                placement = 'bottom-end'
-                                title = {
-                                    <div className = "asset-tooltip-root">
-                                        <div className = "asset-tooltip-item">
-                                            <FacebookShareButton
-                                                url = {window.location.href}
-                                                quote = {asset.metadata.name}
-                                            >
-                                                <div className = "asset-tooltip-item-img-wrap">
-                                                    <img alt = "" src = {FacebookIcon}/>
-                                                </div>
-                                            </FacebookShareButton>
-                                            <p>Facebook</p>
-                                        </div>
-                                        <div className = "asset-tooltip-item">
-                                            <TwitterShareButton
-                                                url = {window.location.href}
-                                                title = {asset.metadata.name}
-                                            >
-                                                <div className = "asset-tooltip-item-img-wrap">
-                                                    <img alt = "" src = {TwitterIcon}/>
-                                                </div>
-                                            </TwitterShareButton>
-                                            <p>Twitter</p>
-                                        </div>
-                                        <div className = "asset-tooltip-item">
-                                            <TelegramShareButton
-                                                url = {window.location.href}
-                                                title = {asset.metadata.name}
-                                            >
-                                                <div className = "asset-tooltip-item-img-wrap">
-                                                    <img alt = "" src = {TelegramIcon}/>
-                                                </div>
-                                            </TelegramShareButton>
-                                            <p>Telegram</p>
-                                        </div>
-                                        <div className = "asset-tooltip-item">
-                                            <EmailShareButton
-                                                url={window.location.href}
-                                                subject = {asset.metadata.name}
-                                                body = {window.location.href}
-                                            >
-                                                <div className = "asset-tooltip-item-img-wrap">
-                                                    <img alt = "" src = {EmailIcon}/>
-                                                </div>
-                                            </EmailShareButton>
-                                            <p>Email</p>
-                                        </div>
-                                        <div onClick = {() => {
-                                            //@ts-ignore
-                                            window.globals.dom.copyTextToClipboard(window.location.href);
-                                            enqueueSnackbar(`Copied to clipboard`, { variant: 'success' });
-                                        }} className = "asset-tooltip-item">
-                                            <div className = "asset-tooltip-item-img-wrap">
-                                                <img alt = "" src = {LinkIcon}/>
-                                            </div>
-                                            <p>Link</p>
-                                        </div>
-                                    </div>
-                                }
-                                onClose={() => setShareOpen(false)}
-                                open={shareOpen}
-                                disableFocusListener
-                                disableHoverListener
-                                disableTouchListener
                             >
-                                <div onClick = {() => setShareOpen(!shareOpen)} className = "asset-description-container-nav-share-wrap">
-                                    <img alt ="" src = {shareOpen? ShareActiveIcon : ShareDisableIcon}/>
-                                </div>
-                            </Tooltip>
+                                {showArtistSocials && <div style = {{marginRight: 24}}>
+                                    <SocialLinks
+                                        open = {artistSocialsOpen}
+                                        handleClose = {() => {
+                                            setShareOpen(false);
+                                            setArtistSocialsOpen(!artistSocialsOpen);
+                                        }}
+                                        instagram = {asset.artist.instagram}
+                                        twitter = {asset.artist.twitter}
+                                        spotify = {asset.artist.spotify}
+                                        soundcloud = {asset.artist.soundcloud}
+                                    />
+                                </div>}
+                                <ShareBtn
+                                    open = {shareOpen}
+                                    handleClose = {() => {
+                                        setArtistSocialsOpen(false);
+                                        setShareOpen(!shareOpen);
+                                        
+                                    }}
+                                    name = {asset.metadata.name}
+                                />
+                            </div>
                         </div>
                         <p className = "asset-description-container-title">{asset.metadata.name}</p>
                         {asset.metadata.description && <p className = "asset-description-container-desc">{asset.metadata.description}</p>}
