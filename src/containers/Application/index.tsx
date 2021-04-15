@@ -15,7 +15,6 @@ import classNames from 'classnames';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { CurrencyEnum } from '../../constants/blockchain/currency';
-import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -164,22 +163,13 @@ function Application(){
         enqueueSnackbar('Fill in all the fields of the application', { variant: 'error' });
     }
 
-    const sendFile = async (file: any) => {
-        const options = { indices: true };        
-        const formData = serialize({ file }, options);
-        const response = await fetch.post(FILESTORE_UPLOAD, formData);
-        const body = await response.json();
-        if(response.ok){
-            return { filename: body.filename, mimetype: body.mimetype};
-        }
-    }
-
     const sendAvatar = async (file: any) => {
         const options = { indices: true };        
         const formData = serialize({ file }, options);
         const response = await fetch.post(FILESTORE_UPLOAD, formData);
         const body = await response.json();
         if(response.ok){
+            enqueueSnackbar('Avatar was uploaded', { variant: 'success' });
             setAvatar(body.filename);
         }
         
@@ -192,6 +182,7 @@ function Application(){
         const response = await fetch.post(FILESTORE_UPLOAD, formData);
         const body = await response.json();
         if(response.ok){
+            enqueueSnackbar('Banner was uploaded',  { variant: 'success' });
             setBackground(body.filename);
         }
         
@@ -318,8 +309,7 @@ function Application(){
                                         file = {nft.file}
                                         accept = {['audio/*', 'video/*', 'image/*']}
                                         type = "file"
-                                        onChange = {async (file) => {
-                                            const data = await sendFile(file);
+                                        onChange = {(data) => {
                                             nft.file = data;
                                             nfts[index] = nft;
                                             setNfts([...nfts]);
@@ -340,8 +330,7 @@ function Application(){
                                         file = {nft.filePlaceholder}
                                         accept = 'image/*'
                                         type = 'icon'
-                                        onChange = {async (file) => {
-                                            const data = await sendFile(file);
+                                        onChange = {(data) => {
                                             nft.filePlaceholder = data;
                                             nfts[index] = nft;
                                             setNfts([...nfts]);

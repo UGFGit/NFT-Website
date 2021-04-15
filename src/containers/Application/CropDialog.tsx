@@ -90,7 +90,7 @@ function CropDialog({ open, onClose, type, onSave }: ICropDialogProps){
                             return  enqueueSnackbar('Image for cropping does not selected', { variant: 'warning' })
                         }
                         try {
-                            enqueueSnackbar('Cropening image start', { variant: 'info' })
+                            enqueueSnackbar('Cropening image', { variant: 'info' })
                             const croppedImage = await getCroppedImg(file.preview,croppedAreaPixels);
                             onSave(croppedImage);
                         } catch (error) {
