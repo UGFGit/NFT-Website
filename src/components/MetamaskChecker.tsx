@@ -6,15 +6,10 @@ import useInterval from '../libs/use-interval';
 import {connect} from 'react-redux';
 import {AnyAction, bindActionCreators, Dispatch} from 'redux';
 import { setProvider, removeProvider } from '../actions/web3';
-import { ChainNames } from '../constants/blockchain/chain-names';
-import WrongNatworkDialog from './WrongNatworkDialog';
 import { useHistory } from "react-router-dom";
 import Tooltip from '@material-ui/core/Tooltip';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import TooltipImg from '../static/images/tooltip-img.png';
-
-const CURRENT_CHAIN_ID = 1;
-const CURRENT_CHAIN_NAME = ChainNames[CURRENT_CHAIN_ID];
 
 interface MetamaskCheckerState{
     provider?: any;
@@ -31,7 +26,6 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
     const history = useHistory();
 
     const [state, setState] = useState<MetamaskCheckerState>({});
-    const [chainDialogOpen, setChainDialogOpen] = useState(false);
     const [tooltipOpen, setTooltipOpen] = useState(false);
     const [ethNotAvaible, setEthNotAvaible] = useState(false);
 
@@ -108,8 +102,6 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
 
         const chainId = await web3.eth.getChainId();
 
-        setChainDialogOpen(chainId !== CURRENT_CHAIN_ID);
-
         if(Array.isArray(addr) && addr.length !== 0 && !state.account){
             check();
         } else{            
@@ -168,10 +160,6 @@ function MetamaskChecker({ setProvider, removeProvider }: MetamaskCheckerProps){
                     }</button>
                 </Tooltip>
             </ClickAwayListener>
-            <WrongNatworkDialog
-                open = {chainDialogOpen}
-                network = {CURRENT_CHAIN_NAME}
-            />
         </div>
     )
 }
