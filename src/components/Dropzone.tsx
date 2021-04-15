@@ -1,11 +1,14 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useDropzone} from 'react-dropzone'
-import { FILESTORE } from '../constants/endpoints';
+import { FILESTORE, FILESTORE_UPLOAD } from '../constants/endpoints';
 import '../static/styles/dropzone.scss';
 import classNames from 'classnames';
 import AudioPlayer from '../components/AudioPlayer';
-import ReactPlayer from 'react-player';
 import VideoPlayer from './VideoPlayer';
+import { serialize } from 'object-to-formdata';
+import { fetch } from '../libs';
+import { useSnackbar } from 'notistack';
+import Lottie from './Lottie';
 
 export interface IFile {
     filename: string;
@@ -24,11 +27,31 @@ const FILE_TEXT = "PNG, GIF, WEBP, MP4 or MP3. Max 100mb.";
 const ICON_TEXT = 'Choose an icon from the suggested ones or upload a new one. It should grab the attention of viewers and reflect the content of the file';
 
 function Dropzone({ file, onChange, error, accept, type }: DropzoneProps){
-    const onDrop = useCallback(([file]) => {
-        onChange(file)
-    }, [onChange])
+    const { enqueueSnackbar } = useSnackbar();
+    const [loading, setLoading] = useState(false);
+
+    const sendFile = async (file: any) => {
+        const options = { indices: true };        
+        const formData = serialize({ file }, options);
+        const response = await fetch.post(FILESTORE_UPLOAD, formData);
+        const body = await response.json();
+        enqueueSnackbar("File uploaded", { variant: 'success'});
+        if(response.ok){
+            return { filename: body.filename, mimetype: body.mimetype};
+        }
+
+        return null;
+    }
+
+    const onDrop = useCallback(async ([file]) => {
+        setLoading(true);
+        enqueueSnackbar("The file is being uploaded, this may take up to several minutes", { variant: 'info'});
+        const data = await sendFile(file);
+        setLoading(false);
+        onChange(data);
+    }, [onChange]);
     
-    const {getRootProps, getInputProps} = useDropzone({onDrop, accept, multiple: false, maxSize: 104857600});
+    const {getRootProps, getInputProps} = useDropzone({onDrop, accept, multiple: false, maxSize: 104857600, disabled: loading});
     
     return(
         <div className = 'dropzone-root'>
@@ -40,7 +63,7 @@ function Dropzone({ file, onChange, error, accept, type }: DropzoneProps){
                 }
             })}>
                 <input {...getInputProps()} />
-                {!file && 
+                {!file && !loading && 
                     <div className = {classNames('dropzone-body-wrap', { 'error': Boolean(error)})}>
                         <div className = "dropzone-body-title-wrap">
                             {type === 'file' && <p className = {classNames('dropzone-body-title', { 'error': Boolean(error)})}>Upload file</p>}
@@ -52,20 +75,25 @@ function Dropzone({ file, onChange, error, accept, type }: DropzoneProps){
                     </div>
                 }
 
-                {file && file.mimetype.split('/')[0] === 'image' && 
+                {file &&!loading && file.mimetype.split('/')[0] === 'image' && 
                     <div className = 'dropzone-image-wrap'>
                         <img className = "dropzone-image" alt = "" src = {FILESTORE(file.filename)}/>
                     </div>
                 }
-                {file && file.mimetype.split('/')[0] === 'audio' && 
+                {file && !loading && file.mimetype.split('/')[0] === 'audio' && 
                     <AudioPlayer
                         src = {FILESTORE(file.filename)}
                     />
                 }
-                {file && file.mimetype.split('/')[0] === 'video' && 
+                {file && !loading && file.mimetype.split('/')[0] === 'video' && 
                     <VideoPlayer
                         src = {FILESTORE(file.filename)}
                     />
+                }
+                {loading && 
+                    <div className = 'dropzone-loader'>
+                        <Lottie width = {80} height = {80}/>
+                    </div>
                 }
             </div>
         </div>
