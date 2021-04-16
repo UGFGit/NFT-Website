@@ -10,4 +10,8 @@ export interface IConfigState{
     avatar?: string;
     artist?: IArtist;
     artistsFilter? : { id: string, name: string }[];
+    instagram?: string;
+    twitter?: string;
+    spotify?: string;
+    soundcloud?: string;
 }

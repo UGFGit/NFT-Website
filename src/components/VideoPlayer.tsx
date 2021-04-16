@@ -11,12 +11,13 @@ interface PlayerProps{
     muted?: boolean;
     loop?: boolean;
     playing?: boolean;
+    placeholder?: string;
 }
 
-function Player({ src, controls = false, muted = true, loop = true, playing = true }: PlayerProps){
+function Player({ src, controls = false, muted = true, loop = true, playing = true, placeholder }: PlayerProps){
     return(
         <div className = 'video-player-root'>
-            <ReactPlayer 
+            {!placeholder && <ReactPlayer 
                 width = '100%' 
                 height = "100%"
                 url = {src} 
@@ -33,7 +34,8 @@ function Player({ src, controls = false, muted = true, loop = true, playing = tr
                         }
                     }
                 }
-            />
+            />}
+            {isMobile && placeholder && <div><img style = {{width: "100%"}} alt ="" src = {placeholder} /></div>}
             {!controls && <div className = "video-player-video-icon-wrap">
                 <img alt="" src = {VideoIcon}/>
             </div>}

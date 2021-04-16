@@ -11,7 +11,7 @@ function Step({ text, index }: IStepProps){
             <div className = 'how-to-step-number'>
                 <p>{index}</p>
             </div>
-            <p className = "how-it-work-text">{text}</p>
+            <p className = "how-it-work-text" dangerouslySetInnerHTML={{__html: text}}/>
         </div>
     )
 }

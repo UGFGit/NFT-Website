@@ -17,6 +17,10 @@ import NoAssets from '../../static/images/no-assets.png';
 import Lottie from "../../components/Lottie";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import InstagramIcon from '../../static/images/instagram-link.png';
+import SpotifyIcon from '../../static/images/spotify-link.png';
+import SoundcloudIcon from '../../static/images/soundcloud-link.png';
+import TwitterIcon from '../../static/images/twitter-icon.png';
 
 interface IArtistProps{
     config: IConfigState
@@ -95,6 +99,17 @@ function ArtistPage({ config }: IArtistProps){
         scrollRef.current.pageLoaded = -1;
         setState({ mimetype: filter, list: [], load: true, artist: state.artist});
     }
+
+    const openLink = (url: string) => {
+        window.open(url, '_blank')
+    }
+
+    const instagram = config.multiple? config.instagram: config.artist?.instagram;
+    const twitter = config.multiple? config.twitter: config.artist?.twitter;
+    const spotify = config.multiple? config.spotify: config.artist?.spotify;
+    const soundcloud = config.multiple? config.soundcloud: config.artist?.soundcloud;
+
+    const count = [instagram, twitter, spotify, soundcloud].filter((r) => Boolean(r));
     
     return(
         // @ts-ignore
@@ -110,6 +125,24 @@ function ArtistPage({ config }: IArtistProps){
                     <Avatar alt="" src = {FILESTORE(config.multiple? config.avatar : config.artist?.avatar)}/>
                     {/* @ts-ignore */}
                     <p className = "artist-page-name">{config.multiple? config.name : config.artist?.name}</p>
+                    {count.length > 0 && <div className = "artist-page-socials-wrap">
+                        <div className = "artist-page-socials" style = {{
+                            gridTemplateColumns: `repeat(${count.length}, 1fr)`,
+                        }}>
+                            {instagram && <div onClick = {() => openLink(instagram)} className = "artist-page-socials-item-img-wrap">
+                                <img alt = "" src = {InstagramIcon}/>
+                            </div>}
+                            {twitter && <div onClick = {() => openLink(twitter)} className = "artist-page-socials-item-img-wrap">
+                                <img alt = "" src = {TwitterIcon}/>
+                            </div>}
+                            {spotify && <div onClick = {() => openLink(spotify)} className = "artist-page-socials-item-img-wrap">
+                                <img alt = "" src = {SpotifyIcon}/>
+                            </div>}
+                            {soundcloud && <div onClick = {() => openLink(soundcloud)} className = "artist-page-socials-item-img-wrap">
+                                <img alt = "" src = {SoundcloudIcon}/>
+                            </div>}
+                        </div>
+                    </div>}
                 </div>
                 <div className = "artist-page-explore-root">
                     <div className = 'artist-page-explore-wrap'>
