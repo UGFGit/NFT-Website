@@ -10,7 +10,7 @@ import VectorBlock from './VectorBlock';
 const BUYER_STEPS = [
     'Install MetaMask (super user friendly in browser E-wallet)',
     'Use the buy option on MetaMask to purchase ETH with your credit card.',
-    'Go to either Sushi.com to swap ETH to UOP token or WETH. If you are more experienced go to Bitfinex.com to buy UOP.',
+    'For swapping your ETH into WETH or UOP token, you can do this within your MetaMask wallet or at <a href="https://sushi.com/" target="_blank">Sushi.com</a>. If you are more experienced you can go to <a href="https://www.bitfinex.com/" target="_blank">Bitfinex.com</a> to buy UOP.',
     `Now you can buy your NFT on ${window.location.host}`,
     'The NFT lives on your MetaMask Wallet as well as the subdomain you purchased it on.'
 ]
