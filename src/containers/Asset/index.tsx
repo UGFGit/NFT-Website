@@ -31,6 +31,7 @@ import { CurrencyEnum } from '../../constants/blockchain/currency';
 import classNames from 'classnames';
 import ShareBtn from '../../components/ShareBtn';
 import SocialLinks from '../../components/SocialLinks';
+import { isMobile } from 'react-device-detect';
 
 interface AssetPageProps{
     assetId: string;
@@ -191,7 +192,7 @@ function AssetPage({ assetId, web3 }: AssetPageProps){
 
     const renderLeftContent = () => {
         if(asset.metadata.mimetype.split('/')[0] === 'video'){
-            return <ReactPlayer src = {FILESTORE(asset.metadata.filename)}/>
+            return <div style = {{maxWidth: 600}}><ReactPlayer src = {FILESTORE(asset.metadata.filename)} placeholder = {isMobile? FILESTORE(asset.metadata.filePlaceholder): ""}/></div>
         }
         if(asset.metadata.mimetype.split('/')[0] === 'audio'){
             return(
